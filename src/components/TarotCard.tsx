@@ -64,7 +64,7 @@ const TarotCard = ({ title, description, icon, onClick, delay = 0, isSelected, c
         </h3>
         
         {/* Description */}
-        <p className={`text-starlight opacity-80 ${compact ? 'text-[10px] sm:text-xs md:text-sm hidden sm:block' : 'text-sm'}`}>
+        <p className={`text-starlight opacity-80 leading-tight ${compact ? 'text-[8px] sm:text-xs md:text-sm' : 'text-sm'}`}>
           "{description}"
         </p>
         
