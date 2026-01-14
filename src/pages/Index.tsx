@@ -112,7 +112,7 @@ const Index = () => {
                 ✦ 올해 나에게 필요한 기운은? ✦
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-1">
                 <TarotCard
                   title="열정의 태양"
                   description="뭐든 할 수 있어요"
@@ -120,6 +120,7 @@ const Index = () => {
                   onClick={() => handleEnergySelect("sun")}
                   delay={0}
                   isSelected={selectedEnergy === "sun"}
+                  compact
                 />
                 <TarotCard
                   title="지혜의 달빛"
@@ -128,6 +129,7 @@ const Index = () => {
                   onClick={() => handleEnergySelect("moon")}
                   delay={0.15}
                   isSelected={selectedEnergy === "moon"}
+                  compact
                 />
                 <TarotCard
                   title="행복의 하트"
@@ -136,6 +138,7 @@ const Index = () => {
                   onClick={() => handleEnergySelect("heart")}
                   delay={0.3}
                   isSelected={selectedEnergy === "heart"}
+                  compact
                 />
               </div>
             </motion.div>
@@ -153,7 +156,7 @@ const Index = () => {
                 ✦ 나에게 행운을 가져다 줄 부적 아이템은? ✦
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 max-w-4xl mx-auto px-1">
                 <TarotCard
                   title="꽃길 걷는 신발"
                   description="가는 곳마다 탄탄대로"
@@ -161,6 +164,7 @@ const Index = () => {
                   onClick={() => handleItemSelect("shoes")}
                   delay={0}
                   isSelected={selectedItem === "shoes"}
+                  compact
                 />
                 <TarotCard
                   title="행운 가득 가방"
@@ -169,6 +173,7 @@ const Index = () => {
                   onClick={() => handleItemSelect("bag")}
                   delay={0.15}
                   isSelected={selectedItem === "bag"}
+                  compact
                 />
                 <TarotCard
                   title="매력 폭발 코디"
@@ -177,6 +182,7 @@ const Index = () => {
                   onClick={() => handleItemSelect("outfit")}
                   delay={0.3}
                   isSelected={selectedItem === "outfit"}
+                  compact
                 />
               </div>
             </motion.div>
