@@ -59,7 +59,7 @@ const Index = () => {
     <div className="min-h-screen relative overflow-hidden">
       <StarryBackground />
       
-      <div className="relative z-10 container mx-auto px-4 py-8 md:py-12">
+      <div className="relative z-10 container mx-auto px-4 py-12 sm:py-16 md:py-20">
         {/* Header */}
         <motion.header
           initial={{ opacity: 0, y: -30 }}
