@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lucky Beginning - 럭키비기닝</title>
+  <meta name="description" content="나만의 시작을 골라 행운의 메시지를 확인하세요! 스타일24 럭키비기닝 이벤트">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: hsl(45, 80%, 55%);
+      --gold-light: hsl(45, 85%, 65%);
+      --gold-dark: hsl(42, 75%, 45%);
+      --mystic-deep: hsl(260, 40%, 12%);
+      --mystic-purple: hsl(280, 40%, 20%);
+      --starlight: hsl(50, 30%, 90%);
+      --background: hsl(260, 35%, 8%);
+    }
+
+    body {
+      font-family: 'Noto Serif KR', serif;
+      background: var(--background);
+      color: var(--starlight);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Starry Background */
+    .starry-bg {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .starry-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, var(--mystic-deep), var(--background), var(--mystic-purple));
+      opacity: 0.9;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.2); }
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    .glow-orb.gold {
+      width: 24rem;
+      height: 24rem;
+      background: radial-gradient(circle, hsla(45, 80%, 55%, 0.08) 0%, transparent 70%);
+      left: 10%;
+      top: 20%;
+    }
+
+    .glow-orb.purple {
+      width: 20rem;
+      height: 20rem;
+      background: radial-gradient(circle, hsla(280, 40%, 45%, 0.1) 0%, transparent 70%);
+      right: 5%;
+      bottom: 10%;
+      animation-delay: 2s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+    }
+
+    /* Main Container */
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .container { padding: 4rem 1rem; }
+    }
+
+    @media (min-width: 768px) {
+      .container { padding: 5rem 1rem; }
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    @media (min-width: 768px) {
+      header { margin-bottom: 3rem; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: bold;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    @media (min-width: 768px) {
+      h1 { font-size: 3.75rem; }
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--starlight);
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .subtitle { font-size: 1.25rem; }
+    }
+
+    .divider {
+      width: 8rem;
+      height: 2px;
+      margin: 1.5rem auto;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .description {
+      font-size: 1rem;
+      color: var(--starlight);
+      opacity: 0.7;
+      max-width: 32rem;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    @media (min-width: 768px) {
+      .description { font-size: 1.125rem; }
+    }
+
+    /* Step Indicator */
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .step-dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background: hsl(260, 20%, 30%);
+      transition: all 0.3s ease;
+    }
+
+    .step-dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 20px var(--gold);
+      animation: stepPulse 1s infinite;
+    }
+
+    .step-dot.completed {
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    @keyframes stepPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Step Content */
+    .step-content {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .step-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .step-title {
+      font-size: 1.5rem;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    @media (min-width: 768px) {
+      .step-title { font-size: 1.875rem; }
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      max-width: 56rem;
+      margin: 0 auto;
+      padding: 0 0.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .card-grid { gap: 1rem; }
+    }
+
+    @media (min-width: 768px) {
+      .card-grid { gap: 1.5rem; }
+    }
+
+    /* Tarot Card */
+    .tarot-card {
+      position: relative;
+      cursor: pointer;
+      border-radius: 0.75rem;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark), var(--gold-light));
+      transition: all 0.3s ease;
+      animation: cardFlip 0.8s ease-out backwards;
+      transform-style: preserve-3d;
+    }
+
+    @media (min-width: 640px) {
+      .tarot-card {
+        border-radius: 1rem;
+        padding: 4px;
+      }
+    }
+
+    .tarot-card:nth-child(1) { animation-delay: 0s; }
+    .tarot-card:nth-child(2) { animation-delay: 0.15s; }
+    .tarot-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes cardFlip {
+      from { opacity: 0; transform: rotateY(180deg) scale(0.8); }
+      to { opacity: 1; transform: rotateY(0) scale(1); }
+    }
+
+    .tarot-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 60px hsla(45, 80%, 55%, 0.4);
+    }
+
+    .tarot-card:active {
+      transform: scale(0.98);
+    }
+
+    .tarot-card.selected {
+      box-shadow: 0 0 30px var(--gold);
+    }
+
+    .tarot-card.selected::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      border: 2px solid var(--gold);
+    }
+
+    @media (min-width: 640px) {
+      .tarot-card.selected::after {
+        border-width: 4px;
+        inset: -4px;
+      }
+    }
+
+    .card-inner {
+      position: relative;
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, var(--mystic-purple), var(--mystic-deep));
+      padding: 0.5rem;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    @media (min-width: 640px) {
+      .card-inner {
+        border-radius: 0.75rem;
+        padding: 1rem;
+        min-height: 200px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .card-inner {
+        padding: 1.5rem;
+        min-height: 280px;
+      }
+    }
+
+    /* Card Decorative Corners */
+    .card-corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: var(--gold);
+      opacity: 0.6;
+    }
+
+    @media (min-width: 640px) {
+      .card-corner { width: 24px; height: 24px; }
+    }
+
+    .card-corner.top-left { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
+    .card-corner.top-right { top: 6px; right: 6px; border-top: 1px solid; border-right: 1px solid; }
+    .card-corner.bottom-left { bottom: 6px; left: 6px; border-bottom: 1px solid; border-left: 1px solid; }
+    .card-corner.bottom-right { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
+
+    @media (min-width: 640px) {
+      .card-corner.top-left { top: 12px; left: 12px; border-width: 2px; }
+      .card-corner.top-right { top: 12px; right: 12px; border-width: 2px; }
+      .card-corner.bottom-left { bottom: 12px; left: 12px; border-width: 2px; }
+      .card-corner.bottom-right { bottom: 12px; right: 12px; border-width: 2px; }
+    }
+
+    .card-glow {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, hsla(45, 80%, 55%, 0.05), transparent);
+    }
+
+    .card-icon {
+      font-size: 1.875rem;
+      margin-bottom: 0.25rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @media (min-width: 640px) {
+      .card-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    }
+
+    @media (min-width: 768px) {
+      .card-icon { font-size: 3.75rem; margin-bottom: 1rem; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .card-title {
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.125rem;
+    }
+
+    @media (min-width: 640px) {
+      .card-title { font-size: 1rem; margin-bottom: 0.25rem; }
+    }
+
+    @media (min-width: 768px) {
+      .card-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    }
+
+    .card-desc {
+      color: var(--starlight);
+      opacity: 0.8;
+      font-size: 8px;
+      line-height: 1.3;
+    }
+
+    @media (min-width: 640px) {
+      .card-desc { font-size: 0.75rem; }
+    }
+
+    @media (min-width: 768px) {
+      .card-desc { font-size: 0.875rem; }
+    }
+
+    .card-sparkle {
+      position: absolute;
+      color: var(--gold);
+      font-size: 8px;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @media (min-width: 640px) {
+      .card-sparkle { font-size: 12px; }
+    }
+
+    .card-sparkle.top { top: 1rem; right: 1rem; }
+    .card-sparkle.bottom { bottom: 1.5rem; left: 1rem; animation-delay: 0.5s; }
+
+    @media (min-width: 640px) {
+      .card-sparkle.top { top: 2rem; right: 2rem; }
+      .card-sparkle.bottom { bottom: 3rem; left: 2rem; }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* Result Card */
+    .result-container {
+      max-width: 28rem;
+      margin: 0 auto;
+      animation: resultFadeIn 1s ease-out;
+    }
+
+    @keyframes resultFadeIn {
+      from { opacity: 0; transform: scale(0.5) rotateY(180deg); }
+      to { opacity: 1; transform: scale(1) rotateY(0); }
+    }
+
+    .result-card {
+      position: relative;
+      border-radius: 1rem;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark), var(--gold-light));
+    }
+
+    .result-inner {
+      position: relative;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, var(--mystic-purple), var(--mystic-deep));
+      padding: 2rem;
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .result-frame {
+      position: absolute;
+      inset: 1rem;
+      border: 1px solid hsla(45, 80%, 55%, 0.3);
+      border-radius: 0.5rem;
+      pointer-events: none;
+    }
+
+    .result-corner {
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      border-color: var(--gold);
+    }
+
+    .result-corner.top-left { top: 0.75rem; left: 0.75rem; border-top: 2px solid; border-left: 2px solid; }
+    .result-corner.top-right { top: 0.75rem; right: 0.75rem; border-top: 2px solid; border-right: 2px solid; }
+    .result-corner.bottom-left { bottom: 0.75rem; left: 0.75rem; border-bottom: 2px solid; border-left: 2px solid; }
+    .result-corner.bottom-right { bottom: 0.75rem; right: 0.75rem; border-bottom: 2px solid; border-right: 2px solid; }
+
+    .result-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, hsla(45, 80%, 55%, 0.1), transparent);
+    }
+
+    .result-icon {
+      font-size: 4.5rem;
+      margin-bottom: 1.5rem;
+      animation: bagFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes bagFloat {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      25% { transform: translateY(-10px) rotate(5deg); }
+      75% { transform: translateY(-10px) rotate(-5deg); }
+    }
+
+    .result-title {
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-message {
+      color: var(--starlight);
+      font-size: 1.125rem;
+      line-height: 1.8;
+      padding: 0 1rem;
+    }
+
+    .result-sparkle {
+      position: absolute;
+      color: var(--gold);
+      animation: sparkle 1.5s ease-in-out infinite;
+    }
+
+    /* Bonus Button */
+    .bonus-btn-container {
+      text-align: center;
+      margin-top: 2rem;
+      animation: fadeInUp 0.5s ease-out 1.2s backwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .bonus-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
+      color: var(--mystic-deep);
+      font-weight: bold;
+      font-size: 1.125rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 30px hsla(45, 80%, 55%, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .bonus-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 50px hsla(45, 80%, 55%, 0.5);
+    }
+
+    .bonus-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out 1s backwards;
+    }
+
+    .footer-divider {
+      width: 6rem;
+      height: 1px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(to right, transparent, hsla(45, 80%, 55%, 0.5), transparent);
+    }
+
+    .notice {
+      color: var(--starlight);
+      opacity: 0.5;
+      font-size: 0.875rem;
+      line-height: 1.8;
+    }
+
+    /* Popup Overlay */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 100;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .popup-overlay.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* Popup */
+    .popup {
+      position: relative;
+      border-radius: 1rem;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark), var(--gold-light));
+      max-width: 24rem;
+      width: 100%;
+      animation: popupEnter 0.4s ease-out;
+    }
+
+    @keyframes popupEnter {
+      from { opacity: 0; transform: scale(0.5) translateY(50px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .popup-inner {
+      position: relative;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, var(--mystic-purple), var(--mystic-deep));
+      padding: 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .popup-corner {
+      position: absolute;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-color: var(--gold);
+      opacity: 0.6;
+    }
+
+    .popup-corner.top-left { top: 0.5rem; left: 0.5rem; border-top: 2px solid; border-left: 2px solid; }
+    .popup-corner.top-right { top: 0.5rem; right: 0.5rem; border-top: 2px solid; border-right: 2px solid; }
+    .popup-corner.bottom-left { bottom: 0.5rem; left: 0.5rem; border-bottom: 2px solid; border-left: 2px solid; }
+    .popup-corner.bottom-right { bottom: 0.5rem; right: 0.5rem; border-bottom: 2px solid; border-right: 2px solid; }
+
+    .popup-icon {
+      font-size: 3.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .popup-icon.winner {
+      animation: celebrate 0.5s ease-out;
+    }
+
+    @keyframes celebrate {
+      0%, 100% { transform: rotate(0) scale(1); }
+      25% { transform: rotate(-10deg) scale(1.1); }
+      50% { transform: rotate(10deg) scale(1.1); }
+      75% { transform: rotate(-10deg) scale(1.1); }
+    }
+
+    .popup-title {
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .popup-message {
+      color: var(--starlight);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .popup-btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--gold), var(--gold-dark));
+      color: var(--mystic-deep);
+      font-weight: bold;
+      font-size: 1.125rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px hsla(45, 80%, 55%, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .popup-btn:hover {
+      box-shadow: 0 0 50px hsla(45, 80%, 55%, 0.5);
+    }
+
+    .popup-sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .popup-sparkle {
+      position: absolute;
+      color: var(--gold);
+      animation: popupSparkle 1s ease-out infinite;
+    }
+
+    @keyframes popupSparkle {
+      0% { opacity: 0; transform: scale(0) translateY(0); }
+      50% { opacity: 1; transform: scale(1) translateY(-20px); }
+      100% { opacity: 0; transform: scale(0) translateY(-40px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Starry Background -->
+  <div class="starry-bg" id="starryBg">
+    <div class="glow-orb gold"></div>
+    <div class="glow-orb purple"></div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>The Lucky Beginning</h1>
+      <p class="subtitle">럭키비기닝</p>
+      <div class="divider"></div>
+      <p class="description">
+        나만의 시작을 골라 행운의 메시지를 확인하세요!<br>
+        깜짝 혜택의 행운도 확인해 보세요.
+      </p>
+    </header>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" data-step="1"></div>
+      <div class="step-dot" data-step="2"></div>
+      <div class="step-dot" data-step="3"></div>
+    </div>
+
+    <!-- Step 1: Energy Selection -->
+    <div class="step-content active" id="step1">
+      <h2 class="step-title">✦ 올해 나에게 필요한 기운은? ✦</h2>
+      <div class="card-grid">
+        <div class="tarot-card" data-energy="sun" onclick="selectEnergy('sun')">
+          <div class="card-inner">
+            <div class="card-corner top-left"></div>
+            <div class="card-corner top-right"></div>
+            <div class="card-corner bottom-left"></div>
+            <div class="card-corner bottom-right"></div>
+            <div class="card-glow"></div>
+            <div class="card-icon">☀️</div>
+            <h3 class="card-title">열정의 태양</h3>
+            <p class="card-desc">"뭐든 할 수 있어요"</p>
+            <span class="card-sparkle top">✦</span>
+            <span class="card-sparkle bottom">✧</span>
+          </div>
+        </div>
+        <div class="tarot-card" data-energy="moon" onclick="selectEnergy('moon')">
+          <div class="card-inner">
+            <div class="card-corner top-left"></div>
+            <div class="card-corner top-right"></div>
+            <div class="card-corner bottom-left"></div>
+            <div class="card-corner bottom-right"></div>
+            <div class="card-glow"></div>
+            <div class="card-icon">🌙</div>
+            <h3 class="card-title">지혜의 달빛</h3>
+            <p class="card-desc">"정답만 쏙쏙 골라요"</p>
+            <span class="card-sparkle top">✦</span>
+            <span class="card-sparkle bottom">✧</span>
+          </div>
+        </div>
+        <div class="tarot-card" data-energy="heart" onclick="selectEnergy('heart')">
+          <div class="card-inner">
+            <div class="card-corner top-left"></div>
+            <div class="card-corner top-right"></div>
+            <div class="card-corner bottom-left"></div>
+            <div class="card-corner bottom-right"></div>
+            <div class="card-glow"></div>
+            <div class="card-icon">💖</div>
+            <h3 class="card-title">행복의 하트</h3>
+            <p class="card-desc">"웃을 일이 많아요"</p>
+            <span class="card-sparkle top">✦</span>
+            <span class="card-sparkle bottom">✧</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Item Selection -->
+    <div class="step-content" id="step2">
+      <h2 class="step-title">✦ 나에게 행운을 가져다 줄 부적 아이템은? ✦</h2>
+      <div class="card-grid">
+        <div class="tarot-card" data-item="shoes" onclick="selectItem('shoes')">
+          <div class="card-inner">
+            <div class="card-corner top-left"></div>
+            <div class="card-corner top-right"></div>
+            <div class="card-corner bottom-left"></div>
+            <div class="card-corner bottom-right"></div>
+            <div class="card-glow"></div>
+            <div class="card-icon">👟</div>
+            <h3 class="card-title">꽃길 걷는 신발</h3>
+            <p class="card-desc">"가는 곳마다 탄탄대로"</p>
+            <span class="card-sparkle top">✦</span>
+            <span class="card-sparkle bottom">✧</span>
+          </div>
+        </div>
+        <div class="tarot-card" data-item="bag" onclick="selectItem('bag')">
+          <div class="card-inner">
+            <div class="card-corner top-left"></div>
+            <div class="card-corner top-right"></div>
+            <div class="card-corner bottom-left"></div>
+            <div class="card-corner bottom-right"></div>
+            <div class="card-glow"></div>
+            <div class="card-icon">🧧</div>
+            <h3 class="card-title">행운 가득 가방</h3>
+            <p class="card-desc">"복을 쓸어 담아요"</p>
+            <span class="card-sparkle top">✦</span>
+            <span class="card-sparkle bottom">✧</span>
+          </div>
+        </div>
+        <div class="tarot-card" data-item="outfit" onclick="selectItem('outfit')">
+          <div class="card-inner">
+            <div class="card-corner top-left"></div>
+            <div class="card-corner top-right"></div>
+            <div class="card-corner bottom-left"></div>
+            <div class="card-corner bottom-right"></div>
+            <div class="card-glow"></div>
+            <div class="card-icon">👗</div>
+            <h3 class="card-title">매력 폭발 코디</h3>
+            <p class="card-desc">"어딜 가나 주인공"</p>
+            <span class="card-sparkle top">✦</span>
+            <span class="card-sparkle bottom">✧</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Result -->
+    <div class="step-content" id="step3">
+      <div class="result-container">
+        <div class="result-card">
+          <div class="result-inner">
+            <div class="result-frame"></div>
+            <div class="result-corner top-left"></div>
+            <div class="result-corner top-right"></div>
+            <div class="result-corner bottom-left"></div>
+            <div class="result-corner bottom-right"></div>
+            <div class="result-glow"></div>
+            <div class="result-icon">🧧</div>
+            <h3 class="result-title">✦ 당신의 행운 메시지 ✦</h3>
+            <p class="result-message" id="fortuneMessage">"결과 메시지"</p>
+            <!-- Result sparkles will be added dynamically -->
+          </div>
+        </div>
+        <div class="bonus-btn-container">
+          <button class="bonus-btn" onclick="showBonusPopup()">✦ 깜짝 혜택도 확인하기 ✦</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-divider"></div>
+      <p class="notice">
+        *ID당 1회 참여 가능합니다.<br>
+        *당첨된 스타일24 포인트는 1/23(금) 23:59까지 사용 가능합니다.
+      </p>
+    </footer>
+  </div>
+
+  <!-- Bonus Popup -->
+  <div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+    <div class="popup" onclick="event.stopPropagation()">
+      <div class="popup-inner">
+        <div class="popup-corner top-left"></div>
+        <div class="popup-corner top-right"></div>
+        <div class="popup-corner bottom-left"></div>
+        <div class="popup-corner bottom-right"></div>
+        <div class="popup-icon" id="popupIcon">🎉</div>
+        <h3 class="popup-title" id="popupTitle">축하합니다!</h3>
+        <p class="popup-message" id="popupMessage">10% 쇼핑백 쿠폰이 발급되었습니다.</p>
+        <button class="popup-btn" id="popupBtn" onclick="confirmPopup()">확인</button>
+        <div class="popup-sparkles" id="popupSparkles"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fortune messages
+    const FORTUNE_MESSAGES = {
+      sun: {
+        bag: "도전하는 것마다 대박! 지치지 않는 에너지로 복을 쓸어 담을 거예요",
+        shoes: "거침없는 질주! 누구보다 빠르게 성공의 고지에 오를 거예요.",
+        outfit: "시선 집중! 숨길 수 없는 끼와 열정이 빛을 발할 거예요"
+      },
+      moon: {
+        bag: "언제나 탁월한 선택! 남다른 안목으로 알짜배기 행운만 챙겨요.",
+        shoes: "현명한 발걸음! 당신이 가는 길이 곧 정답이 될 거예요",
+        outfit: "분위기 천재! 차분하면서도 세련된 당신, 인기가 폭발하겠네요."
+      },
+      heart: {
+        bag: "해피 바이러스! 사랑하는 사람들과 함께 행복이 가득할 거예요.",
+        shoes: "설레는 발걸음! 혼자보다는 함께할 때 더 큰 행운이 찾아와요.",
+        outfit: "사랑둥이 등극! 모두가 당신에게 푹 빠질 거예요."
+      }
+    };
+
+    // State
+    let currentStep = 1;
+    let selectedEnergy = null;
+    let selectedItem = null;
+    let isWinner = false;
+
+    // Initialize stars
+    function createStars() {
+      const starryBg = document.getElementById('starryBg');
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.width = `${Math.random() * 3 + 1}px`;
+        star.style.height = star.style.width;
+        star.style.animationDelay = `${Math.random() * 3}s`;
+        star.style.animationDuration = `${2 + Math.random() * 2}s`;
+        starryBg.appendChild(star);
+      }
+    }
+
+    // Update step indicators
+    function updateStepIndicators() {
+      const dots = document.querySelectorAll('.step-dot');
+      dots.forEach((dot, index) => {
+        const step = index + 1;
+        dot.className = 'step-dot';
+        if (step === currentStep) {
+          dot.classList.add('active');
+        } else if (step < currentStep) {
+          dot.classList.add('completed');
+        }
+      });
+    }
+
+    // Show step content
+    function showStep(step) {
+      document.querySelectorAll('.step-content').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.getElementById(`step${step}`).classList.add('active');
+      updateStepIndicators();
+    }
+
+    // Select energy
+    function selectEnergy(energy) {
+      selectedEnergy = energy;
+      
+      // Visual feedback
+      document.querySelectorAll('#step1 .tarot-card').forEach(card => {
+        card.classList.remove('selected');
+        if (card.dataset.energy === energy) {
+          card.classList.add('selected');
+        }
+      });
+
+      // Move to step 2 after delay
+      setTimeout(() => {
+        currentStep = 2;
+        showStep(2);
+      }, 500);
+    }
+
+    // Select item
+    function selectItem(item) {
+      selectedItem = item;
+      
+      // Visual feedback
+      document.querySelectorAll('#step2 .tarot-card').forEach(card => {
+        card.classList.remove('selected');
+        if (card.dataset.item === item) {
+          card.classList.add('selected');
+        }
+      });
+
+      // Get fortune message and show result
+      const message = FORTUNE_MESSAGES[selectedEnergy][selectedItem];
+      document.getElementById('fortuneMessage').textContent = `"${message}"`;
+
+      // Move to step 3 after delay
+      setTimeout(() => {
+        currentStep = 3;
+        showStep(3);
+        addResultSparkles();
+      }, 500);
+    }
+
+    // Add sparkles to result card
+    function addResultSparkles() {
+      const resultInner = document.querySelector('.result-inner');
+      const existingSparkles = resultInner.querySelectorAll('.result-sparkle');
+      existingSparkles.forEach(s => s.remove());
+
+      for (let i = 0; i < 6; i++) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'result-sparkle';
+        sparkle.textContent = i % 2 === 0 ? '✦' : '✧';
+        sparkle.style.top = `${20 + Math.random() * 60}%`;
+        sparkle.style.left = `${10 + Math.random() * 80}%`;
+        sparkle.style.fontSize = `${8 + Math.random() * 8}px`;
+        sparkle.style.animationDelay = `${Math.random() * 2}s`;
+        sparkle.style.animationDuration = `${1.5 + Math.random()}s`;
+        resultInner.appendChild(sparkle);
+      }
+    }
+
+    // Show bonus popup
+    function showBonusPopup() {
+      isWinner = Math.random() > 0.5;
+      
+      const icon = document.getElementById('popupIcon');
+      const title = document.getElementById('popupTitle');
+      const message = document.getElementById('popupMessage');
+      const sparkles = document.getElementById('popupSparkles');
+
+      if (isWinner) {
+        icon.textContent = '🎉';
+        icon.className = 'popup-icon winner';
+        title.textContent = '축하합니다!';
+        message.textContent = '10% 쇼핑백 쿠폰이 발급되었습니다.';
+        
+        // Add sparkles for winner
+        sparkles.innerHTML = '';
+        for (let i = 0; i < 8; i++) {
+          const sparkle = document.createElement('span');
+          sparkle.className = 'popup-sparkle';
+          sparkle.textContent = '✦';
+          sparkle.style.top = `${Math.random() * 100}%`;
+          sparkle.style.left = `${Math.random() * 100}%`;
+          sparkle.style.animationDelay = `${i * 0.1}s`;
+          sparkles.appendChild(sparkle);
+        }
+      } else {
+        icon.textContent = '🍀';
+        icon.className = 'popup-icon';
+        title.textContent = '앗! 아쉽지만...';
+        message.textContent = '이번에는 당첨되지 않았어요. 작은 액땜으로 더 큰 행운이 올 거예요!';
+        sparkles.innerHTML = '';
+      }
+
+      document.getElementById('popupOverlay').classList.add('active');
+    }
+
+    // Close popup
+    function closePopup(event) {
+      if (event.target === document.getElementById('popupOverlay')) {
+        document.getElementById('popupOverlay').classList.remove('active');
+      }
+    }
+
+    // Confirm popup
+    function confirmPopup() {
+      if (isWinner) {
+        window.open('https://www.style24.com/mypage/main/form', '_blank');
+      }
+      document.getElementById('popupOverlay').classList.remove('active');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      updateStepIndicators();
+    });
+  </script>
+</body>
+</html>
