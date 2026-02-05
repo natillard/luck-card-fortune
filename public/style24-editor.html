@@ -382,6 +382,89 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .color-chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
 .color-chip{width:32px; height:32px; border-radius:4px; cursor:pointer; border:1px solid #ddd}
 .color-chip.active{border:2px solid #1a1a1a}
+
+/* ===== 모바일 최적화 레이아웃 ===== */
+.preview-container.mobile-view .hero-image-wrapper{height:auto; min-height:600px}
+.preview-container.mobile-view .hero-slide .hero-blur-bg{display:none}
+.preview-container.mobile-view .hero-main-image-frame{position:relative; top:auto; left:auto; transform:none; width:100%; height:auto; aspect-ratio:9/16}
+.preview-container.mobile-view .hero-slide.full-mode .hero-main-image-frame{aspect-ratio:9/16}
+.preview-container.mobile-view .hero-text-wrapper{width:100%; padding:0 40px; bottom:60px}
+.preview-container.mobile-view .hero-main-text{font-size:36px}
+.preview-container.mobile-view .hero-sub-text{font-size:14px}
+
+/* 모바일 BENEFIT */
+.preview-container.mobile-view .benefit-header{padding:0 40px}
+.preview-container.mobile-view .benefit-wrapper{padding:0 40px}
+.preview-container.mobile-view .benefit-item-inner{flex-direction:column; gap:16px}
+.preview-container.mobile-view .benefit-number-col{width:100%}
+.preview-container.mobile-view .benefit-main-title{font-size:24px}
+.preview-container.mobile-view .benefit-gift-grid{flex-direction:column}
+.preview-container.mobile-view .benefit-gift-item{flex:none; width:100%}
+.preview-container.mobile-view .benefit-gift-item img{height:auto; aspect-ratio:1/1}
+
+/* 모바일 타이머 */
+.preview-container.mobile-view .timer-value{font-size:32px}
+.preview-container.mobile-view .timer-colon{font-size:24px}
+
+/* 모바일 기본형 블록 - 블러 제거, 세로 레이아웃 */
+.preview-container.mobile-view .basic-block{height:auto}
+.preview-container.mobile-view .basic-blur-bg{display:none}
+.preview-container.mobile-view .basic-main-image-frame{position:relative; top:auto; left:auto; transform:none; width:100%; height:auto; aspect-ratio:3/4}
+.preview-container.mobile-view .basic-text-area{padding:40px}
+.preview-container.mobile-view .basic-main-title{font-size:24px}
+
+/* 모바일 자동스와이프 - 세로 배열 */
+.preview-container.mobile-view .swipe-block{padding:40px 0}
+.preview-container.mobile-view .swipe-inner{flex-direction:column; padding:0 40px; gap:24px}
+.preview-container.mobile-view .swipe-text-area{width:100%; padding-top:0}
+.preview-container.mobile-view .swipe-brand{font-size:28px}
+.preview-container.mobile-view .swipe-images-wrapper{width:100%}
+.preview-container.mobile-view .swipe-images-area{flex-direction:column; gap:16px}
+.preview-container.mobile-view .swipe-item{flex:none; width:100%; height:auto; aspect-ratio:3/4}
+.preview-container.mobile-view .swipe-indicators{padding-right:40px; justify-content:center}
+
+/* 모바일 2분할 - 세로 배열, 블러 제거 */
+.preview-container.mobile-view .split-block{grid-template-columns:1fr; gap:0}
+.preview-container.mobile-view .split-item{height:auto; aspect-ratio:3/4}
+.preview-container.mobile-view .split-item.right-blur .split-blur-bg{display:none}
+.preview-container.mobile-view .split-item.right-blur .split-main-image{position:relative; top:auto; left:auto; transform:none; width:100%; height:100%; max-width:100%; object-fit:cover}
+.preview-container.mobile-view .split-text-overlay{left:30px}
+.preview-container.mobile-view .split-brand{font-size:24px}
+
+/* 모바일 지그재그 - 세로 배열 */
+.preview-container.mobile-view .zigzag-block{padding:60px 40px}
+.preview-container.mobile-view .zigzag-inner{flex-direction:column !important; gap:30px}
+.preview-container.mobile-view .zigzag-text-area{width:100%}
+.preview-container.mobile-view .zigzag-brand{font-size:26px}
+.preview-container.mobile-view .zigzag-images{grid-template-columns:1fr; gap:20px}
+.preview-container.mobile-view .zigzag-img:nth-child(1){margin-top:0}
+.preview-container.mobile-view .zigzag-img img{height:auto; aspect-ratio:3/4}
+
+/* 모바일 콜라주 - 세로 배열 */
+.preview-container.mobile-view .collage-block{padding:60px 40px}
+.preview-container.mobile-view .collage-header{margin-bottom:40px}
+.preview-container.mobile-view .collage-brand{font-size:26px}
+.preview-container.mobile-view .collage-type1{min-height:auto; display:flex; flex-direction:column; gap:20px}
+.preview-container.mobile-view .collage-type1 .col-img{position:relative !important; top:auto !important; left:auto !important; right:auto !important; transform:none !important; width:100% !important; height:auto !important; aspect-ratio:1/1}
+.preview-container.mobile-view .collage-type2{min-height:auto; display:flex; flex-direction:column; gap:20px}
+.preview-container.mobile-view .collage-type2 .col-img{position:relative !important; top:auto !important; left:auto !important; right:auto !important; transform:none !important; width:100% !important; height:auto !important; aspect-ratio:4/5}
+
+/* 모바일 유의사항 */
+.preview-container.mobile-view .notice-section{padding:60px 40px}
+.preview-container.mobile-view .notice-inner{flex-direction:column; gap:30px}
+.preview-container.mobile-view .notice-title-btn{font-size:14px; padding:20px 0}
+
+/* 모바일 간격 조정 */
+.preview-container.mobile-view .content-block{margin-bottom:60px !important}
+.preview-container.mobile-view #blocksContainer .content-block{margin-bottom:60px}
+
+/* 모바일 추가 패널 */
+.preview-container.mobile-view .add-benefit-panel,
+.preview-container.mobile-view .add-block-panel,
+.preview-container.mobile-view .add-timer-panel,
+.preview-container.mobile-view .add-notice-panel{padding:30px 20px; margin-bottom:60px !important}
+.preview-container.mobile-view .add-benefit-grid{grid-template-columns:repeat(2,1fr)}
+.preview-container.mobile-view .add-block-grid{grid-template-columns:repeat(3,1fr)}
 </style>
 </head>
 <body>
