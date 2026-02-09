@@ -234,11 +234,21 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 .swipe-indicators.hidden{display:none}
 .swipe-indicator{width:40px;height:3px;background:#ddd;cursor:pointer; border:none; padding:0}
 .swipe-indicator.active{background:#1a1a1a}
+/* 웹에서는 웹 인디케이터만, 모바일 인디케이터는 숨김 */
+.web-indicators{display:inline-flex; gap:8px}
+.mobile-indicators{display:none}
 
 /* 배경색 테마 */
-.bg-white{background:#ffffff} .bg-sky{background:#e0f2fe} .bg-mint{background:#e3f9f1} .bg-indigo{background:#edf2ff}
-.bg-lavender{background:#f3f0ff} .bg-pink{background:#fff0f6} .bg-rose{background:#fff5f5} .bg-lemon{background:#fff9db}
-.bg-lime{background:#f4fce3} .bg-emerald{background:#e6fcf5} .bg-light-gray{background:#f5f5f5}
+.bg-snow-blue{background:#eef2f5}
+.bg-light-gray{background:#f5f5f5}
+.bg-pale-mint{background:#f0f4f2}
+.bg-warm-sand{background:#f7f3f0}
+.bg-lavender-mist{background:#f2f2f7}
+.bg-sky-tint{background:#edf5f7}
+.bg-ivory-cream{background:#f9f5f0}
+.bg-dew-green{background:#f2f5f2}
+.bg-shell-pink{background:#f5f0f2}
+.bg-steel-tint{background:#ebeef0}
 
 /* 2분할 */
 .split-block{display:grid;grid-template-columns:1fr 1fr;width:100%}
@@ -281,6 +291,28 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 .collage-type2 .col-img img{width:100%; height:100%; object-fit:cover}
 .collage-type2 .col-img:nth-child(1){top:0; right:0; width:65%; height:450px}
 .collage-type2 .col-img:nth-child(2){top:280px; left:5%; width:45%; height:350px; z-index:2}
+
+/* 상품단 영역 */
+.product-section{padding:80px;background:#fff}
+.product-header{text-align:center;margin-bottom:60px}
+.product-main-title{font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:8px;line-height:1.3}
+.product-sub-title{font-size:15px;color:#666}
+.product-grid{display:grid;gap:24px;max-width:1200px;margin:0 auto}
+.product-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.product-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+.product-grid.cols-6{grid-template-columns:repeat(6,1fr)}
+.product-item{text-align:left}
+.product-item a{text-decoration:none;color:inherit;display:block}
+.product-item-img{width:100%;aspect-ratio:1/1;object-fit:cover;margin-bottom:12px;background:#f5f5f5}
+.product-item-brand{font-size:11px;font-weight:600;color:#999;letter-spacing:0.5px;margin-bottom:4px}
+.product-item-name{font-size:14px;font-weight:500;color:#1a1a1a;line-height:1.4;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.product-item-price{display:flex;align-items:center;gap:8px}
+.product-discount{font-size:16px;font-weight:700;color:#dc2626}
+.product-price{font-size:16px;font-weight:700;color:#1a1a1a}
+
+/* 배너 교체 버튼 */
+.banner-replace-btn{padding:4px 8px;font-size:10px;background:rgba(255,255,255,0.9);border:1px solid #ddd;border-radius:4px;cursor:pointer}
+.banner-replace-btn:hover{background:#fff}
 
 /* 유의사항 고도화 */
 .notice-section{padding:100px 80px;background:#fafafa;border-top:1px solid #e5e5e5}
@@ -343,7 +375,10 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .image-edit-label{font-size:11px; font-weight:600; color:#888; margin-bottom:12px}
 .image-edit-row{display:flex; align-items:center; gap:12px; margin-bottom:10px}
 .image-edit-row label{font-size:12px; color:#666; min-width:40px}
-.image-edit-row input[type="range"]{flex:1; height:4px; -webkit-appearance:none; background:#e5e5e5; border-radius:2px}
+.image-edit-row input[type="range"]{flex:1; height:4px; 
+    -webkit-appearance:none; /* 크롬, 사파리용 */
+    appearance:none;         /* 표준 속성 (이 줄을 추가하세요!) */
+    background:#e5e5e5; border-radius:2px}
 .image-edit-row input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; background:#1a1a1a; border-radius:50%; cursor:pointer}
 .image-edit-row .value-display{font-size:12px; font-weight:600; min-width:45px; text-align:right}
 .slider-reset-btn{width:24px; height:24px; border-radius:4px; border:1px solid #ddd; background:#fff; cursor:pointer; font-size:10px; display:flex; align-items:center; justify-content:center}
@@ -387,31 +422,84 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 /* 📐 기준: 단일 컬럼, 세로 스크롤 흐름, 텍스트 1.3~1.5배 확대 */
 
 /* 1️⃣ Hero 영역 - 9:16 비율, 블러 제거, 단일 이미지 포커스 */
-.preview-container.mobile-view .hero-image-wrapper{height:auto; min-height:auto}
-.preview-container.mobile-view .hero-slide .hero-blur-bg{display:none}
+/* 모바일에서 Hero 영역은 필수 섹션으로 최상단 단독 노출 */
+.preview-container.mobile-view .hero-section{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    margin-bottom:0 !important;
+    position:relative !important;
+    z-index:1;
+    width:100% !important;
+}
+.preview-container.mobile-view .hero-image-wrapper{
+    height:auto !important; 
+    min-height:auto !important;
+    display:block !important;
+    visibility:visible !important;
+    position:relative !important;
+    overflow:visible !important;
+}
+/* 핵심: heroSlidesContainer를 relative로 변경 */
+.preview-container.mobile-view #heroSlidesContainer{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+}
+.preview-container.mobile-view .hero-slide{
+    display:none;
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+    opacity:1 !important;
+}
+.preview-container.mobile-view .hero-slide.active{
+    display:block !important;
+    opacity:1 !important;
+    position:relative !important;
+}
+.preview-container.mobile-view .hero-slide .hero-blur-bg{display:none !important}
 .preview-container.mobile-view .hero-main-image-frame{
-    position:relative; top:auto; left:auto; transform:none; 
-    width:100%; height:auto; aspect-ratio:9/16
+    position:relative !important; 
+    top:auto !important; 
+    left:auto !important; 
+    transform:none !important; 
+    width:100% !important; 
+    height:auto !important; 
+    aspect-ratio:9/16;
+    display:block !important;
+}
+.preview-container.mobile-view .hero-main-image-frame .hero-main-image{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
 }
 .preview-container.mobile-view .hero-slide.full-mode .hero-main-image-frame{aspect-ratio:9/16}
 .preview-container.mobile-view .hero-text-wrapper{
-    width:100%; padding:0 48px; bottom:80px
+    width:100%; padding:0 48px; bottom:100px
 }
 .preview-container.mobile-view .hero-top-label{font-size:13px; letter-spacing:2.5px}
 .preview-container.mobile-view .hero-logo{font-size:16px; letter-spacing:4px}
 .preview-container.mobile-view .hero-main-text{font-size:65px; line-height:1.15; letter-spacing:-1px}
 .preview-container.mobile-view .hero-sub-text{font-size:24px; line-height:1.6}
-.preview-container.mobile-view .hero-indicators{bottom:30px; gap:8px}
+.preview-container.mobile-view .hero-indicators{bottom:40px; gap:8px}
 .preview-container.mobile-view .hero-indicator{width:8px; height:8px}
 .preview-container.mobile-view .hero-indicator.active{width:28px; border-radius:4px}
 
 /* 2️⃣ BENEFIT 영역 - 중앙 정렬, 텍스트 확대, 여백 확보 */
-.preview-container.mobile-view .benefit-section{padding:0 0 60px}
-.preview-container.mobile-view .benefit-header{padding:0 48px; margin-bottom:50px; text-align:center}
-.preview-container.mobile-view .benefit-title{font-size:48px; letter-spacing:3px}
+.preview-container.mobile-view .benefit-section{padding:80px 0 80px} /* 상단 여백 추가 */
+.preview-container.mobile-view .benefit-header{
+    padding:0 48px; 
+    margin-bottom:70px; /* 여백 확대 */
+    padding-bottom:30px; /* 하단 padding 추가 */
+    text-align:center
+}
+.preview-container.mobile-view .benefit-title{font-size:48px; letter-spacing:3px; margin-bottom:16px} /* 타이틀-날짜 간격 */
 .preview-container.mobile-view .benefit-date{font-size:18px}
 .preview-container.mobile-view .benefit-wrapper{padding:0 48px}
-.preview-container.mobile-view .benefit-item{padding:50px 0}
+.preview-container.mobile-view .benefit-item{padding:60px 0} /* 아이템 간 여백 확대 */
 .preview-container.mobile-view .benefit-item-inner{flex-direction:column; gap:20px; text-align:center}
 .preview-container.mobile-view .benefit-number-col{width:100%; text-align:center}
 .preview-container.mobile-view .benefit-number{font-size:16px; letter-spacing:2px}
@@ -466,6 +554,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .preview-container.mobile-view .basic-highlight{font-size:18px}
 
 /* 7️⃣ 스와이프 영역 - 세로 스택, 한 장씩 좌우 스와이프, 인디케이터 표시 */
+/* 핵심 규칙: 인디케이터 1개 = 이미지 1장, 스와이프 1회 = 이미지 1장 전환 */
 .preview-container.mobile-view .swipe-block{padding:60px 0}
 .preview-container.mobile-view .swipe-inner{flex-direction:column; padding:0 48px; gap:32px}
 .preview-container.mobile-view .swipe-text-area{width:100%; padding-top:0; text-align:center}
@@ -477,10 +566,24 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     display:flex; flex-direction:row; flex-wrap:nowrap; gap:0;
     transition:transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)
 }
-.preview-container.mobile-view .swipe-item{flex:0 0 100%; width:100%; height:auto; aspect-ratio:3/4}
-.preview-container.mobile-view .swipe-indicators{padding:0; margin-top:24px; justify-content:center; gap:10px}
-.preview-container.mobile-view .swipe-indicator{width:10px; height:10px; border-radius:50%; background:#ddd}
-.preview-container.mobile-view .swipe-indicator.active{width:10px; background:#1a1a1a}
+/* 모바일: 1개씩 카드 슬라이드 - 동시노출/중첩노출 금지 */
+.preview-container.mobile-view .swipe-item{
+    flex:0 0 100%; 
+    width:100%; 
+    height:auto; 
+    aspect-ratio:3/4;
+    min-width:100%; /* 이미지 1장만 보이도록 강제 */
+}
+.preview-container.mobile-view .swipe-indicators{padding:0; margin-top:24px; justify-content:center; gap:10px; display:flex !important}
+/* 모바일에서는 모바일 인디케이터만, 웹 인디케이터는 숨김 */
+.preview-container.mobile-view .web-indicators{display:none}
+.preview-container.mobile-view .mobile-indicators{display:inline-flex; gap:10px}
+/* 인디케이터: 원형으로 통일 */
+.preview-container.mobile-view .swipe-indicator{
+    width:10px; height:10px; border-radius:50%; background:#ddd;
+    transition: all 0.3s ease;
+}
+.preview-container.mobile-view .swipe-indicator.active{width:28px; border-radius:5px; background:#1a1a1a}
 
 /* 8️⃣ 2분할 영역 - 세로 스택, 블러 유지 (풀이미지 + 블러BG 오버레이) */
 .preview-container.mobile-view .split-block{grid-template-columns:1fr; gap:0}
@@ -499,65 +602,102 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .preview-container.mobile-view .split-brand{font-size:38px}
 
 /* 9️⃣ 지그재그 영역 - 세로 스택, 좌/우 번갈아 정렬 */
-.preview-container.mobile-view .zigzag-block{padding:80px 48px}
-.preview-container.mobile-view .zigzag-inner{flex-direction:column !important; gap:40px}
-.preview-container.mobile-view .zigzag-text-area{width:100%; text-align:center}
-.preview-container.mobile-view .zigzag-brand{font-size:38px; text-align:center}
-.preview-container.mobile-view .zigzag-sub{font-size:20px; text-align:center}
-.preview-container.mobile-view .zigzag-images{grid-template-columns:1fr; gap:24px}
-.preview-container.mobile-view .zigzag-img:nth-child(1){margin-top:0; margin-left:0}
-.preview-container.mobile-view .zigzag-img:nth-child(2){margin-left:15%}
-.preview-container.mobile-view .zigzag-block.reversed .zigzag-img:nth-child(1){margin-left:15%}
-.preview-container.mobile-view .zigzag-block.reversed .zigzag-img:nth-child(2){margin-left:0}
-.preview-container.mobile-view .zigzag-img{width:85%}
-.preview-container.mobile-view .zigzag-img img{height:auto; aspect-ratio:3/4}
+/* 핵심 규칙: 자동 중앙정렬 금지, 좌우 엇갈림 유지 */
+.preview-container.mobile-view .zigzag-block{padding:80px 32px} /* 좌우 패딩 축소 */
+.preview-container.mobile-view .zigzag-inner{flex-direction: column !important;
+    gap: 0 !important;}
+.preview-container.mobile-view .zigzag-text-area{width:100%; text-align:left; padding:0 5%; margin-bottom: 20px; } /* 좌측 정렬 */
+.preview-container.mobile-view .zigzag-brand{font-size:38px; text-align:left} /* 좌측 정렬 */
+.preview-container.mobile-view .zigzag-sub{font-size:20px; text-align:left} /* 좌측 정렬 */
+.preview-container.mobile-view .zigzag-images{
+display: block !important; /* margin: auto가 작동하도록 설정 */
+    width: 100%;
+}
+/* 첫번째 이미지: 좌측 정렬, 너비 확대 */
+.preview-container.mobile-view .zigzag-img:nth-child(1){
+    width: 88% !important; 
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    margin-bottom: 30px; /* 다음 이미지와의 간격 */
+}
+/* 두번째 이미지: 우측 끝 정렬 (지그재그 구조), 너비 확대 */
+.preview-container.mobile-view .zigzag-img:nth-child(2){
+    width: 88% !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+/* reversed 모드: 방향 반전 */
+.preview-container.mobile-view .zigzag-block.reversed .zigzag-text-area{text-align: right !important;}
+.preview-container.mobile-view .zigzag-block.reversed .zigzag-brand{text-align:right}
+.preview-container.mobile-view .zigzag-block.reversed .zigzag-sub{text-align:right}
+.preview-container.mobile-view .zigzag-block.reversed .zigzag-img:nth-child(1){margin-left: auto !important;
+    margin-right: 0 !important;}
+.preview-container.mobile-view .zigzag-block.reversed .zigzag-img:nth-child(2){margin-left: 0 !important;
+    margin-right: auto !important;}
+.preview-container.mobile-view .zigzag-img{width:92%} /* 너비 확대 */
+.preview-container.mobile-view .zigzag-img img{width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;}
 
 /* 🔟 콜라주 영역 - 불규칙 배치 유지, 자동 정렬 금지 */
-.preview-container.mobile-view .collage-block{padding:80px 32px}
-.preview-container.mobile-view .collage-header{margin-bottom:50px}
+/* 핵심 규칙: 정렬 규칙 금지, 이미지 크기/위치/여백 차이 유지, 자유배치 인상 */
+/* 중요: 이미지 겹침 최소화, 컨텐츠 블록 추가 버튼 가리지 않게 */
+.preview-container.mobile-view .collage-block{padding:60px 32px 40px}
+.preview-container.mobile-view .collage-header{margin-bottom:40px}
 .preview-container.mobile-view .collage-brand{font-size:38px}
 .preview-container.mobile-view .collage-sub{font-size:20px}
 
-/* 콜라주 Type1 - 불규칙 배치 */
+/* 콜라주 Type1 - 세로 배치, 겹침 최소화 */
 .preview-container.mobile-view .collage-type1{
-    min-height:auto; display:block; position:relative; 
-    padding-bottom:120%
+    min-height:auto; display:flex; flex-direction:column; position:relative; 
+    gap:20px; padding-bottom:40px;
 }
 .preview-container.mobile-view .collage-type1 .col-img{
-    position:absolute !important; transform:none !important
+    position:relative !important; transform:none !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    top:auto !important; left:auto !important; right:auto !important;
 }
+/* 1번 이미지: 우측 정렬 */
 .preview-container.mobile-view .collage-type1 .col-img:nth-child(1){
-    top:0 !important; left:10% !important; right:auto !important;
-    width:75% !important; height:auto !important; aspect-ratio:1/1
+    width:75% !important; height:auto !important; aspect-ratio:1/1;
+    align-self:flex-end; margin-right:5%;
 }
+/* 2번 이미지: 좌측 정렬 */
 .preview-container.mobile-view .collage-type1 .col-img:nth-child(2){
-    top:32% !important; left:0 !important; right:auto !important;
-    width:55% !important; height:auto !important; aspect-ratio:4/5
+    width:60% !important; height:auto !important; aspect-ratio:4/5;
+    align-self:flex-start; margin-left:0; margin-top:-40px;
 }
+/* 3번 이미지: 우측 정렬, 작게 */
 .preview-container.mobile-view .collage-type1 .col-img:nth-child(3){
-    top:28% !important; left:auto !important; right:5% !important;
-    width:42% !important; height:auto !important; aspect-ratio:3/4
+    width:50% !important; height:auto !important; aspect-ratio:3/4;
+    align-self:flex-end; margin-right:10%; margin-top:-30px;
 }
+/* 4번 이미지: 중앙 정렬 */
 .preview-container.mobile-view .collage-type1 .col-img:nth-child(4){
-    top:68% !important; left:15% !important; right:auto !important;
-    width:70% !important; height:auto !important; aspect-ratio:4/3
+    width:80% !important; height:auto !important; aspect-ratio:4/3;
+    align-self:center; margin-top:-20px;
 }
 
-/* 콜라주 Type2 - 불규칙 배치 */
+/* 콜라주 Type2 - 세로 배치, 겹침 최소화 */
 .preview-container.mobile-view .collage-type2{
-    min-height:auto; display:block; position:relative;
-    padding-bottom:85%
+    min-height:auto; display:flex; flex-direction:column; position:relative;
+    gap:20px; padding-bottom:40px;
 }
 .preview-container.mobile-view .collage-type2 .col-img{
-    position:absolute !important; transform:none !important
+    position:relative !important; transform:none !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    top:auto !important; left:auto !important; right:auto !important;
 }
+/* 1번: 우측 정렬 */
 .preview-container.mobile-view .collage-type2 .col-img:nth-child(1){
-    top:0 !important; left:auto !important; right:0 !important;
-    width:70% !important; height:auto !important; aspect-ratio:4/5
+    width:75% !important; height:auto !important; aspect-ratio:4/5;
+    align-self:flex-end; margin-right:0;
 }
+/* 2번: 좌측 정렬, 약간 겹침 */
 .preview-container.mobile-view .collage-type2 .col-img:nth-child(2){
-    top:35% !important; left:5% !important; right:auto !important;
-    width:55% !important; height:auto !important; aspect-ratio:4/5; z-index:2
+    width:60% !important; height:auto !important; aspect-ratio:4/5; 
+    align-self:flex-start; margin-left:5%; margin-top:-50px;
 }
 
 /* 1️⃣1️⃣ 유의사항 영역 - 세로 스크롤 */
@@ -583,6 +723,8 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .preview-container.mobile-view .add-item-icon{font-size:28px}
 .preview-container.mobile-view .add-item-label{font-size:14px}
 </style>
+<!-- FIXED: JSZip CDN 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 <div class="editor-panel">
@@ -591,8 +733,14 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <button class="editor-btn active" id="viewPcBtn" onclick="setViewMode('web')">PC</button>
 <button class="editor-btn" id="viewMoBtn" onclick="setViewMode('mobile')">MO</button>
 <button class="editor-btn" id="previewToggleBtn" onclick="togglePreviewMode()">미리보기</button>
+<button class="editor-btn" style="background:#10b981;border-color:#10b981;color:#fff" onclick="openExportModal()">📤 HTML 내보내기</button>
+<button class="editor-btn" style="background:#3b82f6;border-color:#3b82f6;color:#fff" onclick="exportImagesAndProject()">🖼️ 이미지추출</button>
+<button class="editor-btn" style="background:#8b5cf6;border-color:#8b5cf6;color:#fff" onclick="importProject()">📥 수정하기</button>
+<button class="editor-btn" style="background:#f59e0b;border-color:#f59e0b;color:#fff" onclick="openBannerModal()">🎨 배너생성</button>
+<button class="editor-btn" style="background:#ec4899;border-color:#ec4899;color:#fff" onclick="copyBenefitSEO()">📋 혜택코드복사</button>
 </div>
 </div>
+<input type="file" id="importProjectInput" accept=".json" style="display:none" onchange="handleProjectImport(event)">
 <div class="preview-wrapper">
 <div class="preview-container" id="previewContainer">
 <div class="preview-inner">
@@ -655,37 +803,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     </div>
 </div>
 
-<section class="timer-section content-block" id="timerSection">
-<div class="block-controls">
-    <span class="block-label">타이머</span>
-    <button class="block-ctrl-btn" id="timerVisibleBtn" onclick="toggleTimerVisibility()">👁️</button>
-    <button class="block-ctrl-btn delete" onclick="deleteTimer()">🗑️</button>
-</div>
-<p class="timer-label">혜택 종료시까지</p>
-<div class="timer-display">
-<div class="timer-box"><div class="timer-value" id="timerDays">00</div><div class="timer-unit">일</div></div>
-<div class="timer-colon">:</div>
-<div class="timer-box"><div class="timer-value" id="timerHours">00</div><div class="timer-unit">시간</div></div>
-<div class="timer-colon">:</div>
-<div class="timer-box"><div class="timer-value" id="timerMins">00</div><div class="timer-unit">분</div></div>
-<div class="timer-colon">:</div>
-<div class="timer-box"><div class="timer-value" id="timerSecs">00</div><div class="timer-unit">초</div></div>
-</div>
-<div class="overlay-controls">
-    <button class="overlay-ctrl-btn" onclick="openEditModal(-1,'timer')">✏️ 편집</button>
-</div>
-</section>
-
-<!-- 타이머 영역 추가 패널 (요청사항 반영) -->
-<div class="add-timer-panel">
-    <p class="add-timer-title">타이머 영역 관리</p>
-    <div class="add-timer-grid">
-        <button class="add-item-btn" onclick="restoreTimer()">
-            <span class="add-item-icon">⏲️</span>
-            <span class="add-item-label">타이머 복구/추가</span>
-        </button>
-    </div>
-</div>
+<!-- 타이머 영역 삭제됨 -->
 
 <div id="blocksContainer"></div>
 
@@ -697,6 +815,7 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 <button class="add-item-btn" onclick="addBlock('split')"><span class="add-item-icon">◧</span><span class="add-item-label">2분할</span></button>
 <button class="add-item-btn" onclick="addBlock('zigzag')"><span class="add-item-icon">⚡</span><span class="add-item-label">지그재그</span></button>
 <button class="add-item-btn" onclick="addBlock('collage')"><span class="add-item-icon">🎨</span><span class="add-item-label">콜라주</span></button>
+<button class="add-item-btn" onclick="addBlock('product')"><span class="add-item-icon">🛍️</span><span class="add-item-label">상품단</span></button>
 </div>
 </div>
 
@@ -734,6 +853,87 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 </div>
 </div>
 
+<!-- HTML 내보내기 모달 -->
+<div class="edit-modal" id="exportModal">
+<div class="edit-modal-content" style="max-width:520px">
+<h3 class="edit-modal-title">📤 HTML 내보내기</h3>
+<p style="font-size:13px;color:#666;margin-bottom:20px">기획전을 HTML 파일로 내보내거나 클립보드에 복사할 수 있습니다.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+<button onclick="downloadHTML('web')" style="padding:20px;border:2px solid #e5e5e5;border-radius:12px;background:#fff;cursor:pointer;text-align:center;transition:all 0.2s" onmouseover="this.style.borderColor='#10b981';this.style.background='#f0fdf4'" onmouseout="this.style.borderColor='#e5e5e5';this.style.background='#fff'">
+<div style="font-size:32px;margin-bottom:8px">💻</div>
+<div style="font-size:13px;font-weight:600;color:#333">웹 버전 다운로드</div>
+<div style="font-size:11px;color:#999;margin-top:4px">1920px 기준</div>
+</button>
+<button onclick="downloadHTML('mobile')" style="padding:20px;border:2px solid #e5e5e5;border-radius:12px;background:#fff;cursor:pointer;text-align:center;transition:all 0.2s" onmouseover="this.style.borderColor='#10b981';this.style.background='#f0fdf4'" onmouseout="this.style.borderColor='#e5e5e5';this.style.background='#fff'">
+<div style="font-size:32px;margin-bottom:8px">📱</div>
+<div style="font-size:13px;font-weight:600;color:#333">모바일 버전 다운로드</div>
+<div style="font-size:11px;color:#999;margin-top:4px">1080px 기준</div>
+</button>
+</div>
+<div style="border-top:1px solid #eee;padding-top:16px;margin-bottom:16px">
+<p style="font-size:11px;color:#999;margin-bottom:12px">또는 클립보드에 복사:</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<button onclick="copyHTML('web')" style="padding:10px 16px;background:#f5f5f5;border:none;border-radius:8px;font-size:12px;font-weight:500;color:#555;cursor:pointer">📋 웹 HTML 복사</button>
+<button onclick="copyHTML('mobile')" style="padding:10px 16px;background:#f5f5f5;border:none;border-radius:8px;font-size:12px;font-weight:500;color:#555;cursor:pointer">📋 모바일 HTML 복사</button>
+</div>
+</div>
+<div class="edit-modal-btns">
+<button class="edit-modal-btn secondary" onclick="closeExportModal()" style="flex:1">닫기</button>
+</div>
+</div>
+</div>
+
+<!-- 배너 생성 모달 -->
+<div class="edit-modal" id="bannerModal">
+<div class="edit-modal-content" style="max-width:700px">
+<h3 class="edit-modal-title">🎨 히어로 파생 배너 자동 생성</h3>
+<p style="font-size:13px;color:#666;margin-bottom:20px">히어로 영역 원본 화보컷을 기준으로 4종 배너를 자동 생성합니다.</p>
+<div id="bannerPreviewArea" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="banner-preview-item">
+        <p style="font-size:12px;font-weight:600;margin-bottom:8px">PC 메인배너 (1120×700)</p>
+        <div style="background:#f5f5f5;aspect-ratio:1120/700;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;position:relative">
+            <canvas id="bannerCanvas_pc" width="1120" height="700" style="max-width:100%;height:auto"></canvas>
+            <div style="position:absolute;bottom:8px;right:8px;display:flex;gap:4px">
+                <button class="banner-replace-btn" onclick="replaceBannerImage('pc')">🔄 교체</button>
+            </div>
+        </div>
+    </div>
+    <div class="banner-preview-item">
+        <p style="font-size:12px;font-weight:600;margin-bottom:8px">MO 메인배너 (960×1024)</p>
+        <div style="background:#f5f5f5;aspect-ratio:960/1024;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;position:relative">
+            <canvas id="bannerCanvas_mo" width="960" height="1024" style="max-width:100%;height:auto"></canvas>
+            <div style="position:absolute;bottom:8px;right:8px;display:flex;gap:4px">
+                <button class="banner-replace-btn" onclick="replaceBannerImage('mo')">🔄 교체</button>
+            </div>
+        </div>
+    </div>
+    <div class="banner-preview-item">
+        <p style="font-size:12px;font-weight:600;margin-bottom:8px">기획전 목록 배너 (1080×1248)</p>
+        <div style="background:#f5f5f5;aspect-ratio:1080/1248;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;position:relative">
+            <canvas id="bannerCanvas_list" width="1080" height="1248" style="max-width:100%;height:auto"></canvas>
+            <div style="position:absolute;bottom:8px;right:8px;display:flex;gap:4px">
+                <button class="banner-replace-btn" onclick="replaceBannerImage('list')">🔄 교체</button>
+            </div>
+        </div>
+    </div>
+    <div class="banner-preview-item">
+        <p style="font-size:12px;font-weight:600;margin-bottom:8px">카카오 배너 (800×1100)</p>
+        <div style="background:#f5f5f5;aspect-ratio:800/1100;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;position:relative">
+            <canvas id="bannerCanvas_kakao" width="800" height="1100" style="max-width:100%;height:auto"></canvas>
+            <div style="position:absolute;bottom:8px;right:8px;display:flex;gap:4px">
+                <button class="banner-replace-btn" onclick="replaceBannerImage('kakao')">🔄 교체</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="file" id="bannerReplaceInput" accept="image/*" style="display:none">
+<div class="edit-modal-btns">
+<button class="edit-modal-btn secondary" onclick="closeBannerModal()">닫기</button>
+<button class="edit-modal-btn primary" onclick="downloadAllBanners()">📥 배너 다운로드 (ZIP)</button>
+</div>
+</div>
+</div>
+
 <script>
 var viewMode='web', isPreview=false, currentEditBlock=null, currentEditType=null, heroSlideInterval=null, currentHeroSlide=0;
 var timerInterval=null;
@@ -741,17 +941,16 @@ var swipePageIntervals = {};
 var tempSwipeBg = null;
 
 var bgColors = [
-    {name:'화이트', value:'bg-white', color:'#ffffff'},
-    {name:'스카이', value:'bg-sky', color:'#e0f2fe'},
-    {name:'민트', value:'bg-mint', color:'#e3f9f1'},
-    {name:'인디고', value:'bg-indigo', color:'#edf2ff'},
-    {name:'라벤더', value:'bg-lavender', color:'#f3f0ff'},
-    {name:'핑크', value:'bg-pink', color:'#fff0f6'},
-    {name:'로즈', value:'bg-rose', color:'#fff5f5'},
-    {name:'레몬', value:'bg-lemon', color:'#fff9db'},
-    {name:'라임', value:'bg-lime', color:'#f4fce3'},
-    {name:'에메랄드', value:'bg-emerald', color:'#e6fcf5'},
-    {name:'라이트그레이', value:'bg-light-gray', color:'#f5f5f5'}
+    {name:'스노우블루', value:'bg-snow-blue', color:'#eef2f5'},
+    {name:'라이트그레이', value:'bg-light-gray', color:'#f5f5f5'},
+    {name:'페일민트', value:'bg-pale-mint', color:'#f0f4f2'},
+    {name:'웜샌드', value:'bg-warm-sand', color:'#f7f3f0'},
+    {name:'라벤더미스트', value:'bg-lavender-mist', color:'#f2f2f7'},
+    {name:'스카이틴트', value:'bg-sky-tint', color:'#edf5f7'},
+    {name:'아이보리크림', value:'bg-ivory-cream', color:'#f9f5f0'},
+    {name:'듀그린', value:'bg-dew-green', color:'#f2f5f2'},
+    {name:'쉘핑크', value:'bg-shell-pink', color:'#f5f0f2'},
+    {name:'스틸틴트', value:'bg-steel-tint', color:'#ebeef0'}
 ];
 
 var benefitSectionData = {
@@ -786,7 +985,7 @@ var benefits=[
 
 var blocks=[
 {type:'basic',visible:true,mode:'blur',image:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1440&h=560&fit=crop',mainTitle:'LAST CLEARANCE\nWINTER SHOES',subTitle:'겨울의 끝자락, 마지막 방한 슈즈 클리어런스.',highlight:'',zoom:100,posX:50,posY:50},
-{type:'swipe',visible:true,bgColor:'bg-sky',brand:'NEW STYLE',subBrand:'마리데님 스타일링',descText:'마리메꼬의 시그니처 마리데님.\n심플한 블랙 코디 위에 더해진 우니꼬 데님셔츠.',images:['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=520&fit=crop','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=520&fit=crop','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=520&fit=crop']},
+{type:'swipe',visible:true,bgColor:'bg-sky-tint',brand:'NEW STYLE',subBrand:'마리데님 스타일링',descText:'마리메꼬의 시그니처 마리데님.\n심플한 블랙 코디 위에 더해진 우니꼬 데님셔츠.',images:['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=520&fit=crop','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=520&fit=crop','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=520&fit=crop']},
 {type:'split',visible:true,leftImage:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=720&h=560&fit=crop',rightImage:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=520&fit=crop',rightBrand:'Ivana\nHelsinki'},
 {type:'zigzag',visible:true,reversed:false,brand:'IvanaHelsinki',sub:'Ceremony Wear',images:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=400&fit=crop','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=520&fit=crop']},
 {type:'collage',visible:true,collageType:1,brand:'MOIMOLIN',sub:'2025 SS COLLECTION',images:['https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=400&h=400&fit=crop','https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?w=300&h=400&fit=crop','https://images.unsplash.com/photo-1476234251651-f353703a034d?w=240&h=300&fit=crop','https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=360&h=280&fit=crop']}
@@ -812,6 +1011,15 @@ viewMode=m;
 document.getElementById('previewContainer').classList.toggle('mobile-view',m==='mobile');
 document.getElementById('viewPcBtn').classList.toggle('active',m==='web');
 document.getElementById('viewMoBtn').classList.toggle('active',m==='mobile');
+/* 뷰 모드 변경 시 스와이프 슬라이드 위치 초기화 및 재시작 */
+document.querySelectorAll('.swipe-images-area').forEach(function(area){
+    area.style.transform = 'translateX(0)';
+});
+document.querySelectorAll('.swipe-indicator').forEach(function(ind, idx){
+    ind.classList.toggle('active', ind.parentElement.firstElementChild === ind || 
+        (ind.parentElement.querySelector('button') === ind));
+});
+initSwipeBlocks();
 }
 
 function renderHeroSlides(){
@@ -873,24 +1081,32 @@ if(b.subText)h+='<p class="benefit-sub-text">'+b.subText+'</p>';
 
 if(b.type==='gift' && b.showImage){
     var giftCount = b.gifts ? b.gifts.length : 0;
-    var isSlide = giftCount > 2;
+    var pageCount = Math.ceil(giftCount / 2); /* 2개씩 1페이지 */
+    var isSlide = pageCount > 1; /* 페이지가 2개 이상일 때만 슬라이드 */
     h+='<div class="benefit-gift-area">';
-    h+='<div class="benefit-gift-grid-wrapper"><div class="benefit-gift-grid" id="giftGrid_'+i+'">';
+    h+='<div class="benefit-gift-grid-wrapper"><div class="benefit-gift-grid" id="giftGrid_'+i+'" data-page-count="'+pageCount+'">';
     (b.gifts||[]).forEach(function(g){
         h+='<div class="benefit-gift-item '+(isSlide?'slide-mode':'')+'"><img src="'+g.image+'"><div class="benefit-gift-text-box"><p>'+g.desc.replace(/\n/g,'<br>')+'</p></div></div>';
     });
     h+='</div></div>';
+    /* 페이지당 인디케이터 - 이미지 개수가 아닌 페이지 개수만큼 생성 */
     if(isSlide) {
         h+='<div class="benefit-gift-indicators">';
-        (b.gifts||[]).forEach(function(_, idx){ h+='<button class="gift-dot '+(idx===0?'active':'')+'" onclick="moveGiftSlide('+i+', '+idx+')" id="giftDot_'+i+'_'+idx+'"></button>'; });
+        for(var p=0; p<pageCount; p++){
+            h+='<button class="gift-dot '+(p===0?'active':'')+'" onclick="moveGiftSlide('+i+', '+p+')" id="giftDot_'+i+'_'+p+'"></button>';
+        }
         h+='</div>';
     }
     h+='<div class="benefit-gift-notes">'; (b.notes||[]).forEach(function(n){h+='<p>· '+n+'</p>';}); h+='</div></div>';
 }
 
 if(b.type==='coupon'){
-h+='<div class="benefit-coupon-card"><div class="coupon-left"><span class="coupon-percent">'+b.couponPercent+'</span></div><div class="coupon-right"><p class="coupon-name">'+b.couponName+'</p><p class="coupon-period">'+b.couponPeriod+'</p></div></div>';
-if(b.notes&&b.notes.length){h+='<div class="benefit-gift-notes" style="margin-top:16px;">';b.notes.forEach(function(n){h+='<p>· '+n+'</p>';});h+='</div>';}
+    // 다중 쿠폰 지원
+    var coupons = b.coupons || [{percent: b.couponPercent, name: b.couponName, period: b.couponPeriod}];
+    coupons.forEach(function(c) {
+        h+='<div class="benefit-coupon-card" style="margin-bottom:12px;"><div class="coupon-left"><span class="coupon-percent">'+(c.percent||'')+'</span></div><div class="coupon-right"><p class="coupon-name">'+(c.name||'')+'</p><p class="coupon-period">'+(c.period||'')+'</p></div></div>';
+    });
+    if(b.notes&&b.notes.length){h+='<div class="benefit-gift-notes" style="margin-top:16px;">';b.notes.forEach(function(n){h+='<p>· '+n+'</p>';});h+='</div>';}
 }
 h+='</div></div></div>';
 }); w.innerHTML=h;
@@ -909,11 +1125,33 @@ function moveBenefit(i, dir) {
     renderBenefits();
 }
 
-function moveGiftSlide(benefitId, index) {
+function moveGiftSlide(benefitId, pageIndex) {
     var grid = document.getElementById('giftGrid_' + benefitId);
-    if(grid) { grid.style.transform = 'translateX(-' + (index * 316) + 'px)'; }
+    if(!grid) return;
+    
+    /* 페이지 단위 이동 (2개 = 100% + gap) */
+    /* 웹/모바일 공통: 페이지 기준으로 이동 */
+    var isMobile = document.getElementById('previewContainer').classList.contains('mobile-view');
+    var translateValue;
+    
+    if(isMobile) {
+        /* 모바일: 100% 단위로 이동 (2개씩 보이므로) */
+        translateValue = pageIndex * 100;
+        grid.style.transform = 'translateX(-' + translateValue + '%)';
+    } else {
+        /* 웹: 픽셀 단위로 이동 (아이템 너비 + gap 고려) */
+        /* 아이템 2개 너비 = (50% - 8px) * 2 + gap 16px = 100% */
+        translateValue = pageIndex * 100;
+        grid.style.transform = 'translateX(-' + translateValue + '%)';
+    }
+    
+    /* 인디케이터 업데이트 */
     var dots = document.querySelectorAll('#benefitWrapper .benefit-gift-indicators button');
-    dots.forEach(function(dot) { if(dot.id.startsWith('giftDot_' + benefitId)) { dot.classList.toggle('active', dot.id === 'giftDot_' + benefitId + '_' + index); } });
+    dots.forEach(function(dot) { 
+        if(dot.id.startsWith('giftDot_' + benefitId)) { 
+            dot.classList.toggle('active', dot.id === 'giftDot_' + benefitId + '_' + pageIndex); 
+        } 
+    });
 }
 
 function addBenefit(t){
@@ -955,6 +1193,29 @@ if(b.type === 'gift') {
     h += '</div><button class="item-add-btn" onclick="addGiftItemUI()">+ 사은품 추가</button></div>';
     h += '<div class="edit-modal-field"><label class="edit-modal-label">유의사항 (줄바꿈:엔터)</label><textarea class="edit-modal-textarea" id="editBenefitNotes" style="min-height:100px">'+(b.notes ? b.notes.join('\n') : '')+'</textarea></div>';
     btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal()">취소</button><button class="edit-modal-btn primary save-done" onclick="saveBenefitGift()">저장 완료</button>';
+} else if(b.type === 'coupon') {
+    t.textContent = '쿠폰 편집';
+    h = '<div class="edit-modal-field"><label class="edit-modal-label">타이틀</label><input class="edit-modal-input" id="editBenefitMain" value="'+b.mainTitle+'"></div>';
+    h += '<div class="edit-modal-field"><label class="edit-modal-label">설명</label><textarea class="edit-modal-textarea" id="editBenefitSub">'+(b.subText||'')+'</textarea></div>';
+    
+    // 다중 쿠폰 편집
+    h += '<div class="item-edit-list" id="couponItemsContainer"><p class="edit-modal-label" style="font-size:11px;color:#999;margin-bottom:12px;">쿠폰 목록</p>';
+    var coupons = b.coupons || [{percent: b.couponPercent || '5%', name: b.couponName || '', period: b.couponPeriod || ''}];
+    coupons.forEach(function(c, idx) {
+        h += `<div class="item-edit-row" data-idx="${idx}" style="flex-direction:column;align-items:stretch;gap:8px;">
+            <div style="display:grid;grid-template-columns:80px 1fr;gap:6px;">
+                <input class="edit-modal-input" style="padding:8px;font-size:14px;font-weight:700;text-align:center;" value="${c.percent||''}" placeholder="할인율" id="couponPercent_${idx}">
+                <input class="edit-modal-input" style="padding:8px;font-size:12px;" value="${c.name||''}" placeholder="쿠폰명" id="couponName_${idx}">
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+                <input class="edit-modal-input" style="flex:1;padding:6px;font-size:11px;" value="${c.period||''}" placeholder="사용기간 (예: 2025.06.09 ~ 06.23)" id="couponPeriod_${idx}">
+                <button class="item-edit-delete" onclick="removeCouponItemUI(${idx})">✕</button>
+            </div>
+        </div>`;
+    });
+    h += '</div><button class="item-add-btn" onclick="addCouponItemUI()">+ 쿠폰 추가</button>';
+    h += '<div class="edit-modal-field"><label class="edit-modal-label">유의사항 (줄바꿈:엔터)</label><textarea class="edit-modal-textarea" id="editBenefitNotes" style="min-height:80px">'+(b.notes ? b.notes.join('\n') : '')+'</textarea></div>';
+    btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal()">취소</button><button class="edit-modal-btn primary" onclick="saveBenefitCoupon()">저장</button>';
 } else {
     t.textContent='혜택 편집';
     h='<div class="edit-modal-field"><label class="edit-modal-label">타이틀</label><input class="edit-modal-input" id="editBenefitMain" value="'+b.mainTitle+'"></div>';
@@ -1021,16 +1282,23 @@ h+='<section class="content-block '+isHiddenClass+'">'+ctrl+'<div class="basic-b
     var imgs=''; 
     b.images.forEach(function(img){ imgs+='<div class="swipe-item"><img src="'+img+'"></div>'; });
     var imgCount = b.images.length;
-    var pageCount = 1;
-    if(imgCount === 3) pageCount = 2;
-    else if(imgCount > 3) pageCount = Math.ceil(imgCount / 2);
-    var inds=''; 
-    if(pageCount > 1) {
-        for(var p=0; p<pageCount; p++) {
-            inds+='<button class="swipe-indicator '+(p===0?'active':'')+'" onclick="moveSwipePage('+i+', '+p+')"></button>';
+    /* 웹: 2개씩 페이지 */
+    var webPageCount = 1;
+    if(imgCount === 3) webPageCount = 2;
+    else if(imgCount > 3) webPageCount = Math.ceil(imgCount / 2);
+    /* 웹용 인디케이터 */
+    var webInds=''; 
+    if(webPageCount > 1) {
+        for(var p=0; p<webPageCount; p++) {
+            webInds+='<button class="swipe-indicator web-indicator '+(p===0?'active':'')+'" onclick="moveSwipePage('+i+', '+p+')"></button>';
         }
     }
-    h+='<section class="content-block swipe-block '+b.bgColor+' '+isHiddenClass+'">'+ctrl+'<div class="swipe-inner"><div class="swipe-text-area"><p class="swipe-brand">'+b.brand+'</p><p class="swipe-sub-brand">'+b.subBrand+'</p><p class="swipe-desc-text">'+b.descText.replace(/\n/g,'<br>')+'</p></div><div class="swipe-images-wrapper"><div class="swipe-images-area" id="swipeArea_'+i+'">'+imgs+'</div></div></div><div class="swipe-indicators">'+inds+'</div><div class="overlay-controls"><button class="overlay-ctrl-btn" onclick="openEditModal('+i+',\'swipe\')">✏️ 편집</button></div></section>';
+    /* 모바일용 인디케이터 - 이미지 1개당 1인디케이터 */
+    var mobileInds='';
+    for(var m=0; m<imgCount; m++) {
+        mobileInds+='<button class="swipe-indicator mobile-indicator '+(m===0?'active':'')+'" onclick="moveSwipePage('+i+', '+m+')"></button>';
+    }
+    h+='<section class="content-block swipe-block '+b.bgColor+' '+isHiddenClass+'" data-img-count="'+imgCount+'">'+ctrl+'<div class="swipe-inner"><div class="swipe-text-area"><p class="swipe-brand">'+b.brand+'</p><p class="swipe-sub-brand">'+b.subBrand+'</p><p class="swipe-desc-text">'+b.descText.replace(/\n/g,'<br>')+'</p></div><div class="swipe-images-wrapper"><div class="swipe-images-area" id="swipeArea_'+i+'">'+imgs+'</div></div></div><div class="swipe-indicators"><span class="web-indicators">'+webInds+'</span><span class="mobile-indicators">'+mobileInds+'</span></div><div class="overlay-controls"><button class="overlay-ctrl-btn" onclick="openEditModal('+i+',\'swipe\')">✏️ 편집</button></div></section>';
 }else if(b.type==='split'){
 h+='<section class="content-block split-block '+isHiddenClass+'">'+ctrl+'<div class="split-item left-full"><img class="split-main-image" src="'+b.leftImage+'"></div><div class="split-item right-blur"><div class="split-blur-bg" style="background-image:url(\''+b.rightImage+'\');"></div><img class="split-main-image" src="'+b.rightImage+'"><div class="split-text-overlay"><p class="split-brand">'+b.rightBrand.replace(/\n/g,'<br>')+'</p></div></div><div class="overlay-controls"><button class="overlay-ctrl-btn" onclick="openEditModal('+i+',\'split\')">✏️ 편집</button></div></section>';
 }else if(b.type==='zigzag'){
@@ -1046,6 +1314,27 @@ imgHtml+='</div>';
 imgHtml='<div class="collage-type2"><div class="col-img"><img src="'+(b.images[0]||'')+'"></div><div class="col-img"><img src="'+(b.images[1]||'')+'"></div></div>';
 }
 h+='<section class="content-block collage-block '+isHiddenClass+'">'+ctrl+'<div class="collage-header"><p class="collage-brand">'+b.brand+'</p><p class="collage-sub">'+b.sub+'</p></div>'+imgHtml+'<div class="overlay-controls"><button class="overlay-ctrl-btn '+(b.collageType===1?'active':'')+'" onclick="setCollageType('+i+',1)">유형 1</button><button class="overlay-ctrl-btn '+(b.collageType===2?'active':'')+'" onclick="setCollageType('+i+',2)">유형 2</button><button class="overlay-ctrl-btn" onclick="openEditModal('+i+',\'collage\')">✏️ 편집</button></div></section>';
+}else if(b.type==='product'){
+    var colClass = 'cols-' + (b.columns || 4);
+    var prodHtml = '<div class="product-grid ' + colClass + '">';
+    (b.products || []).forEach(function(p) {
+        var isMobile = document.getElementById('previewContainer').classList.contains('mobile-view');
+        var target = isMobile ? '' : ' target="_blank"';
+        prodHtml += '<div class="product-item"><a href="' + (p.link || '#') + '"' + target + '>';
+        prodHtml += '<img class="product-item-img" src="' + (p.image || '') + '" alt="' + (p.name || '') + '">';
+        prodHtml += '<p class="product-item-brand">' + (p.brand || '') + '</p>';
+        prodHtml += '<p class="product-item-name">' + (p.name || '') + '</p>';
+        prodHtml += '<div class="product-item-price">';
+        if(p.discount) prodHtml += '<span class="product-discount">' + p.discount + '</span>';
+        prodHtml += '<span class="product-price">' + (p.price || '') + '</span>';
+        prodHtml += '</div></a></div>';
+    });
+    prodHtml += '</div>';
+    h += '<section class="content-block product-section ' + isHiddenClass + '">' + ctrl;
+    h += '<div class="product-header"><h3 class="product-main-title">' + (b.mainTitle || '').replace(/\n/g,'<br>') + '</h3>';
+    h += '<p class="product-sub-title">' + (b.subTitle || '') + '</p></div>';
+    h += prodHtml;
+    h += '<div class="overlay-controls"><button class="overlay-ctrl-btn" onclick="openEditModal(' + i + ',\'product\')">✏️ 편집</button></div></section>';
 }
 });
 c.innerHTML=h;
@@ -1056,20 +1345,40 @@ function moveSwipePage(blockIdx, pageIdx) {
     var block = blocks[blockIdx];
     var area = document.getElementById('swipeArea_' + blockIdx);
     if(!area) return;
-    var translateValue = 0;
+    
+    var isMobile = document.getElementById('previewContainer').classList.contains('mobile-view');
     var imgCount = block.images.length;
-    if(imgCount === 3) {
-        translateValue = pageIdx * 50;
-        area.style.transform = 'translateX(calc(-' + translateValue + '% - ' + (pageIdx * 8) + 'px))';
-    } else {
+    var translateValue = 0;
+    
+    if(isMobile) {
+        /* 모바일: 이미지 1개씩 슬라이드 (100% 단위) */
         translateValue = pageIdx * 100;
         area.style.transform = 'translateX(-' + translateValue + '%)';
+    } else {
+        /* 웹: 기존 로직 유지 (2개씩 페이지) */
+        if(imgCount === 3) {
+            translateValue = pageIdx * 50;
+            area.style.transform = 'translateX(calc(-' + translateValue + '% - ' + (pageIdx * 8) + 'px))';
+        } else {
+            translateValue = pageIdx * 100;
+            area.style.transform = 'translateX(-' + translateValue + '%)';
+        }
     }
-    var inds = area.closest('.swipe-block').querySelectorAll('.swipe-indicator');
-    inds.forEach(function(ind, idx) { ind.classList.toggle('active', idx === pageIdx); });
+    
+    /* 인디케이터 업데이트 */
+    var swipeBlock = area.closest('.swipe-block');
+    if(isMobile) {
+        swipeBlock.querySelectorAll('.mobile-indicator').forEach(function(ind, idx) { 
+            ind.classList.toggle('active', idx === pageIdx); 
+        });
+    } else {
+        swipeBlock.querySelectorAll('.web-indicator').forEach(function(ind, idx) { 
+            ind.classList.toggle('active', idx === pageIdx); 
+        });
+    }
 }
 
-function getLabel(t){return{basic:'기본형',swipe:'자동스와이프',split:'2분할',zigzag:'지그재그',collage:'콜라주'}[t]||t;}
+function getLabel(t){return{basic:'기본형',swipe:'자동스와이프',split:'2분할',zigzag:'지그재그',collage:'콜라주',product:'상품단'}[t]||t;}
 function toggleBlock(i){blocks[i].visible=!blocks[i].visible;renderBlocks();}
 function deleteBlock(i){blocks.splice(i,1);renderBlocks();}
 function toggleZigzag(i){blocks[i].reversed=!blocks[i].reversed;renderBlocks();}
@@ -1094,11 +1403,17 @@ function addBlock(t){
         return;
     }
     var d={
-    basic:{type:'basic',visible:true,mode:'blur',image:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1440&h=560&fit=crop',mainTitle:'TITLE',subTitle:'설명', zoom:100, posX:50, posY:50},
-    swipe:{type:'swipe',visible:true,bgColor:'bg-sky',brand:'BRAND',subBrand:'서브브랜드',descText:'설명',images:['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=520&fit=crop','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=520&fit=crop','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=520&fit=crop']},
-    split:{type:'split',visible:true,leftImage:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=720&h=560&fit=crop',rightImage:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=520&fit=crop',rightBrand:'Brand\nName'},
-    zigzag:{type:'zigzag',visible:true,reversed:false,brand:'BRAND',sub:'Sub Title',images:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=400&fit=crop','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=520&fit=crop']},
-    collage:{type:'collage',visible:true,collageType:1,brand:'BRAND',sub:'Sub Title',images:['https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=400&h=400&fit=crop','https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?w=300&h=400&fit=crop','https://images.unsplash.com/photo-1476234251651-f353703a034d?w=240&h=300&fit=crop','https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=360&h=280&fit=crop']}
+    basic:{type:'basic',visible:true,mode:'blur',image:'',mainTitle:'TITLE',subTitle:'설명', zoom:100, posX:50, posY:50},
+    swipe:{type:'swipe',visible:true,bgColor:'bg-sky-tint',brand:'BRAND',subBrand:'서브브랜드',descText:'설명',images:[]},
+    split:{type:'split',visible:true,leftImage:'',rightImage:'',rightBrand:'Brand\nName'},
+    zigzag:{type:'zigzag',visible:true,reversed:false,brand:'BRAND',sub:'Sub Title',images:['','']},
+    collage:{type:'collage',visible:true,collageType:1,brand:'BRAND',sub:'Sub Title',images:['','','','']},
+    product:{type:'product',visible:true,columns:4,mainTitle:'BEST ITEM',subTitle:'인기 상품을 만나보세요',products:[
+        {image:'',brand:'BRAND',name:'상품명을 입력하세요',discount:'30%',price:'99,000원',link:'#'},
+        {image:'',brand:'BRAND',name:'상품명을 입력하세요',discount:'20%',price:'129,000원',link:'#'},
+        {image:'',brand:'BRAND',name:'상품명을 입력하세요',discount:'',price:'89,000원',link:'#'},
+        {image:'',brand:'BRAND',name:'상품명을 입력하세요',discount:'15%',price:'79,000원',link:'#'}
+    ]}
     };
     blocks.push(d[t]); renderBlocks();
 }
@@ -1110,9 +1425,18 @@ function initSwipeBlocks(){
         var id = area.id.split('_')[1];
         var block = blocks[id];
         var imgCount = block.images.length;
+        var isMobile = document.getElementById('previewContainer').classList.contains('mobile-view');
         var pageCount = 1;
-        if(imgCount === 3) pageCount = 2;
-        else if(imgCount > 3) pageCount = Math.ceil(imgCount / 2);
+        
+        if(isMobile) {
+            /* 모바일: 이미지 개수 = 페이지 개수 */
+            pageCount = imgCount;
+        } else {
+            /* 웹: 기존 로직 (2개씩) */
+            if(imgCount === 3) pageCount = 2;
+            else if(imgCount > 3) pageCount = Math.ceil(imgCount / 2);
+        }
+        
         if(pageCount > 1){
             var cur = 0;
             swipePageIntervals[id] = setInterval(function(){
@@ -1314,11 +1638,36 @@ btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal(
     h+='<div class="edit-modal-field"><label class="edit-modal-label">이미지 1 교체</label><div class="upload-btn-wrapper"><button class="upload-btn" id="zigImgBtn_0"><img class="item-edit-img" src="'+b.images[0]+'" style="margin-right:8px; display:'+(b.images[0]?'block':'none')+'"> 📷 이미지 교체</button><input type="file" accept="image/*" onchange="updateZigzagImageUI(this,'+index+', 0)"></div></div>';
     h+='<div class="edit-modal-field"><label class="edit-modal-label">이미지 2 교체</label><div class="upload-btn-wrapper"><button class="upload-btn" id="zigImgBtn_1"><img class="item-edit-img" src="'+b.images[1]+'" style="margin-right:8px; display:'+(b.images[1]?'block':'none')+'"> 📷 이미지 교체</button><input type="file" accept="image/*" onchange="updateZigzagImageUI(this,'+index+', 1)"></div></div>';
     btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal()">취소</button><button class="edit-modal-btn primary" onclick="saveZigzag('+index+')">저장</button>';
-}else if(type==='timer'){
-    t.textContent = '타이머 편집';
-    h = '<div class="edit-modal-field"><label class="edit-modal-label">시작 일시 설정</label><input type="datetime-local" class="edit-modal-input" id="editTimerStartDateTime" value="'+timerData.startDate+'"></div>';
-    h += '<div class="edit-modal-field"><label class="edit-modal-label">종료 일시 설정</label><input type="datetime-local" class="edit-modal-input" id="editTimerDateTime" value="'+timerData.targetDate+'"></div>';
-    btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal()">취소</button><button class="edit-modal-btn primary" onclick="saveTimer()">저장</button>';
+}else if(type==='product'){
+    var b=blocks[index]; t.textContent='상품단 편집';
+    h='<div class="edit-modal-field"><label class="edit-modal-label">레이아웃</label><div class="mode-tabs">';
+    h+='<button class="mode-tab '+(b.columns===2?'active':'')+'" onclick="setProductColumns('+index+',2)"><div class="mode-tab-label">2단</div></button>';
+    h+='<button class="mode-tab '+(b.columns===4?'active':'')+'" onclick="setProductColumns('+index+',4)"><div class="mode-tab-label">4단</div></button>';
+    h+='<button class="mode-tab '+(b.columns===6?'active':'')+'" onclick="setProductColumns('+index+',6)"><div class="mode-tab-label">6단</div></button>';
+    h+='</div></div>';
+    h+='<div class="edit-modal-field"><label class="edit-modal-label">메인 타이틀</label><input class="edit-modal-input" id="editProductMainTitle" value="'+(b.mainTitle||'')+'"></div>';
+    h+='<div class="edit-modal-field"><label class="edit-modal-label">서브 타이틀</label><input class="edit-modal-input" id="editProductSubTitle" value="'+(b.subTitle||'')+'"></div>';
+    h+='<div class="item-edit-list" id="productItemsContainer"><p class="edit-modal-label" style="font-size:11px;color:#999;margin-bottom:12px;">상품 목록</p>';
+    (b.products || []).forEach(function(p, idx) {
+        h += `<div class="item-edit-row" data-idx="${idx}" style="flex-direction:column;align-items:stretch;gap:8px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+                <img class="item-edit-img" src="${p.image||''}" id="productImg_${idx}" style="width:60px;height:60px;">
+                <div style="flex:1">
+                    <div class="upload-btn-wrapper"><button class="gift-edit-small-btn" style="width:100%;padding:6px;font-size:11px;border:1px solid #ddd;background:#fff;cursor:pointer;">이미지 교체</button><input type="file" accept="image/*" onchange="updateProductImageUI(this,${idx})"></div>
+                </div>
+                <button class="item-edit-delete" onclick="removeProductItemUI(${idx})">✕</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="${p.brand||''}" placeholder="브랜드" id="productBrand_${idx}">
+                <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="${p.name||''}" placeholder="상품명" id="productName_${idx}">
+                <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="${p.discount||''}" placeholder="할인율 (예: 30%)" id="productDiscount_${idx}">
+                <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="${p.price||''}" placeholder="판매가" id="productPrice_${idx}">
+            </div>
+            <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="${p.link||'#'}" placeholder="링크 URL" id="productLink_${idx}">
+        </div>`;
+    });
+    h+='</div><button class="item-add-btn" onclick="addProductItemUI()">+ 상품 추가</button>';
+    btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal()">취소</button><button class="edit-modal-btn primary" onclick="saveProduct('+index+')">저장</button>';
 }else if(type==='collage'){
     var b=blocks[index]; t.textContent='콜라주 편집';
     h='<div class="edit-modal-field"><label class="edit-modal-label">브랜드</label><input class="edit-modal-input" id="editColBrand" value="'+b.brand+'"></div>';
@@ -1492,10 +1841,154 @@ function saveNoticeItem() {
     renderNotices(); closeEditModal();
 }
 
+// ========== 쿠폰 다중 편집 함수 ==========
+function addCouponItemUI() {
+    var cont = document.getElementById('couponItemsContainer');
+    var idx = cont.querySelectorAll('.item-edit-row').length;
+    var div = document.createElement('div');
+    div.className = 'item-edit-row';
+    div.dataset.idx = idx;
+    div.style.cssText = 'flex-direction:column;align-items:stretch;gap:8px;';
+    div.innerHTML = `
+        <div style="display:grid;grid-template-columns:80px 1fr;gap:6px;">
+            <input class="edit-modal-input" style="padding:8px;font-size:14px;font-weight:700;text-align:center;" value="" placeholder="할인율" id="couponPercent_${idx}">
+            <input class="edit-modal-input" style="padding:8px;font-size:12px;" value="" placeholder="쿠폰명" id="couponName_${idx}">
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+            <input class="edit-modal-input" style="flex:1;padding:6px;font-size:11px;" value="" placeholder="사용기간" id="couponPeriod_${idx}">
+            <button class="item-edit-delete" onclick="removeCouponItemUI(${idx})">✕</button>
+        </div>
+    `;
+    cont.appendChild(div);
+}
+
+function removeCouponItemUI(idx) {
+    var item = document.querySelector(`#couponItemsContainer .item-edit-row[data-idx="${idx}"]`);
+    if(item) item.remove();
+    // Re-index
+    document.querySelectorAll('#couponItemsContainer .item-edit-row').forEach((it, i) => {
+        it.dataset.idx = i;
+        it.querySelectorAll('input').forEach(input => {
+            var idParts = input.id.split('_');
+            if(idParts.length === 2) input.id = idParts[0] + '_' + i;
+        });
+        it.querySelector('.item-edit-delete').setAttribute('onclick', `removeCouponItemUI(${i})`);
+    });
+}
+
+function saveBenefitCoupon() {
+    var b = benefits[currentEditBlock];
+    b.mainTitle = document.getElementById('editBenefitMain').value;
+    b.subText = document.getElementById('editBenefitSub').value;
+    
+    // 다중 쿠폰 저장
+    b.coupons = [];
+    document.querySelectorAll('#couponItemsContainer .item-edit-row').forEach((row, i) => {
+        b.coupons.push({
+            percent: document.getElementById('couponPercent_' + i)?.value || '',
+            name: document.getElementById('couponName_' + i)?.value || '',
+            period: document.getElementById('couponPeriod_' + i)?.value || ''
+        });
+    });
+    
+    // 첫 번째 쿠폰은 레거시 필드에도 저장
+    if(b.coupons.length > 0) {
+        b.couponPercent = b.coupons[0].percent;
+        b.couponName = b.coupons[0].name;
+        b.couponPeriod = b.coupons[0].period;
+    }
+    
+    var notesText = document.getElementById('editBenefitNotes').value;
+    b.notes = notesText.split('\n').filter(n => n.trim() !== '');
+    
+    renderBenefits(); closeEditModal();
+}
+
+// ========== 상품단 편집 함수 ==========
+function setProductColumns(index, cols) {
+    blocks[index].columns = cols;
+    openEditModal(index, 'product');
+}
+
+function addProductItemUI() {
+    var cont = document.getElementById('productItemsContainer');
+    var idx = cont.querySelectorAll('.item-edit-row').length;
+    var div = document.createElement('div');
+    div.className = 'item-edit-row';
+    div.dataset.idx = idx;
+    div.style.cssText = 'flex-direction:column;align-items:stretch;gap:8px;';
+    div.innerHTML = `
+        <div style="display:flex;gap:8px;align-items:center;">
+            <img class="item-edit-img" src="" id="productImg_${idx}" style="width:60px;height:60px;">
+            <div style="flex:1">
+                <div class="upload-btn-wrapper"><button class="gift-edit-small-btn" style="width:100%;padding:6px;font-size:11px;border:1px solid #ddd;background:#fff;cursor:pointer;">이미지 교체</button><input type="file" accept="image/*" onchange="updateProductImageUI(this,${idx})"></div>
+            </div>
+            <button class="item-edit-delete" onclick="removeProductItemUI(${idx})">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="" placeholder="브랜드" id="productBrand_${idx}">
+            <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="" placeholder="상품명" id="productName_${idx}">
+            <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="" placeholder="할인율" id="productDiscount_${idx}">
+            <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="" placeholder="판매가" id="productPrice_${idx}">
+        </div>
+        <input class="edit-modal-input" style="padding:6px;font-size:11px;" value="#" placeholder="링크 URL" id="productLink_${idx}">
+    `;
+    cont.appendChild(div);
+}
+
+function removeProductItemUI(idx) {
+    var item = document.querySelector(`#productItemsContainer .item-edit-row[data-idx="${idx}"]`);
+    if(item) item.remove();
+    // Re-index
+    document.querySelectorAll('#productItemsContainer .item-edit-row').forEach((it, i) => {
+        it.dataset.idx = i;
+        var img = it.querySelector('.item-edit-img');
+        if(img) img.id = 'productImg_' + i;
+        it.querySelectorAll('input[id]').forEach(input => {
+            var idParts = input.id.split('_');
+            if(idParts.length === 2) input.id = idParts[0] + '_' + i;
+        });
+        it.querySelector('.item-edit-delete').setAttribute('onclick', `removeProductItemUI(${i})`);
+        it.querySelector('input[type="file"]').setAttribute('onchange', `updateProductImageUI(this,${i})`);
+    });
+}
+
+function updateProductImageUI(input, idx) {
+    if(input.files && input.files[0]) {
+        if(!validateImageSize(input.files[0])) return;
+        var r = new FileReader();
+        r.onload = function(e) {
+            document.getElementById('productImg_' + idx).src = e.target.result;
+        };
+        r.readAsDataURL(input.files[0]);
+    }
+}
+
+function saveProduct(index) {
+    var b = blocks[index];
+    b.mainTitle = document.getElementById('editProductMainTitle').value;
+    b.subTitle = document.getElementById('editProductSubTitle').value;
+    
+    b.products = [];
+    document.querySelectorAll('#productItemsContainer .item-edit-row').forEach((row, i) => {
+        b.products.push({
+            image: document.getElementById('productImg_' + i)?.src || '',
+            brand: document.getElementById('productBrand_' + i)?.value || '',
+            name: document.getElementById('productName_' + i)?.value || '',
+            discount: document.getElementById('productDiscount_' + i)?.value || '',
+            price: document.getElementById('productPrice_' + i)?.value || '',
+            link: document.getElementById('productLink_' + i)?.value || '#'
+        });
+    });
+    
+    renderBlocks(); closeEditModal();
+}
+
 function addHeroSlideUI() {
     var input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
     input.onchange = function(e) {
         if(e.target.files && e.target.files[0]) {
+            if(!validateImageSize(e.target.files[0])) return;
             var r = new FileReader(); r.onload = function(ev) {
                 heroData.slides.push({image:ev.target.result, mode:'blur', zoom:100, posX:50, posY:50});
                 renderHeroSlides(); openEditModal(-1, 'hero');
@@ -1628,6 +2121,1047 @@ function restoreTimer() {
 window.onload=function(){
     renderHeroSlides(); renderHeroContent(); renderBenefits(); renderBlocks(); renderNotices(); startTimer(); updateTimerUI();
 };
+
+/* ========== HTML 내보내기 기능 ========== */
+function openExportModal() {
+    document.getElementById('exportModal').classList.add('show');
+}
+
+function closeExportModal() {
+    document.getElementById('exportModal').classList.remove('show');
+}
+
+function generateExportHTML(viewMode) {
+    var isMobile = viewMode === 'mobile';
+    var containerWidth = isMobile ? '1080px' : '1920px';
+    var innerWidth = isMobile ? '1080px' : '1440px';
+    var mobileClass = isMobile ? ' mobile-view' : '';
+    
+    var html = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>기획전</title>\n';
+    html += '<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">\n';
+    html += '<style>\n';
+    html += '*{margin:0;padding:0;box-sizing:border-box}\n';
+    html += "body{font-family:'Pretendard',-apple-system,sans-serif;color:#222;background:#e5e1dc;line-height:1.5}\n";
+    html += 'img{max-width:100%;display:block}\n';
+    html += '.preview-wrapper{width:100%;overflow-x:auto}\n';
+    html += '.preview-container{width:'+containerWidth+';margin:0 auto;background:#fff}\n';
+    html += '.preview-inner{max-width:'+innerWidth+';margin:0 auto}\n';
+    
+    /* 콘텐츠 블록 간격 */
+    html += '.content-block{margin-bottom:100px}\n';
+    html += '.content-block:last-child{margin-bottom:0}\n';
+    
+    /* 히어로 스타일 */
+    html += '.hero-section{width:100%;position:relative;margin-bottom:100px}\n';
+    html += '.hero-image-wrapper{width:100%;height:778px;position:relative;overflow:hidden;background:#1a1a1a}\n';
+    html += '#heroSlidesContainer{position:absolute;inset:0}\n';
+    html += '.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s}\n';
+    html += '.hero-slide.active{opacity:1;z-index:1}\n';
+    html += '.hero-slide .hero-blur-bg{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(50px) saturate(1.2);opacity:0.8}\n';
+    html += '.hero-main-image-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:516px;height:778px;overflow:hidden;z-index:2;background:#000}\n';
+    html += '.hero-main-image-frame .hero-main-image{width:100%;height:100%;object-fit:cover}\n';
+    html += '.hero-slide.full-mode .hero-blur-bg{display:none}\n';
+    html += '.hero-slide.full-mode .hero-main-image-frame{width:100%;height:100%}\n';
+    html += '.hero-gradient-overlay{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0) 100%);z-index:3;pointer-events:none}\n';
+    html += '.hero-text-wrapper{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);width:516px;z-index:10;padding:0 30px}\n';
+    html += '.hero-text-wrapper.align-left{text-align:left}\n';
+    html += '.hero-text-wrapper.align-center{text-align:center}\n';
+    html += '.hero-text-wrapper.align-right{text-align:right}\n';
+    html += '.hero-top-label{font-size:10px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:6px}\n';
+    html += '.hero-logo{font-size:12px;font-weight:700;letter-spacing:3px;color:#fff;margin-bottom:16px}\n';
+    html += '.hero-main-text{font-size:50px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:14px;letter-spacing:-0.5px;white-space:pre-line}\n';
+    html += '.hero-sub-text{font-size:18px;font-weight:300;color:rgba(255,255,255,0.85);line-height:1.5;white-space:pre-line}\n';
+    html += '.hero-indicators{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:15}\n';
+    html += '.hero-indicator{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer}\n';
+    html += '.hero-indicator.active{background:#fff;width:20px;border-radius:3px}\n';
+    
+    /* 베네핏 스타일 */
+    html += '.benefit-section{padding:0 0 40px;background:#fff}\n';
+    html += '.benefit-header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:800px;margin-left:auto;margin-right:auto}\n';
+    html += '.benefit-title{font-size:35px;font-weight:700;letter-spacing:2px;color:#1a1a1a;margin-bottom:8px}\n';
+    html += '.benefit-date{font-size:14px;color:#666}\n';
+    html += '.benefit-wrapper{max-width:800px;margin:0 auto}\n';
+    html += '.benefit-item{padding:40px 0;border-bottom:1px solid #e5e5e5}\n';
+    html += '.benefit-item:last-child{border-bottom:none}\n';
+    html += '.benefit-item-inner{display:flex;gap:40px}\n';
+    html += '.benefit-number-col{width:100px;flex-shrink:0}\n';
+    html += '.benefit-number{font-size:12px;font-weight:600;color:#999;letter-spacing:1px}\n';
+    html += '.benefit-content-col{flex:1;min-width:0}\n';
+    html += '.benefit-main-title{font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:8px}\n';
+    html += '.benefit-sub-text{font-size:15px;color:#666;line-height:1.7;white-space:pre-line;margin-bottom:16px}\n';
+    html += '.benefit-gift-area{margin-top:20px}\n';
+    html += '.benefit-gift-grid-wrapper{overflow:hidden;width:100%}\n';
+    html += '.benefit-gift-grid{display:flex;gap:16px;margin-bottom:16px;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}\n';
+    html += '.benefit-gift-item{flex:0 0 calc(50% - 8px);background:#f5f5f5;overflow:hidden}\n';
+    html += '.benefit-gift-item img{width:100%;height:300px;object-fit:cover}\n';
+    html += '.benefit-gift-text-box{padding:16px}\n';
+    html += '.benefit-gift-item p{font-size:14px;color:#222;font-weight:600;line-height:1.4}\n';
+    html += '.benefit-gift-indicators{display:flex;justify-content:center;gap:8px;margin-bottom:20px}\n';
+    html += '.gift-dot{width:8px;height:8px;border-radius:50%;background:#ddd;cursor:pointer;border:none;padding:0}\n';
+    html += '.gift-dot.active{background:#222;width:24px;border-radius:4px}\n';
+    html += '.benefit-gift-notes{font-size:12px;color:#999;line-height:1.8}\n';
+    html += '.benefit-gift-notes p{margin-bottom:4px}\n';
+    html += '.benefit-coupon-card{display:inline-flex;background:#1a1a1a;overflow:hidden;margin-top:16px;border-radius:2px}\n';
+    html += '.coupon-left{padding:20px 28px;display:flex;align-items:center;justify-content:center;border-right:1px dashed #444}\n';
+    html += '.coupon-percent{font-size:36px;font-weight:700;color:#fff}\n';
+    html += '.coupon-right{padding:16px 24px;display:flex;flex-direction:column;justify-content:center}\n';
+    html += '.coupon-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}\n';
+    html += '.coupon-period{font-size:11px;color:#888}\n';
+    
+    /* 타이머 스타일 */
+    html += '.timer-section{padding:50px 0;background:#fff;text-align:center}\n';
+    html += '.timer-label{font-size:14px;font-weight:500;color:#222;margin-bottom:20px}\n';
+    html += '.timer-display{display:flex;justify-content:center;gap:20px;align-items:center}\n';
+    html += '.timer-box{text-align:center}\n';
+    html += '.timer-value{font-size:48px;font-weight:700;color:#1a1a1a;font-variant-numeric:tabular-nums}\n';
+    html += '.timer-unit{font-size:12px;color:#222;margin-top:4px}\n';
+    html += '.timer-colon{font-size:36px;font-weight:300;color:#ccc}\n';
+    
+    /* 기본형 블록 */
+    html += '.basic-block{width:100%;height:560px;position:relative;overflow:hidden;background:#f0f0f0}\n';
+    html += '.basic-blur-bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(40px) saturate(1.2);opacity:0.7}\n';
+    html += '.basic-main-image-frame{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:520px;height:560px;overflow:hidden;z-index:2;background:#000}\n';
+    html += '.basic-main-image{width:100%;height:100%;object-fit:cover}\n';
+    html += '.basic-block.full-mode .basic-blur-bg{display:none}\n';
+    html += '.basic-block.full-mode .basic-main-image-frame{width:100%;height:100%}\n';
+    html += '.basic-text-area{padding:50px 0;text-align:center;background:#fff}\n';
+    html += '.basic-main-title{font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:16px;letter-spacing:1px;line-height:1.3}\n';
+    html += '.basic-sub-title{font-size:15px;color:#666;line-height:1.7}\n';
+    
+    /* 자동스와이프 블록 */
+    html += '.swipe-block{width:100%;padding:60px 0;position:relative;overflow:hidden}\n';
+    html += '.swipe-inner{display:flex;gap:40px;padding:0 80px;align-items:flex-start}\n';
+    html += '.swipe-text-area{width:350px;flex-shrink:0;padding-top:20px}\n';
+    html += '.swipe-brand{font-size:36px;font-weight:700;color:#1a1a1a;margin-bottom:16px}\n';
+    html += '.swipe-sub-brand{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:12px}\n';
+    html += '.swipe-desc-text{font-size:13px;color:#666;line-height:1.7}\n';
+    html += '.swipe-images-wrapper{flex:1;overflow:hidden}\n';
+    html += '.swipe-images-area{display:flex;gap:16px;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1)}\n';
+    html += '.swipe-item{flex:0 0 calc(50% - 8px);height:480px;overflow:hidden}\n';
+    html += '.swipe-item img{width:100%;height:100%;object-fit:cover}\n';
+    html += '.swipe-indicators{display:flex;justify-content:flex-end;padding-right:80px;margin-top:20px;gap:8px}\n';
+    html += '.swipe-indicator{width:40px;height:3px;background:#ddd;cursor:pointer;border:none;padding:0}\n';
+    html += '.swipe-indicator.active{background:#1a1a1a}\n';
+    
+    /* 2분할 블록 */
+    html += '.split-block{display:grid;grid-template-columns:1fr 1fr;width:100%}\n';
+    html += '.split-item{height:560px;position:relative;overflow:hidden;background:#f0f0f0}\n';
+    html += '.split-item.left-full .split-main-image{position:relative;width:100%;height:100%;object-fit:cover}\n';
+    html += '.split-item.right-blur .split-blur-bg{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:blur(35px) saturate(1.2);opacity:0.7}\n';
+    html += '.split-item.right-blur .split-main-image{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:auto;height:90%;max-width:80%;object-fit:cover;z-index:2}\n';
+    html += '.split-text-overlay{position:absolute;top:50%;left:40px;transform:translateY(-50%);z-index:5;color:#fff}\n';
+    html += '.split-brand{font-size:32px;font-weight:600;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,0.3)}\n';
+    
+    /* 지그재그 블록 */
+    html += '.zigzag-block{width:100%;padding:100px 80px;background:#fff}\n';
+    html += '.zigzag-inner{display:flex;gap:60px;align-items:flex-start}\n';
+    html += '.zigzag-block.reversed .zigzag-inner{flex-direction:row-reverse}\n';
+    html += '.zigzag-text-area{width:280px;flex-shrink:0}\n';
+    html += '.zigzag-brand{font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:8px;line-height:1.2}\n';
+    html += '.zigzag-sub{font-size:15px;color:#666}\n';
+    html += '.zigzag-images{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:flex-start}\n';
+    html += '.zigzag-img{overflow:hidden}\n';
+    html += '.zigzag-img:nth-child(1){margin-top:140px}\n';
+    html += '.zigzag-img:nth-child(2){margin-top:0}\n';
+    html += '.zigzag-img img{width:100%;height:600px;object-fit:cover}\n';
+    
+    /* 콜라주 블록 */
+    html += '.collage-block{padding:80px;background:#fff}\n';
+    html += '.collage-header{text-align:center;margin-bottom:80px}\n';
+    html += '.collage-brand{font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:12px;line-height:1}\n';
+    html += '.collage-sub{font-size:15px;color:#666;font-weight:500}\n';
+    html += '.collage-type1{position:relative;min-height:1350px;max-width:1100px;margin:0 auto}\n';
+    html += '.collage-type1 .col-img{position:absolute;overflow:hidden}\n';
+    html += '.collage-type1 .col-img img{width:100%;height:100%;object-fit:cover}\n';
+    html += '.collage-type1 .col-img:nth-child(1){top:0;left:50%;transform:translateX(-50%);width:450px;height:450px}\n';
+    html += '.collage-type1 .col-img:nth-child(2){top:480px;left:0;width:400px;height:500px}\n';
+    html += '.collage-type1 .col-img:nth-child(3){top:420px;right:5%;width:300px;height:350px}\n';
+    html += '.collage-type1 .col-img:nth-child(4){top:930px;left:50%;transform:translateX(-50%);width:480px;height:350px}\n';
+    html += '.collage-type2{position:relative;min-height:750px;max-width:1000px;margin:0 auto}\n';
+    html += '.collage-type2 .col-img{position:absolute;overflow:hidden}\n';
+    html += '.collage-type2 .col-img img{width:100%;height:100%;object-fit:cover}\n';
+    html += '.collage-type2 .col-img:nth-child(1){top:0;right:0;width:65%;height:450px}\n';
+    html += '.collage-type2 .col-img:nth-child(2){top:280px;left:5%;width:45%;height:350px;z-index:2}\n';
+    
+    /* 유의사항 */
+    html += '.notice-section{padding:100px 80px;background:#fafafa;border-top:1px solid #e5e5e5}\n';
+    html += '.notice-inner{max-width:1200px;margin:0 auto}\n';
+    html += '.notice-item{border-bottom:1px solid #e5e5e5}\n';
+    html += '.notice-item.active .notice-content{display:block}\n';
+    html += '.notice-item.active .notice-arrow{transform:rotate(180deg)}\n';
+    html += '.notice-title-btn{width:100%;padding:24px 0;background:none;border:none;display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:600;color:#1a1a1a;cursor:pointer;text-align:left}\n';
+    html += '.notice-arrow{font-size:12px;color:#999;transition:transform 0.3s}\n';
+    html += '.notice-content{display:none;padding:0 0 24px;font-size:14px;color:#666;line-height:1.8;white-space:pre-line}\n';
+    
+    /* 배경색 */
+    html += '.bg-snow-blue{background:#eef2f5}\n';
+    html += '.bg-light-gray{background:#f5f5f5}\n';
+    html += '.bg-pale-mint{background:#f0f4f2}\n';
+    html += '.bg-warm-sand{background:#f7f3f0}\n';
+    html += '.bg-lavender-mist{background:#f2f2f7}\n';
+    html += '.bg-sky-tint{background:#edf5f7}\n';
+    html += '.bg-ivory-cream{background:#f9f5f0}\n';
+    html += '.bg-dew-green{background:#f2f5f2}\n';
+    html += '.bg-shell-pink{background:#f5f0f2}\n';
+    html += '.bg-steel-tint{background:#ebeef0}\n';
+    
+    /* ===== 모바일 스타일 ===== */
+    if(isMobile) {
+        /* 히어로 모바일 */
+        html += '.hero-section{margin-bottom:80px}\n';
+        html += '.hero-image-wrapper{height:auto;overflow:visible}\n';
+        html += '#heroSlidesContainer{position:relative;inset:auto;width:100%;height:auto}\n';
+        html += '.hero-slide{display:none;position:relative;inset:auto;width:100%;height:auto;opacity:1}\n';
+        html += '.hero-slide.active{display:block;opacity:1;position:relative}\n';
+        html += '.hero-slide .hero-blur-bg{display:none}\n';
+        html += '.hero-main-image-frame{position:relative;top:auto;left:auto;transform:none;width:100%;height:auto;aspect-ratio:9/16}\n';
+        html += '.hero-main-image-frame .hero-main-image{width:100%;height:100%;object-fit:cover}\n';
+        html += '.hero-slide.full-mode .hero-main-image-frame{aspect-ratio:9/16}\n';
+        html += '.hero-text-wrapper{width:100%;padding:0 48px;bottom:100px}\n';
+        html += '.hero-top-label{font-size:13px;letter-spacing:2.5px}\n';
+        html += '.hero-logo{font-size:16px;letter-spacing:4px}\n';
+        html += '.hero-main-text{font-size:65px;line-height:1.15;letter-spacing:-1px}\n';
+        html += '.hero-sub-text{font-size:24px;line-height:1.6}\n';
+        html += '.hero-indicators{bottom:40px;gap:8px}\n';
+        html += '.hero-indicator{width:8px;height:8px}\n';
+        html += '.hero-indicator.active{width:28px;border-radius:4px}\n';
+        
+        /* 베네핏 모바일 */
+        html += '.benefit-section{padding:80px 0 80px}\n';
+        html += '.benefit-header{padding:0 48px;margin-bottom:70px;padding-bottom:30px;text-align:center}\n';
+        html += '.benefit-title{font-size:48px;letter-spacing:3px;margin-bottom:16px}\n';
+        html += '.benefit-date{font-size:18px}\n';
+        html += '.benefit-wrapper{padding:0 48px}\n';
+        html += '.benefit-item{padding:60px 0}\n';
+        html += '.benefit-item-inner{flex-direction:column;gap:20px;text-align:center}\n';
+        html += '.benefit-number-col{width:100%;text-align:center}\n';
+        html += '.benefit-number{font-size:16px;letter-spacing:2px}\n';
+        html += '.benefit-main-title{font-size:40px;text-align:center}\n';
+        html += '.benefit-sub-text{font-size:20px;text-align:center;line-height:1.8}\n';
+        html += '.benefit-gift-area{margin-top:30px}\n';
+        html += '.benefit-gift-grid{display:flex;flex-direction:row;flex-wrap:nowrap;gap:12px}\n';
+        html += '.benefit-gift-item{flex:0 0 calc(50% - 6px);width:calc(50% - 6px)}\n';
+        html += '.benefit-gift-item img{height:200px}\n';
+        html += '.benefit-gift-text-box{padding:12px}\n';
+        html += '.benefit-gift-item p{font-size:16px}\n';
+        html += '.benefit-gift-notes{font-size:14px;line-height:2;text-align:center}\n';
+        html += '.benefit-coupon-card{margin:20px auto 0;display:flex}\n';
+        html += '.coupon-left{padding:24px 32px}\n';
+        html += '.coupon-percent{font-size:42px}\n';
+        html += '.coupon-right{padding:20px 28px}\n';
+        html += '.coupon-name{font-size:16px}\n';
+        html += '.coupon-period{font-size:14px}\n';
+        
+        /* 타이머 모바일 */
+        html += '.timer-section{padding:60px 0}\n';
+        html += '.timer-label{font-size:18px;margin-bottom:24px}\n';
+        html += '.timer-display{gap:16px}\n';
+        html += '.timer-value{font-size:56px;font-weight:800}\n';
+        html += '.timer-unit{font-size:14px;margin-top:6px}\n';
+        html += '.timer-colon{font-size:40px}\n';
+        
+        /* 기본형 모바일 */
+        html += '.basic-block{height:auto}\n';
+        html += '.basic-blur-bg{display:none}\n';
+        html += '.basic-main-image-frame{position:relative;top:auto;left:auto;transform:none;width:100%;height:auto;aspect-ratio:3/4}\n';
+        html += '.basic-text-area{padding:50px 48px;text-align:center}\n';
+        html += '.basic-main-title{font-size:42px;line-height:1.25;letter-spacing:0}\n';
+        html += '.basic-sub-title{font-size:20px;line-height:1.8}\n';
+        
+        /* 스와이프 모바일 */
+        html += '.swipe-block{padding:60px 0}\n';
+        html += '.swipe-inner{flex-direction:column;padding:0 48px;gap:32px}\n';
+        html += '.swipe-text-area{width:100%;padding-top:0;text-align:center}\n';
+        html += '.swipe-brand{font-size:42px;text-align:center}\n';
+        html += '.swipe-sub-brand{font-size:18px;text-align:center}\n';
+        html += '.swipe-desc-text{font-size:17px;text-align:center}\n';
+        html += '.swipe-images-wrapper{width:100%;overflow:hidden}\n';
+        html += '.swipe-images-area{display:flex;flex-direction:row;flex-wrap:nowrap;gap:0}\n';
+        html += '.swipe-item{flex:0 0 100%;width:100%;height:auto;aspect-ratio:3/4;min-width:100%}\n';
+        html += '.swipe-indicators{padding:0;margin-top:24px;justify-content:center;gap:10px;display:flex}\n';
+        html += '.swipe-indicator{width:10px;height:10px;border-radius:50%;background:#ddd}\n';
+        html += '.swipe-indicator.active{width:28px;border-radius:5px;background:#1a1a1a}\n';
+        
+        /* 2분할 모바일 */
+        html += '.split-block{grid-template-columns:1fr;gap:0}\n';
+        html += '.split-item{height:auto;aspect-ratio:3/4}\n';
+        html += '.split-item.left-full .split-main-image{width:100%;height:100%;object-fit:cover}\n';
+        html += '.split-item.right-blur{position:relative}\n';
+        html += '.split-item.right-blur .split-blur-bg{display:block;position:absolute;inset:-30px;filter:blur(35px) saturate(1.2);opacity:0.7}\n';
+        html += '.split-item.right-blur .split-main-image{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:auto;height:85%;max-width:75%;object-fit:cover;z-index:2}\n';
+        html += '.split-text-overlay{left:40px}\n';
+        html += '.split-brand{font-size:38px}\n';
+        
+        /* 지그재그 모바일 */
+        html += '.zigzag-block{padding:80px 32px}\n';
+        html += '.zigzag-inner{flex-direction:column !important;gap:0 !important}\n';
+        html += '.zigzag-text-area{width:100%;text-align:left;padding:0 5%;margin-bottom:20px}\n';
+        html += '.zigzag-brand{font-size:38px;text-align:left}\n';
+        html += '.zigzag-sub{font-size:20px;text-align:left}\n';
+        html += '.zigzag-images{display:block !important;width:100%}\n';
+        html += '.zigzag-img:nth-child(1){width:88% !important;margin-left:0 !important;margin-right:auto !important;margin-bottom:30px;margin-top:0}\n';
+        html += '.zigzag-img:nth-child(2){width:88% !important;margin-left:auto !important;margin-right:0 !important}\n';
+        html += '.zigzag-block.reversed .zigzag-text-area{text-align:right !important}\n';
+        html += '.zigzag-block.reversed .zigzag-brand{text-align:right}\n';
+        html += '.zigzag-block.reversed .zigzag-sub{text-align:right}\n';
+        html += '.zigzag-block.reversed .zigzag-img:nth-child(1){margin-left:auto !important;margin-right:0 !important}\n';
+        html += '.zigzag-block.reversed .zigzag-img:nth-child(2){margin-left:0 !important;margin-right:auto !important}\n';
+        html += '.zigzag-img img{width:100% !important;height:auto !important;aspect-ratio:3/4;object-fit:cover}\n';
+        
+        /* 콜라주 모바일 */
+        html += '.collage-block{padding:60px 32px 40px}\n';
+        html += '.collage-header{margin-bottom:40px}\n';
+        html += '.collage-brand{font-size:38px}\n';
+        html += '.collage-sub{font-size:20px}\n';
+        html += '.collage-type1{min-height:auto;display:flex;flex-direction:column;position:relative;gap:20px;padding-bottom:40px}\n';
+        html += '.collage-type1 .col-img{position:relative !important;transform:none !important;box-shadow:0 4px 20px rgba(0,0,0,0.08);top:auto !important;left:auto !important;right:auto !important}\n';
+        html += '.collage-type1 .col-img:nth-child(1){width:75% !important;height:auto !important;aspect-ratio:1/1;align-self:flex-end;margin-right:5%}\n';
+        html += '.collage-type1 .col-img:nth-child(2){width:60% !important;height:auto !important;aspect-ratio:4/5;align-self:flex-start;margin-left:0;margin-top:-40px}\n';
+        html += '.collage-type1 .col-img:nth-child(3){width:50% !important;height:auto !important;aspect-ratio:3/4;align-self:flex-end;margin-right:10%;margin-top:-30px}\n';
+        html += '.collage-type1 .col-img:nth-child(4){width:80% !important;height:auto !important;aspect-ratio:4/3;align-self:center;margin-top:-20px}\n';
+        html += '.collage-type2{min-height:auto;display:flex;flex-direction:column;position:relative;gap:20px;padding-bottom:40px}\n';
+        html += '.collage-type2 .col-img{position:relative !important;transform:none !important;box-shadow:0 4px 20px rgba(0,0,0,0.08);top:auto !important;left:auto !important;right:auto !important}\n';
+        html += '.collage-type2 .col-img:nth-child(1){width:75% !important;height:auto !important;aspect-ratio:4/5;align-self:flex-end;margin-right:0}\n';
+        html += '.collage-type2 .col-img:nth-child(2){width:60% !important;height:auto !important;aspect-ratio:4/5;align-self:flex-start;margin-left:5%;margin-top:-50px}\n';
+        
+        /* 유의사항 모바일 */
+        html += '.notice-section{padding:80px 48px}\n';
+        html += '.notice-inner{flex-direction:column;gap:40px}\n';
+        html += '.notice-title-btn{font-size:20px;padding:24px 0}\n';
+        html += '.notice-arrow{font-size:16px}\n';
+        html += '.notice-content{font-size:18px;line-height:2}\n';
+        
+        /* 간격 모바일 */
+        html += '.content-block{margin-bottom:80px}\n';
+    }
+    
+    html += '</style>\n</head>\n<body>\n';
+    html += '<div class="preview-wrapper">\n<div class="preview-container'+mobileClass+'">\n<div class="preview-inner">\n\n';
+    
+    /* 히어로 섹션 */
+    html += '<!-- 히어로 섹션 -->\n';
+    html += '<section class="hero-section">\n';
+    html += '<div class="hero-image-wrapper">\n';
+    html += '<div id="heroSlidesContainer">\n';
+    
+    heroData.slides.forEach(function(slide, i) {
+        var activeClass = i === 0 ? ' active' : '';
+        var modeClass = slide.mode === 'full' ? ' full-mode' : '';
+        html += '<div class="hero-slide'+activeClass+modeClass+'">\n';
+        if(slide.mode !== 'full') {
+            html += '<div class="hero-blur-bg" style="background-image:url(\''+slide.image+'\')"></div>\n';
+        }
+        html += '<div class="hero-main-image-frame">\n';
+        html += '<img class="hero-main-image" src="'+slide.image+'" style="object-position:'+slide.posX+'% '+slide.posY+'%;transform:scale('+(slide.zoom/100)+')">\n';
+        html += '<div class="hero-gradient-overlay"></div>\n';
+        html += '</div>\n</div>\n';
+    });
+    
+    html += '</div>\n';
+    html += '<div class="hero-text-wrapper align-'+heroData.textAlign+'">\n';
+    html += '<p class="hero-top-label">'+heroData.topLabel+'</p>\n';
+    html += '<p class="hero-logo">'+heroData.logo+'</p>\n';
+    html += '<h1 class="hero-main-text">'+heroData.mainText+'</h1>\n';
+    html += '<p class="hero-sub-text">'+heroData.subText+'</p>\n';
+    html += '</div>\n';
+    
+    if(heroData.slides.length > 1) {
+        html += '<div class="hero-indicators">\n';
+        heroData.slides.forEach(function(_, i) {
+            html += '<div class="hero-indicator'+(i===0?' active':'')+'" onclick="goToHeroSlide('+i+')"></div>\n';
+        });
+        html += '</div>\n';
+    }
+    html += '</div>\n</section>\n\n';
+    
+    /* 베네핏 섹션 */
+    if(benefitSectionData.visible) {
+        html += '<!-- 베네핏 섹션 -->\n';
+        html += '<section class="benefit-section content-block">\n';
+        html += '<div class="benefit-header">\n';
+        html += '<h2 class="benefit-title">'+benefitSectionData.title+'</h2>\n';
+        html += '<p class="benefit-date">'+benefitSectionData.date+'</p>\n';
+        html += '</div>\n';
+        html += '<div class="benefit-wrapper">\n';
+        
+        benefits.forEach(function(benefit, i) {
+            html += '<div class="benefit-item">\n';
+            html += '<div class="benefit-item-inner">\n';
+            html += '<div class="benefit-number-col"><p class="benefit-number">EVENT '+(i+1)+'</p></div>\n';
+            html += '<div class="benefit-content-col">\n';
+            html += '<p class="benefit-main-title">'+benefit.mainTitle+'</p>\n';
+            if(benefit.subText) html += '<p class="benefit-sub-text">'+benefit.subText+'</p>\n';
+            
+            if(benefit.type === 'gift' && benefit.showImage && benefit.gifts) {
+                html += '<div class="benefit-gift-area">\n';
+                html += '<div class="benefit-gift-grid-wrapper">\n';
+                html += '<div class="benefit-gift-grid">\n';
+                benefit.gifts.forEach(function(gift) {
+                    html += '<div class="benefit-gift-item">\n';
+                    html += '<img src="'+gift.image+'" alt="'+gift.desc+'">\n';
+                    html += '<div class="benefit-gift-text-box"><p>'+gift.desc+'</p></div>\n';
+                    html += '</div>\n';
+                });
+                html += '</div>\n</div>\n';
+                if(benefit.notes && benefit.notes.length > 0) {
+                    html += '<div class="benefit-gift-notes">\n';
+                    benefit.notes.forEach(function(note) { html += '<p>'+note+'</p>\n'; });
+                    html += '</div>\n';
+                }
+                html += '</div>\n';
+            }
+            
+            if(benefit.type === 'coupon') {
+                html += '<div class="benefit-coupon-card">\n';
+                html += '<div class="coupon-left"><span class="coupon-percent">'+benefit.couponPercent+'</span></div>\n';
+                html += '<div class="coupon-right">\n';
+                html += '<span class="coupon-name">'+benefit.couponName+'</span>\n';
+                html += '<span class="coupon-period">'+benefit.couponPeriod+'</span>\n';
+                html += '</div>\n</div>\n';
+            }
+            
+            html += '</div>\n</div>\n</div>\n';
+        });
+        
+        html += '</div>\n</section>\n\n';
+    }
+    
+    /* 타이머 섹션 */
+    if(timerData.visible) {
+        html += '<!-- 타이머 섹션 -->\n';
+        html += '<section class="timer-section content-block">\n';
+        html += '<p class="timer-label">혜택 종료시까지</p>\n';
+        html += '<div class="timer-display">\n';
+        html += '<div class="timer-box"><div class="timer-value" id="timerDays">00</div><div class="timer-unit">일</div></div>\n';
+        html += '<div class="timer-colon">:</div>\n';
+        html += '<div class="timer-box"><div class="timer-value" id="timerHours">00</div><div class="timer-unit">시간</div></div>\n';
+        html += '<div class="timer-colon">:</div>\n';
+        html += '<div class="timer-box"><div class="timer-value" id="timerMins">00</div><div class="timer-unit">분</div></div>\n';
+        html += '<div class="timer-colon">:</div>\n';
+        html += '<div class="timer-box"><div class="timer-value" id="timerSecs">00</div><div class="timer-unit">초</div></div>\n';
+        html += '</div>\n</section>\n\n';
+    }
+    
+    /* 콘텐츠 블록들 */
+    var swipeBlockIndex = 0;
+    blocks.forEach(function(block, blockIndex) {
+        if(!block.visible) return;
+        
+        if(block.type === 'basic') {
+            var modeClass = block.mode === 'full' ? ' full-mode' : '';
+            html += '<!-- 기본형 블록 -->\n';
+            html += '<section class="content-block">\n';
+            html += '<div class="basic-block'+modeClass+'">\n';
+            if(block.mode !== 'full') {
+                html += '<div class="basic-blur-bg" style="background-image:url(\''+block.image+'\')"></div>\n';
+            }
+            html += '<div class="basic-main-image-frame">\n';
+            html += '<img class="basic-main-image" src="'+block.image+'" style="object-position:'+block.posX+'% '+block.posY+'%;transform:scale('+(block.zoom/100)+')">\n';
+            html += '</div>\n</div>\n';
+            html += '<div class="basic-text-area">\n';
+            html += '<h3 class="basic-main-title">'+block.mainTitle.replace(/\n/g,'<br>')+'</h3>\n';
+            html += '<p class="basic-sub-title">'+block.subTitle.replace(/\n/g,'<br>')+'</p>\n';
+            html += '</div>\n</section>\n\n';
+        }
+        
+        if(block.type === 'swipe') {
+            var imgCount = block.images.length;
+            var pageCount = isMobile ? imgCount : (imgCount === 3 ? 2 : Math.ceil(imgCount / 2));
+            html += '<!-- 자동스와이프 블록 -->\n';
+            html += '<section class="content-block swipe-block '+block.bgColor+'" data-swipe-id="'+swipeBlockIndex+'" data-img-count="'+imgCount+'">\n';
+            html += '<div class="swipe-inner">\n';
+            html += '<div class="swipe-text-area">\n';
+            html += '<p class="swipe-brand">'+block.brand+'</p>\n';
+            html += '<p class="swipe-sub-brand">'+block.subBrand+'</p>\n';
+            html += '<p class="swipe-desc-text">'+block.descText.replace(/\n/g,'<br>')+'</p>\n';
+            html += '</div>\n';
+            html += '<div class="swipe-images-wrapper">\n';
+            html += '<div class="swipe-images-area" id="swipeArea_'+swipeBlockIndex+'">\n';
+            block.images.forEach(function(img) {
+                html += '<div class="swipe-item"><img src="'+img+'"></div>\n';
+            });
+            html += '</div>\n</div>\n</div>\n';
+            if(pageCount > 1) {
+                html += '<div class="swipe-indicators">\n';
+                for(var p = 0; p < pageCount; p++) {
+                    html += '<button class="swipe-indicator'+(p===0?' active':'')+'" onclick="moveSwipePage('+swipeBlockIndex+','+p+')"></button>\n';
+                }
+                html += '</div>\n';
+            }
+            html += '</section>\n\n';
+            swipeBlockIndex++;
+        }
+        
+        if(block.type === 'split') {
+            html += '<!-- 2분할 블록 -->\n';
+            html += '<section class="content-block split-block">\n';
+            html += '<div class="split-item left-full">\n';
+            html += '<img class="split-main-image" src="'+block.leftImage+'">\n';
+            html += '</div>\n';
+            html += '<div class="split-item right-blur">\n';
+            html += '<div class="split-blur-bg" style="background-image:url(\''+block.rightImage+'\')"></div>\n';
+            html += '<img class="split-main-image" src="'+block.rightImage+'">\n';
+            html += '<div class="split-text-overlay">\n';
+            html += '<p class="split-brand">'+block.rightBrand.replace(/\n/g,'<br>')+'</p>\n';
+            html += '</div>\n</div>\n</section>\n\n';
+        }
+        
+        if(block.type === 'zigzag') {
+            html += '<!-- 지그재그 블록 -->\n';
+            html += '<section class="content-block zigzag-block'+(block.reversed?' reversed':'')+'">\n';
+            html += '<div class="zigzag-inner">\n';
+            html += '<div class="zigzag-text-area">\n';
+            html += '<p class="zigzag-brand">'+block.brand+'</p>\n';
+            html += '<p class="zigzag-sub">'+block.sub+'</p>\n';
+            html += '</div>\n';
+            html += '<div class="zigzag-images">\n';
+            block.images.forEach(function(img) {
+                html += '<div class="zigzag-img"><img src="'+img+'"></div>\n';
+            });
+            html += '</div>\n</div>\n</section>\n\n';
+        }
+        
+        if(block.type === 'collage') {
+            html += '<!-- 콜라주 블록 -->\n';
+            html += '<section class="content-block collage-block">\n';
+            html += '<div class="collage-header">\n';
+            html += '<p class="collage-brand">'+block.brand+'</p>\n';
+            html += '<p class="collage-sub">'+block.sub+'</p>\n';
+            html += '</div>\n';
+            if(block.collageType === 1) {
+                html += '<div class="collage-type1">\n';
+                block.images.slice(0,4).forEach(function(img) {
+                    html += '<div class="col-img"><img src="'+img+'"></div>\n';
+                });
+                html += '</div>\n';
+            } else {
+                html += '<div class="collage-type2">\n';
+                html += '<div class="col-img"><img src="'+(block.images[0]||'')+'"></div>\n';
+                html += '<div class="col-img"><img src="'+(block.images[1]||'')+'"></div>\n';
+                html += '</div>\n';
+            }
+            html += '</section>\n\n';
+        }
+    });
+    
+    /* 유의사항 섹션 */
+    html += '<!-- 유의사항 섹션 -->\n';
+    html += '<section class="notice-section content-block">\n';
+    html += '<div class="notice-inner">\n';
+    html += '<div class="notice-content-area">\n';
+    notices.forEach(function(notice, i) {
+        html += '<div class="notice-item" id="notice_'+i+'">\n';
+        html += '<button class="notice-title-btn" onclick="toggleNotice('+i+')">\n';
+        html += '<span>'+notice.title+'</span>\n';
+        html += '<span class="notice-arrow">▼</span>\n';
+        html += '</button>\n';
+        html += '<div class="notice-content">'+notice.content.replace(/\n/g,'<br>')+'</div>\n';
+        html += '</div>\n';
+    });
+    html += '</div>\n</div>\n</section>\n\n';
+    
+    html += '</div>\n</div>\n</div>\n\n';
+    
+    /* JavaScript */
+    html += '<script>\n';
+    html += 'var isMobile = '+isMobile+';\n\n';
+    
+    /* 히어로 슬라이드쇼 */
+    if(heroData.slides.length > 1) {
+        html += 'var currentHeroSlide = 0;\n';
+        html += 'var heroSlideCount = '+heroData.slides.length+';\n';
+        html += 'setInterval(function() {\n';
+        html += '  var slides = document.querySelectorAll(".hero-slide");\n';
+        html += '  var indicators = document.querySelectorAll(".hero-indicator");\n';
+        html += '  slides[currentHeroSlide].classList.remove("active");\n';
+        html += '  if(indicators[currentHeroSlide]) indicators[currentHeroSlide].classList.remove("active");\n';
+        html += '  currentHeroSlide = (currentHeroSlide + 1) % heroSlideCount;\n';
+        html += '  slides[currentHeroSlide].classList.add("active");\n';
+        html += '  if(indicators[currentHeroSlide]) indicators[currentHeroSlide].classList.add("active");\n';
+        html += '}, 3000);\n\n';
+        html += 'function goToHeroSlide(i) {\n';
+        html += '  var slides = document.querySelectorAll(".hero-slide");\n';
+        html += '  var indicators = document.querySelectorAll(".hero-indicator");\n';
+        html += '  slides[currentHeroSlide].classList.remove("active");\n';
+        html += '  if(indicators[currentHeroSlide]) indicators[currentHeroSlide].classList.remove("active");\n';
+        html += '  currentHeroSlide = i;\n';
+        html += '  slides[currentHeroSlide].classList.add("active");\n';
+        html += '  if(indicators[currentHeroSlide]) indicators[currentHeroSlide].classList.add("active");\n';
+        html += '}\n\n';
+    }
+    
+    /* 타이머 */
+    if(timerData.visible) {
+        html += 'var targetDate = new Date("'+timerData.targetDate+'").getTime();\n';
+        html += 'setInterval(function() {\n';
+        html += '  var now = new Date().getTime();\n';
+        html += '  var diff = targetDate - now;\n';
+        html += '  if (diff > 0) {\n';
+        html += '    var d = Math.floor(diff / (1000 * 60 * 60 * 24));\n';
+        html += '    var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));\n';
+        html += '    var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));\n';
+        html += '    var s = Math.floor((diff % (1000 * 60)) / 1000);\n';
+        html += '    document.getElementById("timerDays").textContent = d < 10 ? "0"+d : d;\n';
+        html += '    document.getElementById("timerHours").textContent = h < 10 ? "0"+h : h;\n';
+        html += '    document.getElementById("timerMins").textContent = m < 10 ? "0"+m : m;\n';
+        html += '    document.getElementById("timerSecs").textContent = s < 10 ? "0"+s : s;\n';
+        html += '  }\n';
+        html += '}, 1000);\n\n';
+    }
+    
+    /* 스와이프 기능 */
+    html += 'var swipeIntervals = {};\n';
+    html += 'function moveSwipePage(blockId, pageIndex) {\n';
+    html += '  var area = document.getElementById("swipeArea_" + blockId);\n';
+    html += '  if(!area) return;\n';
+    html += '  var block = area.closest(".swipe-block");\n';
+    html += '  var imgCount = parseInt(block.dataset.imgCount);\n';
+    html += '  var translateValue = 0;\n';
+    html += '  if(isMobile) {\n';
+    html += '    translateValue = pageIndex * 100;\n';
+    html += '    area.style.transform = "translateX(-" + translateValue + "%)";\n';
+    html += '  } else {\n';
+    html += '    if(imgCount === 3) {\n';
+    html += '      translateValue = pageIndex * 50;\n';
+    html += '      area.style.transform = "translateX(calc(-" + translateValue + "% - " + (pageIndex * 8) + "px))";\n';
+    html += '    } else {\n';
+    html += '      translateValue = pageIndex * 100;\n';
+    html += '      area.style.transform = "translateX(-" + translateValue + "%)";\n';
+    html += '    }\n';
+    html += '  }\n';
+    html += '  block.querySelectorAll(".swipe-indicator").forEach(function(ind, idx) {\n';
+    html += '    ind.classList.toggle("active", idx === pageIndex);\n';
+    html += '  });\n';
+    html += '}\n\n';
+    
+    html += 'function initSwipeBlocks() {\n';
+    html += '  document.querySelectorAll(".swipe-block").forEach(function(block) {\n';
+    html += '    var id = block.dataset.swipeId;\n';
+    html += '    var imgCount = parseInt(block.dataset.imgCount);\n';
+    html += '    var pageCount = isMobile ? imgCount : (imgCount === 3 ? 2 : Math.ceil(imgCount / 2));\n';
+    html += '    if(pageCount > 1) {\n';
+    html += '      var cur = 0;\n';
+    html += '      swipeIntervals[id] = setInterval(function() {\n';
+    html += '        cur = (cur + 1) % pageCount;\n';
+    html += '        moveSwipePage(id, cur);\n';
+    html += '      }, 4000);\n';
+    html += '    }\n';
+    html += '  });\n';
+    html += '}\n';
+    html += 'initSwipeBlocks();\n\n';
+    
+    /* 유의사항 토글 */
+    html += 'function toggleNotice(idx) {\n';
+    html += '  var item = document.getElementById("notice_" + idx);\n';
+    html += '  item.classList.toggle("active");\n';
+    html += '}\n';
+    
+    html += '<\/script>\n';
+    html += '</body>\n</html>';
+    
+    return html;
+}
+
+function downloadHTML(viewMode) {
+    var html = generateExportHTML(viewMode);
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'promotion_' + viewMode + '_' + Date.now() + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    closeExportModal();
+    alert((viewMode === 'web' ? '웹' : '모바일') + ' 버전 HTML 파일이 다운로드되었습니다!');
+}
+
+function copyHTML(viewMode) {
+    var html = generateExportHTML(viewMode);
+    navigator.clipboard.writeText(html).then(function() {
+        closeExportModal();
+        alert((viewMode === 'web' ? '웹' : '모바일') + ' 버전 HTML 코드가 클립보드에 복사되었습니다!');
+    }).catch(function(err) {
+        console.error('복사 실패:', err);
+        alert('복사에 실패했습니다. 다시 시도해주세요.');
+    });
+}
+
+// ========== 이미지 업로드 용량 제한 (500KB) ==========
+var MAX_IMAGE_SIZE = 500 * 1024; // 500KB
+
+function validateImageSize(file) {
+    if(file.size > MAX_IMAGE_SIZE) {
+        alert('이미지는 500kb를 넘지 않습니다.');
+        return false;
+    }
+    return true;
+}
+
+// ========== Export/Import 파이프라인 ==========
+function exportImagesAndProject() {
+    if(typeof JSZip === 'undefined') { alert('잠시 후 다시 시도하세요.'); return; }
+    var zip = new JSZip();
+    var slicesFolder = zip.folder('slices');
+    var bannersFolder = zip.folder('banners');
+    
+    // 프로젝트 상태 저장
+    var state = {
+        version: '5.0',
+        timestamp: new Date().toISOString(),
+        heroData: heroData,
+        benefitSectionData: benefitSectionData,
+        benefits: benefits,
+        blocks: blocks,
+        notices: notices
+    };
+    zip.file('project.json', JSON.stringify(state, null, 2));
+    
+    // 슬라이스 및 배너 생성
+    var promises = [];
+    
+    // 히어로 슬라이스
+    heroData.slides.forEach(function(slide, i) {
+        if(slide.image && slide.image.startsWith('data:')) {
+            var data = compressImage(slide.image, 500);
+            slicesFolder.file('hero_slide_' + i + '.jpg', data.split(',')[1], {base64: true});
+        }
+    });
+    
+    // 블록별 슬라이스
+    blocks.forEach(function(block, i) {
+        if(block.image && block.image.startsWith('data:')) {
+            var data = compressImage(block.image, 500);
+            slicesFolder.file('block_' + i + '_main.jpg', data.split(',')[1], {base64: true});
+        }
+        if(block.images) {
+            block.images.forEach(function(img, j) {
+                if(img && img.startsWith('data:')) {
+                    var data = compressImage(img, 500);
+                    slicesFolder.file('block_' + i + '_img_' + j + '.jpg', data.split(',')[1], {base64: true});
+                }
+            });
+        }
+    });
+    
+    // 배너 생성
+    if(heroData.slides && heroData.slides[0] && heroData.slides[0].image) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function() {
+            var configs = [
+                {n: 'PC_메인배너', w: 1120, h: 700},
+                {n: 'MO_메인배너', w: 960, h: 1024},
+                {n: '기획전목록배너', w: 1080, h: 1248},
+                {n: '카카오배너', w: 800, h: 1100}
+            ];
+            configs.forEach(function(cfg) {
+                var data = createBannerImage(img, cfg.w, cfg.h, cfg.n === '카카오배너');
+                bannersFolder.file(cfg.n + '.jpg', data.split(',')[1], {base64: true});
+            });
+            
+            zip.generateAsync({type: 'blob'}).then(function(content) {
+                var url = URL.createObjectURL(content);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'style24_export_' + Date.now() + '.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                alert('이미지 추출 완료!');
+            });
+        };
+        img.onerror = function() {
+            zip.generateAsync({type: 'blob'}).then(function(content) {
+                var url = URL.createObjectURL(content);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'style24_export_' + Date.now() + '.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                alert('프로젝트 JSON 저장 완료! (이미지는 외부 URL이라 추출되지 않음)');
+            });
+        };
+        img.src = heroData.slides[0].image;
+    } else {
+        zip.generateAsync({type: 'blob'}).then(function(content) {
+            var url = URL.createObjectURL(content);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'style24_export_' + Date.now() + '.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    }
+}
+
+function compressImage(dataUrl, maxKB) {
+    var canvas = document.createElement('canvas');
+    var img = new Image();
+    img.src = dataUrl;
+    canvas.width = img.width || 800;
+    canvas.height = img.height || 600;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    var quality = 0.9;
+    var result = canvas.toDataURL('image/jpeg', quality);
+    while(result.length > maxKB * 1024 * 1.37 && quality > 0.1) {
+        quality -= 0.1;
+        result = canvas.toDataURL('image/jpeg', quality);
+    }
+    return result;
+}
+
+function createBannerImage(img, w, h, includeText) {
+    var canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, w, h);
+    
+    var scale = Math.max(w / img.width, h / img.height);
+    var sw = img.width * scale;
+    var sh = img.height * scale;
+    ctx.drawImage(img, (w - sw) / 2, (h - sh) / 2, sw, sh);
+    
+    if(includeText) {
+        // 카카오 배너: 히어로 텍스트 레이아웃 적용
+        var gradient = ctx.createLinearGradient(0, h * 0.5, 0, h);
+        gradient.addColorStop(0, 'rgba(0,0,0,0)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0.6)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, w, h);
+        
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.font = '600 40px Pretendard, sans-serif';
+        ctx.fillText(heroData.mainText.replace(/\n/g, ' '), w / 2, h - 80);
+        ctx.font = '300 18px Pretendard, sans-serif';
+        ctx.fillText(heroData.subText.split('\n')[0] || '', w / 2, h - 40);
+    }
+    
+    // 300KB 제한 압축
+    var quality = 0.9;
+    var result = canvas.toDataURL('image/jpeg', quality);
+    while(result.length > 300 * 1024 * 1.37 && quality > 0.1) {
+        quality -= 0.1;
+        result = canvas.toDataURL('image/jpeg', quality);
+    }
+    return result;
+}
+
+function importProject() {
+    document.getElementById('importProjectInput').click();
+}
+
+function handleProjectImport(event) {
+    var file = event.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            var state = JSON.parse(e.target.result);
+            heroData = state.heroData || heroData;
+            benefitSectionData = state.benefitSectionData || benefitSectionData;
+            benefits = state.benefits || [];
+            blocks = state.blocks || [];
+            notices = state.notices || [];
+            
+            renderHeroSlides();
+            renderHeroContent();
+            renderBenefits();
+            renderBlocks();
+            renderNotices();
+            
+            // benefitSectionData UI 업데이트
+            document.getElementById('benefitSectionTitle').textContent = benefitSectionData.title;
+            document.getElementById('benefitSectionDate').textContent = benefitSectionData.date;
+            
+            alert('프로젝트 복원 완료!');
+            event.target.value = '';
+        } catch(err) {
+            alert('복원 실패: ' + err.message);
+            event.target.value = '';
+        }
+    };
+    reader.readAsText(file);
+}
+
+// ========== 배너 생성 모달 ==========
+var bannerImages = {pc: null, mo: null, list: null, kakao: null};
+var currentBannerType = null;
+
+function openBannerModal() {
+    document.getElementById('bannerModal').classList.add('show');
+    generateBannerPreviews();
+}
+
+function closeBannerModal() {
+    document.getElementById('bannerModal').classList.remove('show');
+}
+
+function generateBannerPreviews() {
+    if(!heroData.slides || !heroData.slides[0] || !heroData.slides[0].image) {
+        alert('히어로 이미지가 없습니다.');
+        return;
+    }
+    
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+        var configs = [
+            {id: 'pc', w: 1120, h: 700, text: false},
+            {id: 'mo', w: 960, h: 1024, text: false},
+            {id: 'list', w: 1080, h: 1248, text: false},
+            {id: 'kakao', w: 800, h: 1100, text: true}
+        ];
+        
+        configs.forEach(function(cfg) {
+            var canvas = document.getElementById('bannerCanvas_' + cfg.id);
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#f5f5f5';
+            ctx.fillRect(0, 0, cfg.w, cfg.h);
+            
+            var sourceImg = bannerImages[cfg.id] || img;
+            var scale = Math.max(cfg.w / sourceImg.width, cfg.h / sourceImg.height);
+            var sw = sourceImg.width * scale;
+            var sh = sourceImg.height * scale;
+            ctx.drawImage(sourceImg, (cfg.w - sw) / 2, (cfg.h - sh) / 2, sw, sh);
+            
+            if(cfg.text) {
+                var gradient = ctx.createLinearGradient(0, cfg.h * 0.5, 0, cfg.h);
+                gradient.addColorStop(0, 'rgba(0,0,0,0)');
+                gradient.addColorStop(1, 'rgba(0,0,0,0.6)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, cfg.w, cfg.h);
+                
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'center';
+                ctx.font = '600 40px Pretendard, sans-serif';
+                ctx.fillText(heroData.mainText.replace(/\n/g, ' '), cfg.w / 2, cfg.h - 80);
+                ctx.font = '300 18px Pretendard, sans-serif';
+                ctx.fillText(heroData.subText.split('\n')[0] || '', cfg.w / 2, cfg.h - 40);
+            }
+        });
+    };
+    img.src = heroData.slides[0].image;
+}
+
+function replaceBannerImage(type) {
+    currentBannerType = type;
+    var input = document.getElementById('bannerReplaceInput');
+    input.onchange = function(e) {
+        if(e.target.files && e.target.files[0]) {
+            if(!validateImageSize(e.target.files[0])) return;
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                var img = new Image();
+                img.onload = function() {
+                    bannerImages[currentBannerType] = img;
+                    generateBannerPreviews();
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
+    input.click();
+}
+
+function downloadAllBanners() {
+    if(typeof JSZip === 'undefined') { alert('잠시 후 다시 시도하세요.'); return; }
+    var zip = new JSZip();
+    
+    var configs = [
+        {id: 'pc', n: 'PC_메인배너_1120x700'},
+        {id: 'mo', n: 'MO_메인배너_960x1024'},
+        {id: 'list', n: '기획전목록배너_1080x1248'},
+        {id: 'kakao', n: '카카오배너_800x1100'}
+    ];
+    
+    configs.forEach(function(cfg) {
+        var canvas = document.getElementById('bannerCanvas_' + cfg.id);
+        var quality = 0.9;
+        var data = canvas.toDataURL('image/jpeg', quality);
+        while(data.length > 300 * 1024 * 1.37 && quality > 0.1) {
+            quality -= 0.1;
+            data = canvas.toDataURL('image/jpeg', quality);
+        }
+        zip.file(cfg.n + '.jpg', data.split(',')[1], {base64: true});
+    });
+    
+    zip.generateAsync({type: 'blob'}).then(function(content) {
+        var url = URL.createObjectURL(content);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'banners_' + Date.now() + '.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        closeBannerModal();
+        alert('배너 다운로드 완료!');
+    });
+}
+
+// ========== SEO 혜택 코드 복사 ==========
+function copyBenefitSEO() {
+    var html = '<ul class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">\n';
+    benefits.forEach(function(b, i) {
+        html += '  <li>' + b.mainTitle;
+        if(b.subText) html += ' - ' + b.subText.replace(/\n/g, ' ');
+        if(b.couponPercent) html += ' (' + b.couponPercent + ')';
+        html += '</li>\n';
+    });
+    html += '</ul>';
+    
+    navigator.clipboard.writeText(html).then(function() {
+        alert('혜택 코드가 클립보드에 복사되었습니다!\n(visually-hidden 방식으로 SEO 최적화됨)');
+    }).catch(function() {
+        alert('복사에 실패했습니다.');
+    });
+}
+
+// ========== 상품단 영역 렌더링 ==========
+function renderProductBlock(block, index) {
+    var colClass = 'cols-' + (block.columns || 4);
+    var h = '<section class="content-block product-section">';
+    h += '<div class="block-controls"><span class="block-label">상품단</span>';
+    h += '<button class="block-ctrl-btn" onclick="toggleBlock(' + index + ')">' + (block.visible ? '👁️' : '🙈') + '</button>';
+    h += '<button class="block-ctrl-btn delete" onclick="deleteBlock(' + index + ')">🗑️</button></div>';
+    h += '<div class="product-header">';
+    h += '<h3 class="product-main-title">' + (block.mainTitle || '').replace(/\n/g, '<br>') + '</h3>';
+    h += '<p class="product-sub-title">' + (block.subTitle || '') + '</p>';
+    h += '</div>';
+    h += '<div class="product-grid ' + colClass + '">';
+    
+    (block.products || []).forEach(function(p) {
+        var isMobile = document.getElementById('previewContainer').classList.contains('mobile-view');
+        var target = isMobile ? '' : ' target="_blank"';
+        h += '<div class="product-item">';
+        h += '<a href="' + (p.link || '#') + '"' + target + '>';
+        h += '<img class="product-item-img" src="' + (p.image || '') + '" alt="' + (p.name || '') + '">';
+        h += '<p class="product-item-brand">' + (p.brand || '') + '</p>';
+        h += '<p class="product-item-name">' + (p.name || '') + '</p>';
+        h += '<div class="product-item-price">';
+        if(p.discount) h += '<span class="product-discount">' + p.discount + '</span>';
+        h += '<span class="product-price">' + (p.price || '') + '</span>';
+        h += '</div></a></div>';
+    });
+    
+    h += '</div>';
+    h += '<div class="overlay-controls"><button class="overlay-ctrl-btn" onclick="openEditModal(' + index + ',\'product\')">✏️ 편집</button></div>';
+    h += '</section>';
+    return h;
+}
+
 </script>
 </body>
 </html>
