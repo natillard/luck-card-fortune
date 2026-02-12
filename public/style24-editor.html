@@ -38,7 +38,7 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 
 /* 모든 영역 간격 100px 통일 */
 .content-block, .add-benefit-panel, .add-block-panel, .add-timer-panel, .add-notice-panel { margin-bottom: 100px !important; }
-.content-block:last-child { margin-bottom: 0 !important; }
+.content-block:last-child { margin-bottom: 100px !important; }
 
 .preview-wrapper{width:100%;overflow-x:auto}
 .preview-container{width:1920px;margin:0 auto;background:#fff;transition: width 0.3s ease;}
@@ -107,7 +107,7 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 .hero-text-wrapper.align-left{text-align:left}
 .hero-text-wrapper.align-center{text-align:center}
 .hero-text-wrapper.align-right{text-align:right}
-.hero-top-label{font-size:10px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:6px}
+.hero-top-label{display:none}
 .hero-logo{font-size:12px;font-weight:700;letter-spacing:3px;color:#fff;margin-bottom:16px}
 .hero-main-text{font-size:50px; font-weight:700;color:#fff;line-height:1.2;margin-bottom:14px;letter-spacing:-0.5px;white-space:pre-line}
 .hero-sub-text{font-size:18px;font-weight:300;color:rgba(255,255,255,0.85);line-height:1.5;white-space:pre-line}
@@ -117,20 +117,21 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 
 /* BENEFIT */
 .benefit-section{padding:0 0 40px;background:#fff}
-.benefit-header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:800px;margin-left:auto;margin-right:auto}
+.benefit-header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:1000px;margin-left:auto;margin-right:auto}
 .benefit-title{font-size:35px; font-weight:700;letter-spacing:2px;color:#1a1a1a;margin-bottom:8px}
 .benefit-date{font-size:14px;color:#666}
-.benefit-wrapper{max-width:800px;margin:0 auto}
+.benefit-wrapper{max-width:1000px;margin:0 auto}
 .benefit-item{padding:40px 0;border-bottom:1px solid #e5e5e5;position:relative}
 .benefit-item:last-child{border-bottom:none}
-.benefit-item-inner{display:flex;gap:40px}
-.benefit-number-col{width:100px;flex-shrink:0}
+.benefit-item-inner{position:relative}
+.benefit-number-col{position:absolute;top:0;left:0;width:100px;text-align:left}
 .benefit-number{font-size:12px;font-weight:600;color:#999;letter-spacing:1px}
-.benefit-content-col{flex:1; min-width: 0; position: relative;}
+.benefit-content-col{width:100%; min-width: 0; position: relative; text-align: center;}
 .benefit-main-title{font-size:30px; font-weight:700;color:#1a1a1a;margin-bottom:8px}
 .benefit-sub-text{font-size:15px;color:#666;line-height:1.7;white-space:pre-line;margin-bottom:16px}
-.benefit-link-btn{display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;color:#fff;padding:16px 24px;font-size:14px;font-weight:500;cursor:pointer;border:none;width:100%;max-width:400px}
+.benefit-link-btn{display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;color:#fff;padding:16px 24px;font-size:14px;font-weight:500;cursor:pointer;border:none;width:100%;max-width:400px;margin:0 auto}
 .benefit-link-btn span:last-child{font-size:18px}
+
 
 /* 베네핏 아이템별 컨트롤 버튼 */
 .benefit-controls{position:absolute;top:0;right:0;display:flex;gap:4px;opacity:0;transition:opacity 0.2s}
@@ -142,18 +143,21 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 /* 사은품 영역 */
 .benefit-gift-area{margin-top:20px; position: relative;}
 .benefit-gift-grid-wrapper { overflow: hidden; width: 100%; }
-.benefit-gift-grid{display:flex; gap:16px; margin-bottom:16px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);}
-.benefit-gift-item{flex: 0 0 calc(50% - 8px); background:#f5f5f5; padding:0; text-align:center; overflow:hidden;}
-.benefit-gift-item img{width:100%; height:300px; object-fit:cover; display: block;}
+.benefit-gift-grid{display:flex; flex-wrap: wrap; gap:16px; margin-bottom:16px; justify-content: center;}
+.benefit-gift-item{width: calc(50% - 8px); background:#f5f5f5; padding:0; text-align:center; overflow:hidden;}
+.benefit-gift-item img{width:100%; height:320px; object-fit:cover; display: block;}
 .benefit-gift-text-box { padding: 16px; }
 .benefit-gift-item p{font-size:14px; color:#222; font-weight: 600; line-height:1.4}
 
-.benefit-gift-indicators { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+.benefit-gift-indicators { display: none; }
 .gift-dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; cursor: pointer; border: none; padding: 0; }
 .gift-dot.active { background: #222; width: 24px; border-radius: 4px; }
 
 .benefit-gift-notes{font-size:12px;color:#999;line-height:1.8}
 .benefit-gift-notes p{margin-bottom:4px}
+
+
+
 
 /* 쿠폰 카드 */
 .benefit-coupon-card{display:inline-flex;background:#1a1a1a; overflow:hidden;margin-top:16px; border-radius: 2px;}
@@ -318,13 +322,11 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 .notice-section{padding:100px 80px;background:#fafafa;border-top:1px solid #e5e5e5}
 .notice-inner{max-width:1200px;margin:0 auto;display:flex;gap:60px;position:relative}
 .notice-content-area{flex:1}
-.notice-item{border-bottom:1px solid #e5e5e5; position:relative}
+.notice-item{border-bottom:1px solid #e5e5e5; position:relative; padding: 24px 0;}
 .notice-item:hover .item-controls { opacity: 1; }
-.notice-item.active .notice-content{display:block}
-.notice-item.active .notice-arrow{transform:rotate(180deg)}
-.notice-title-btn{width:100%;padding:24px 0;background:none;border:none;display:flex;justify-content:space-between;align-items:center;font-size:16px;font-weight:600;color:#1a1a1a;cursor:pointer;text-align:left}
-.notice-arrow{font-size:12px;color:#999;transition:transform 0.3s}
-.notice-content{display:none;padding:0 0 24px;font-size:14px;color:#666;line-height:1.8}
+.notice-title-btn{width:100%;padding:0 0 12px 0;background:none;border:none;display:block;font-size:16px;font-weight:600;color:#1a1a1a;text-align:left;pointer-events: none;}
+.notice-arrow{display: none;}
+.notice-content{display:block;padding:0;font-size:14px;color:#666;line-height:1.8}
 
 .item-controls { position: absolute; top: 24px; right: 40px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s; z-index: 10; }
 .item-ctrl-btn { padding: 4px 8px; font-size: 11px; background: #fff; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
@@ -466,9 +468,9 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     top:auto !important; 
     left:auto !important; 
     transform:none !important; 
-    width:100% !important; 
-    height:auto !important; 
-    aspect-ratio:9/16;
+    width:1080px !important; 
+    height:1668px !important; 
+    aspect-ratio:1080/1668;
     display:block !important;
 }
 .preview-container.mobile-view .hero-main-image-frame .hero-main-image{
@@ -476,82 +478,101 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
     height:100% !important;
     object-fit:cover !important;
 }
-.preview-container.mobile-view .hero-slide.full-mode .hero-main-image-frame{aspect-ratio:9/16}
+.preview-container.mobile-view .hero-slide.full-mode .hero-main-image-frame{width:1080px !important; height:1668px !important; aspect-ratio:1080/1668}
 .preview-container.mobile-view .hero-text-wrapper{
-    width:100%; padding:0 48px; bottom:100px
+    width:100%; padding:0 48px 64px 48px; bottom:100px
 }
-.preview-container.mobile-view .hero-top-label{font-size:13px; letter-spacing:2.5px}
-.preview-container.mobile-view .hero-logo{font-size:16px; letter-spacing:4px}
-.preview-container.mobile-view .hero-main-text{font-size:65px; line-height:1.15; letter-spacing:-1px}
-.preview-container.mobile-view .hero-sub-text{font-size:24px; line-height:1.6}
+.preview-container.mobile-view .hero-top-label{display:none}
+.preview-container.mobile-view .hero-logo{font-size:40px; letter-spacing:0; font-weight:700}
+.preview-container.mobile-view .hero-main-text{font-size:96px; line-height:1.1; letter-spacing:-2px; font-weight:700}
+.preview-container.mobile-view .hero-sub-text{font-size:36px; line-height:1.4; font-weight:400}
 .preview-container.mobile-view .hero-indicators{bottom:40px; gap:8px}
 .preview-container.mobile-view .hero-indicator{width:8px; height:8px}
 .preview-container.mobile-view .hero-indicator.active{width:28px; border-radius:4px}
 
+
+
+
+
+
 /* 2️⃣ BENEFIT 영역 - 중앙 정렬, 텍스트 확대, 여백 확보 */
-.preview-container.mobile-view .benefit-section{padding:80px 0 80px} /* 상단 여백 추가 */
+.preview-container.mobile-view .benefit-section{padding:80px 0 80px}
 .preview-container.mobile-view .benefit-header{
     padding:0 48px; 
-    margin-bottom:70px; /* 여백 확대 */
-    padding-bottom:30px; /* 하단 padding 추가 */
+    margin-bottom:60px;
+    padding-bottom:28px;
     text-align:center
 }
-.preview-container.mobile-view .benefit-title{font-size:48px; letter-spacing:3px; margin-bottom:16px} /* 타이틀-날짜 간격 */
-.preview-container.mobile-view .benefit-date{font-size:18px}
-.preview-container.mobile-view .benefit-wrapper{padding:0 48px}
-.preview-container.mobile-view .benefit-item{padding:60px 0} /* 아이템 간 여백 확대 */
+.preview-container.mobile-view .benefit-title{font-size:80px; letter-spacing:3px; margin-bottom:16px; font-weight:700}
+.preview-container.mobile-view .benefit-date{font-size:32px; font-weight:600}
+.preview-container.mobile-view .benefit-wrapper{padding:0 48px; max-width:1000px; margin:0 auto}
+.preview-container.mobile-view .benefit-item{padding:50px 0}
 .preview-container.mobile-view .benefit-item-inner{flex-direction:column; gap:20px; text-align:center}
 .preview-container.mobile-view .benefit-number-col{width:100%; text-align:center}
-.preview-container.mobile-view .benefit-number{font-size:16px; letter-spacing:2px}
-.preview-container.mobile-view .benefit-main-title{font-size:40px; text-align:center}
-.preview-container.mobile-view .benefit-sub-text{font-size:20px; text-align:center; line-height:1.8}
-.preview-container.mobile-view .benefit-link-btn{margin:0 auto; font-size:18px; padding:20px 28px}
+.preview-container.mobile-view .benefit-number{font-size:28px; letter-spacing:2px; font-weight:600}
+.preview-container.mobile-view .benefit-main-title{font-size:60px; text-align:center; font-weight:700; line-height:1.3}
+.preview-container.mobile-view .benefit-sub-text{font-size:38px; text-align:center; line-height:1.4; font-weight:600}
+.preview-container.mobile-view .benefit-link-btn{margin:0 auto; font-size:18px; padding:18px 28px}
 
-/* 3️⃣ 사은품 영역 - 2개씩 슬라이드 구조, 이미지 축소 */
-.preview-container.mobile-view .benefit-gift-area{margin-top:30px}
+
+
+
+
+
+
+/* 3️⃣ 사은품 영역 */
+.preview-container.mobile-view .benefit-gift-area{margin-top:28px}
 .preview-container.mobile-view .benefit-gift-grid-wrapper{overflow:hidden; width:100%}
 .preview-container.mobile-view .benefit-gift-grid{
-    display:flex; flex-direction:row; flex-wrap:nowrap; gap:12px;
-    transition:transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)
+    display:flex; flex-direction:column; gap:16px;
 }
 .preview-container.mobile-view .benefit-gift-item{
-    flex:0 0 calc(50% - 6px); width:calc(50% - 6px)
+    width:100%; max-width:100%;
 }
-.preview-container.mobile-view .benefit-gift-item img{height:200px; aspect-ratio:auto; object-fit:cover}
-.preview-container.mobile-view .benefit-gift-text-box{padding:12px}
-.preview-container.mobile-view .benefit-gift-item p{font-size:16px}
-.preview-container.mobile-view .benefit-gift-indicators{margin-top:16px; margin-bottom:24px}
+.preview-container.mobile-view .benefit-gift-item img{width:100%; height:auto; aspect-ratio:1/1; object-fit:cover}
+.preview-container.mobile-view .benefit-gift-text-box{padding:18px}
+.preview-container.mobile-view .benefit-gift-item p{font-size:17px; line-height:1.5; font-weight:600}
+.preview-container.mobile-view .benefit-gift-indicators{display:none}
 .preview-container.mobile-view .gift-dot{width:10px; height:10px}
 .preview-container.mobile-view .gift-dot.active{width:30px}
-.preview-container.mobile-view .benefit-gift-notes{font-size:14px; line-height:2; text-align:center}
+.preview-container.mobile-view .benefit-gift-notes{font-size:28px; line-height:1.9; text-align:center; margin-top:18px; font-weight:400}
+
 
 /* 4️⃣ 쿠폰 영역 */
-.preview-container.mobile-view .benefit-coupon-card{margin:20px auto 0; display:flex}
+.preview-container.mobile-view .benefit-coupon-card{margin:60px auto 0; display:flex; width:100%; max-width:100%; border-radius:0}
 .preview-container.mobile-view .coupon-left{padding:24px 32px}
-.preview-container.mobile-view .coupon-percent{font-size:42px}
-.preview-container.mobile-view .coupon-right{padding:20px 28px}
-.preview-container.mobile-view .coupon-name{font-size:16px}
-.preview-container.mobile-view .coupon-period{font-size:14px}
+.preview-container.mobile-view .coupon-percent{font-size:72px; font-weight:700}
+.preview-container.mobile-view .coupon-right{padding:20px 28px; text-align:left}
+.preview-container.mobile-view .coupon-name{font-size:38px; font-weight:600}
+.preview-container.mobile-view .coupon-period{font-size:24px; font-weight:600}
 
-/* 5️⃣ 타이머 영역 - 중앙 정렬, 숫자 강조 */
+
+
+
+
+
+
+/* 5️⃣ 타이머 영역 */
 .preview-container.mobile-view .timer-section{padding:60px 0}
-.preview-container.mobile-view .timer-label{font-size:18px; margin-bottom:24px}
-.preview-container.mobile-view .timer-display{gap:16px}
-.preview-container.mobile-view .timer-value{font-size:56px; font-weight:800}
-.preview-container.mobile-view .timer-unit{font-size:14px; margin-top:6px}
+.preview-container.mobile-view .timer-label{font-size:18px; margin-bottom:24px; letter-spacing:2px; font-weight:500}
+.preview-container.mobile-view .timer-display{gap:14px}
+.preview-container.mobile-view .timer-value{font-size:60px; font-weight:700}
+.preview-container.mobile-view .timer-unit{font-size:13px; margin-top:8px}
 .preview-container.mobile-view .timer-colon{font-size:40px}
 
-/* 6️⃣ 기본형 블록 - 블러 제거, 단일 이미지 노출, 여백 확보 */
+/* 6️⃣ 기본형 블록 */
 .preview-container.mobile-view .basic-block{height:auto}
 .preview-container.mobile-view .basic-blur-bg{display:none}
 .preview-container.mobile-view .basic-main-image-frame{
     position:relative; top:auto; left:auto; transform:none; 
-    width:100%; height:auto; aspect-ratio:3/4
+    width:100%; height:auto; aspect-ratio:9/16
 }
 .preview-container.mobile-view .basic-text-area{padding:50px 48px; text-align:center}
-.preview-container.mobile-view .basic-main-title{font-size:42px; line-height:1.25; letter-spacing:0}
-.preview-container.mobile-view .basic-sub-title{font-size:20px; line-height:1.8}
+.preview-container.mobile-view .basic-main-title{font-size:44px; line-height:1.3; letter-spacing:-0.5px; font-weight:700}
+.preview-container.mobile-view .basic-sub-title{font-size:20px; line-height:1.6}
 .preview-container.mobile-view .basic-highlight{font-size:18px}
+
+
 
 /* 7️⃣ 스와이프 영역 - 세로 스택, 한 장씩 좌우 스와이프, 인디케이터 표시 */
 /* 핵심 규칙: 인디케이터 1개 = 이미지 1장, 스와이프 1회 = 이미지 1장 전환 */
@@ -700,12 +721,14 @@ display: block !important; /* margin: auto가 작동하도록 설정 */
     align-self:flex-start; margin-left:5%; margin-top:-50px;
 }
 
-/* 1️⃣1️⃣ 유의사항 영역 - 세로 스크롤 */
-.preview-container.mobile-view .notice-section{padding:80px 48px}
-.preview-container.mobile-view .notice-inner{flex-direction:column; gap:40px}
-.preview-container.mobile-view .notice-title-btn{font-size:20px; padding:24px 0}
-.preview-container.mobile-view .notice-arrow{font-size:16px}
-.preview-container.mobile-view .notice-content{font-size:18px; line-height:2}
+/* 1️⃣1️⃣ 유의사항 영역 */
+.preview-container.mobile-view .notice-section{padding:70px 48px}
+.preview-container.mobile-view .notice-inner{flex-direction:column; gap:36px}
+.preview-container.mobile-view .notice-title-btn{font-size:20px; padding:0 0 14px 0; font-weight:600}
+.preview-container.mobile-view .notice-arrow{display:none}
+.preview-container.mobile-view .notice-content{font-size:17px; line-height:1.8}
+
+
 
 /* 📐 모바일 간격 조정 */
 .preview-container.mobile-view .content-block{margin-bottom:80px !important}
@@ -730,10 +753,12 @@ display: block !important; /* margin: auto가 작동하도록 설정 */
 <div class="editor-panel">
 <div class="editor-title">Style24 기획전 에디터 V5</div>
 <div class="editor-btns">
+<button class="editor-btn" onclick="resetAll()">🔄 초기화</button>
+<button class="editor-btn" id="autoSaveIndicator" style="cursor:default;opacity:0.5;background:#10b981;border-color:#10b981;color:#fff">💾 저장됨</button>
+<button class="editor-btn" onclick="loadFromTemp()">📂 임시저장 불러오기</button>
 <button class="editor-btn active" id="viewPcBtn" onclick="setViewMode('web')">PC</button>
 <button class="editor-btn" id="viewMoBtn" onclick="setViewMode('mobile')">MO</button>
 <button class="editor-btn" id="previewToggleBtn" onclick="togglePreviewMode()">미리보기</button>
-<button class="editor-btn" style="background:#10b981;border-color:#10b981;color:#fff" onclick="openExportModal()">📤 HTML 내보내기</button>
 <button class="editor-btn" style="background:#3b82f6;border-color:#3b82f6;color:#fff" onclick="exportImagesAndProject()">🖼️ 이미지추출</button>
 <button class="editor-btn" style="background:#8b5cf6;border-color:#8b5cf6;color:#fff" onclick="importProject()">📥 수정하기</button>
 <button class="editor-btn" style="background:#f59e0b;border-color:#f59e0b;color:#fff" onclick="openBannerModal()">🎨 배너생성</button>
@@ -1071,21 +1096,12 @@ if(b.subText)h+='<p class="benefit-sub-text">'+b.subText+'</p>';
 if(b.type==='gift' && b.showImage){
     var giftCount = b.gifts ? b.gifts.length : 0;
     var pageCount = Math.ceil(giftCount / 2); /* 2개씩 1페이지 */
-    var isSlide = pageCount > 1; /* 페이지가 2개 이상일 때만 슬라이드 */
     h+='<div class="benefit-gift-area">';
-    h+='<div class="benefit-gift-grid-wrapper"><div class="benefit-gift-grid" id="giftGrid_'+i+'" data-page-count="'+pageCount+'">';
+    h+='<div class="benefit-gift-grid-wrapper"><div class="benefit-gift-grid" id="giftGrid_'+i+'">';
     (b.gifts||[]).forEach(function(g){
-        h+='<div class="benefit-gift-item '+(isSlide?'slide-mode':'')+'"><img src="'+g.image+'"><div class="benefit-gift-text-box"><p>'+g.desc.replace(/\n/g,'<br>')+'</p></div></div>';
+        h+='<div class="benefit-gift-item"><img src="'+g.image+'"><div class="benefit-gift-text-box"><p>'+g.desc.replace(/\n/g,'<br>')+'</p></div></div>';
     });
     h+='</div></div>';
-    /* 페이지당 인디케이터 - 이미지 개수가 아닌 페이지 개수만큼 생성 */
-    if(isSlide) {
-        h+='<div class="benefit-gift-indicators">';
-        for(var p=0; p<pageCount; p++){
-            h+='<button class="gift-dot '+(p===0?'active':'')+'" onclick="moveGiftSlide('+i+', '+p+')" id="giftDot_'+i+'_'+p+'"></button>';
-        }
-        h+='</div>';
-    }
     h+='<div class="benefit-gift-notes">'; (b.notes||[]).forEach(function(n){h+='<p>· '+n+'</p>';}); h+='</div></div>';
 }
 
@@ -1114,34 +1130,6 @@ function moveBenefit(i, dir) {
     renderBenefits();
 }
 
-function moveGiftSlide(benefitId, pageIndex) {
-    var grid = document.getElementById('giftGrid_' + benefitId);
-    if(!grid) return;
-    
-    /* 페이지 단위 이동 (2개 = 100% + gap) */
-    /* 웹/모바일 공통: 페이지 기준으로 이동 */
-    var isMobile = document.getElementById('previewContainer').classList.contains('mobile-view');
-    var translateValue;
-    
-    if(isMobile) {
-        /* 모바일: 100% 단위로 이동 (2개씩 보이므로) */
-        translateValue = pageIndex * 100;
-        grid.style.transform = 'translateX(-' + translateValue + '%)';
-    } else {
-        /* 웹: 픽셀 단위로 이동 (아이템 너비 + gap 고려) */
-        /* 아이템 2개 너비 = (50% - 8px) * 2 + gap 16px = 100% */
-        translateValue = pageIndex * 100;
-        grid.style.transform = 'translateX(-' + translateValue + '%)';
-    }
-    
-    /* 인디케이터 업데이트 */
-    var dots = document.querySelectorAll('#benefitWrapper .benefit-gift-indicators button');
-    dots.forEach(function(dot) { 
-        if(dot.id.startsWith('giftDot_' + benefitId)) { 
-            dot.classList.toggle('active', dot.id === 'giftDot_' + benefitId + '_' + pageIndex); 
-        } 
-    });
-}
 
 function addBenefit(t){
     // 혜택 영역이 비활성 상태라면 강제 활성화 (복구 로직)
@@ -1259,7 +1247,9 @@ var h='';
 blocks.forEach(function(b,i){
 var isHiddenClass = !b.visible ? 'is-hidden' : '';
 var eyeIcon = b.visible ? '👁️' : '🙈';
-var ctrl='<div class="block-controls"><span class="block-label">'+getLabel(b.type)+'</span><button class="block-ctrl-btn" onclick="toggleBlock('+i+')">'+eyeIcon+'</button><button class="block-ctrl-btn delete" onclick="deleteBlock('+i+')">🗑️</button></div>';
+var upBtn = i > 0 ? '<button class="block-ctrl-btn" onclick="moveBlockUp('+i+')" title="위로 이동">⬆️</button>' : '';
+var downBtn = i < blocks.length - 1 ? '<button class="block-ctrl-btn" onclick="moveBlockDown('+i+')" title="아래로 이동">⬇️</button>' : '';
+var ctrl='<div class="block-controls"><span class="block-label">'+getLabel(b.type)+'</span>'+upBtn+downBtn+'<button class="block-ctrl-btn" onclick="toggleBlock('+i+')">'+eyeIcon+'</button><button class="block-ctrl-btn delete" onclick="deleteBlock('+i+')">🗑️</button></div>';
 
 if(b.type==='basic'){
 var fm=b.mode==='full'?'full-mode':'';
@@ -1370,6 +1360,22 @@ function moveSwipePage(blockIdx, pageIdx) {
 function getLabel(t){return{basic:'기본형',swipe:'자동스와이프',split:'2분할',zigzag:'지그재그',collage:'콜라주',product:'상품단'}[t]||t;}
 function toggleBlock(i){blocks[i].visible=!blocks[i].visible;renderBlocks();}
 function deleteBlock(i){blocks.splice(i,1);renderBlocks();}
+function moveBlockUp(i){
+    if(i > 0) {
+        var temp = blocks[i];
+        blocks[i] = blocks[i-1];
+        blocks[i-1] = temp;
+        renderBlocks();
+    }
+}
+function moveBlockDown(i){
+    if(i < blocks.length - 1) {
+        var temp = blocks[i];
+        blocks[i] = blocks[i+1];
+        blocks[i+1] = temp;
+        renderBlocks();
+    }
+}
 function toggleZigzag(i){blocks[i].reversed=!blocks[i].reversed;renderBlocks();}
 function setBasicMode(i,m){
     if(currentEditType === 'basic') {
@@ -1449,10 +1455,9 @@ notices.forEach(function(n,i){
             <button class="item-ctrl-btn" onclick="openEditModal(${i}, 'notice-item')">✏️</button>
             <button class="item-ctrl-btn" style="color:#dc2626" onclick="deleteNoticeItem(${i})">🗑️</button>
         </div>
-        <button class="notice-title-btn" onclick="toggleNoticeItem(this)">
+        <div class="notice-title-btn">
             <span>${n.title}</span>
-            <span class="notice-arrow">▼</span>
-        </button>
+        </div>
         <div class="notice-content">${n.content.replace(/\n/g,'<br>')}</div>
     </div>`;
 }); 
@@ -1566,7 +1571,7 @@ var h='';
 if(type==='hero-text'){
 t.textContent='히어로 텍스트';
 h='<div class="edit-modal-field"><label class="edit-modal-label">정렬</label><div class="align-tabs"><button class="align-tab '+(heroData.textAlign==='left'?'active':'')+'" onclick="setHeroAlign(\'left\')">◀</button><button class="align-tab '+(heroData.textAlign==='center'?'active':'')+'" onclick="setHeroAlign(\'center\')">●</button><button class="align-tab '+(heroData.textAlign==='right'?'active':'')+'" onclick="setHeroAlign(\'right\')">▶</button></div></div>';
-h+='<div class="edit-modal-field"><label class="edit-modal-label">상단 라벨</label><input class="edit-modal-input" id="editHeroTopLabel" value="'+heroData.topLabel+'"></div>';
+h+='<div class="edit-modal-field"><label class="edit-modal-label">로고/날짜 (예: BESTDAY)</label><input class="edit-modal-input" id="editHeroLogo" value="'+heroData.logo+'"></div>';
 h+='<div class="edit-modal-field"><label class="edit-modal-label">메인 텍스트 (줄바꿈:엔터)</label><textarea class="edit-modal-textarea" id="editHeroMain">'+heroData.mainText+'</textarea></div>';
 h+='<div class="edit-modal-field"><label class="edit-modal-label">서브 텍스트 (줄바꿈:엔터)</label><textarea class="edit-modal-textarea" id="editHeroSub">'+heroData.subText+'</textarea></div>';
 btn.innerHTML='<button class="edit-modal-btn secondary" onclick="closeEditModal()">취소</button><button class="edit-modal-btn primary" onclick="saveHeroText()">저장</button>';
@@ -1998,10 +2003,35 @@ function removeHeroSlideUI(idx) {
 function closeEditModal(){document.getElementById('editModal').classList.remove('show');}
 function setHeroAlign(a){heroData.textAlign=a; renderHeroContent(); openEditModal(-1,'hero-text');}
 function saveHeroText(){
-    heroData.topLabel=document.getElementById('editHeroTopLabel').value;
-    heroData.mainText=document.getElementById('editHeroMain').value;
-    heroData.subText=document.getElementById('editHeroSub').value;
-    renderHeroContent(); closeEditModal();
+    var logo = document.getElementById('editHeroLogo').value;
+    var mainText = document.getElementById('editHeroMain').value;
+    var subText = document.getElementById('editHeroSub').value;
+    
+    // 메인 텍스트 줄바꿈으로 분리하여 각 줄 검증 (한줄에 10자 제한, 여백 포함)
+    var mainLines = mainText.split('\n');
+    for(var i = 0; i < mainLines.length; i++) {
+        // 여백 포함하여 길이 체크
+        if(mainLines[i].length > 10) {
+            alert('메인 텍스트의 ' + (i+1) + '번째 줄이 10자를 초과했습니다.\n현재: ' + mainLines[i].length + '자 (여백 포함)\n한 줄에 최대 10자까지만 입력 가능합니다.');
+            return;
+        }
+    }
+    
+    // 서브 텍스트 줄바꿈으로 분리하여 각 줄 검증 (한줄에 24자 제한, 여백 포함)
+    var subLines = subText.split('\n');
+    for(var i = 0; i < subLines.length; i++) {
+        // 여백 포함하여 길이 체크
+        if(subLines[i].length > 24) {
+            alert('서브 텍스트의 ' + (i+1) + '번째 줄이 24자를 초과했습니다.\n현재: ' + subLines[i].length + '자 (여백 포함)\n한 줄에 최대 24자까지만 입력 가능합니다.');
+            return;
+        }
+    }
+    
+    heroData.logo = logo;
+    heroData.mainText = mainText;
+    heroData.subText = subText;
+    renderHeroContent(); 
+    closeEditModal();
 }
 
 function saveTimer(){
@@ -2117,7 +2147,23 @@ window.onload=function(){
     renderHeroSlides(); renderHeroContent(); renderBenefits(); renderBlocks(); renderNotices(); startTimer(); updateTimerUI();
     // 초기 상태: 히어로+혜택만 노출, 유의사항 숨김
     document.getElementById('noticeSection').style.display = 'none';
+    
+    // 임시저장 데이터 확인
+    checkAutoSave();
 };
+
+function checkAutoSave() {
+    try {
+        var saved = localStorage.getItem('style24_editor_autosave');
+        if(saved) {
+            var data = JSON.parse(saved);
+            var saveDate = new Date(data.timestamp);
+            updateAutoSaveIndicator(false);
+        }
+    } catch(e) {
+        console.error('자동저장 확인 실패:', e);
+    }
+}
 
 /* ========== HTML 내보내기 기능 ========== */
 function openExportModal() {
@@ -3129,8 +3175,10 @@ function copyBenefitSEO() {
 // ========== 상품단 영역 렌더링 ==========
 function renderProductBlock(block, index) {
     var colClass = 'cols-' + (block.columns || 4);
+    var upBtn = index > 0 ? '<button class="block-ctrl-btn" onclick="moveBlockUp('+index+')" title="위로 이동">⬆️</button>' : '';
+    var downBtn = index < blocks.length - 1 ? '<button class="block-ctrl-btn" onclick="moveBlockDown('+index+')" title="아래로 이동">⬇️</button>' : '';
     var h = '<section class="content-block product-section">';
-    h += '<div class="block-controls"><span class="block-label">상품단</span>';
+    h += '<div class="block-controls"><span class="block-label">상품단</span>'+upBtn+downBtn;
     h += '<button class="block-ctrl-btn" onclick="toggleBlock(' + index + ')">' + (block.visible ? '👁️' : '🙈') + '</button>';
     h += '<button class="block-ctrl-btn delete" onclick="deleteBlock(' + index + ')">🗑️</button></div>';
     h += '<div class="product-header">';
@@ -3157,6 +3205,323 @@ function renderProductBlock(block, index) {
     h += '<div class="overlay-controls"><button class="overlay-ctrl-btn" onclick="openEditModal(' + index + ',\'product\')">✏️ 편집</button></div>';
     h += '</section>';
     return h;
+}
+
+// ========== 초기화 기능 ==========
+function resetAll() {
+    if(!confirm('모든 내용을 초기화하시겠습니까?\n(임시저장된 데이터는 유지됩니다)')) return;
+    
+    // 모든 데이터 초기화
+    heroData = {
+        slides: [{
+            image: '',
+            topLabel: '',
+            logo: '',
+            mainText: '',
+            subText: '',
+            textAlign: 'left',
+            overlayMode: 'blur'
+        }],
+        activeSlide: 0
+    };
+    benefits = [];
+    blocks = [];
+    bannerImages = {};
+    
+    // 렌더링
+    renderHero();
+    renderBenefits();
+    renderBlocks();
+    
+    alert('초기화 완료!');
+}
+
+// ========== 임시저장 기능 ==========
+var autoSaveTimer;
+var lastSaveTime = 0;
+
+function updateAutoSaveIndicator(saving) {
+    var indicator = document.getElementById('autoSaveIndicator');
+    if(!indicator) return;
+    
+    if(saving) {
+        indicator.textContent = '💾 저장중...';
+        indicator.style.opacity = '1';
+        indicator.style.background = '#f59e0b';
+        indicator.style.borderColor = '#f59e0b';
+    } else {
+        indicator.textContent = '💾 저장됨';
+        indicator.style.opacity = '0.8';
+        indicator.style.background = '#10b981';
+        indicator.style.borderColor = '#10b981';
+        lastSaveTime = Date.now();
+        
+        // 3초 후 opacity 감소
+        setTimeout(function() {
+            if(Date.now() - lastSaveTime >= 3000) {
+                indicator.style.opacity = '0.5';
+            }
+        }, 3000);
+    }
+}
+
+function autoSaveData() {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(function() {
+        try {
+            updateAutoSaveIndicator(true);
+            var data = {
+                heroData: heroData,
+                benefits: benefits,
+                blocks: blocks,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('style24_editor_autosave', JSON.stringify(data));
+            updateAutoSaveIndicator(false);
+        } catch(e) {
+            console.error('자동저장 실패:', e);
+        }
+    }, 1000);
+}
+
+function loadFromTemp() {
+    try {
+        var saved = localStorage.getItem('style24_editor_autosave');
+        if(!saved) {
+            alert('저장된 데이터가 없습니다.');
+            return;
+        }
+        
+        var data = JSON.parse(saved);
+        var saveDate = new Date(data.timestamp);
+        var msg = '저장된 데이터를 불러오시겠습니까?\n\n저장 시각: ' + saveDate.toLocaleString('ko-KR');
+        
+        if(!confirm(msg)) return;
+        
+        heroData = data.heroData || heroData;
+        benefits = data.benefits || [];
+        blocks = data.blocks || [];
+        
+        renderHero();
+        renderBenefits();
+        renderBlocks();
+        
+        alert('불러오기 완료!');
+    } catch(e) {
+        alert('불러오기 실패: ' + e.message);
+    }
+}
+
+// 기존 render 함수들에 자동저장 추가
+var originalRenderHero = renderHero;
+renderHero = function() {
+    originalRenderHero.apply(this, arguments);
+    autoSaveData();
+};
+
+var originalRenderBenefits = renderBenefits;
+renderBenefits = function() {
+    originalRenderBenefits.apply(this, arguments);
+    autoSaveData();
+};
+
+var originalRenderBlocks = renderBlocks;
+renderBlocks = function() {
+    originalRenderBlocks.apply(this, arguments);
+    autoSaveData();
+};
+
+// ========== 이미지 영역별 슬라이스 추출 (500KB 이하) ==========
+function exportImagesAndProject() {
+    if(typeof JSZip === 'undefined') {
+        alert('JSZip 라이브러리를 로딩 중입니다. 잠시 후 다시 시도하세요.');
+        return;
+    }
+    
+    var zip = new JSZip();
+    var imgFolder = zip.folder('images');
+    var slicedFolder = imgFolder.folder('sliced');
+    var promises = [];
+    var sliceIndex = 1;
+    
+    // 1. 히어로 이미지들
+    heroData.slides.forEach(function(slide, idx) {
+        if(slide.image) {
+            promises.push(
+                downloadAndSliceImage(slide.image, '히어로_' + (idx + 1), slicedFolder, sliceIndex)
+                    .then(function(newIndex) { sliceIndex = newIndex; })
+            );
+        }
+    });
+    
+    // 2. 베네핏 쿠폰/사은품 이미지
+    benefits.forEach(function(b, idx) {
+        if(b.gifts && b.gifts.length > 0) {
+            b.gifts.forEach(function(gift, gIdx) {
+                if(gift.image) {
+                    promises.push(
+                        downloadAndSliceImage(gift.image, '베네핏' + (idx + 1) + '_사은품_' + (gIdx + 1), slicedFolder, sliceIndex)
+                            .then(function(newIndex) { sliceIndex = newIndex; })
+                    );
+                }
+            });
+        }
+    });
+    
+    // 3. 블록 이미지들
+    blocks.forEach(function(block, idx) {
+        if(block.type === 'video' && block.thumbnail) {
+            promises.push(
+                downloadAndSliceImage(block.thumbnail, '영상_썸네일_' + (idx + 1), slicedFolder, sliceIndex)
+                    .then(function(newIndex) { sliceIndex = newIndex; })
+            );
+        } else if(block.type === 'swipe' && block.items) {
+            block.items.forEach(function(item, iIdx) {
+                if(item.image) {
+                    promises.push(
+                        downloadAndSliceImage(item.image, '스와이프_' + (idx + 1) + '_' + (iIdx + 1), slicedFolder, sliceIndex)
+                            .then(function(newIndex) { sliceIndex = newIndex; })
+                    );
+                }
+            });
+        } else if(block.type === 'image' && block.image) {
+            promises.push(
+                downloadAndSliceImage(block.image, '이미지_' + (idx + 1), slicedFolder, sliceIndex)
+                    .then(function(newIndex) { sliceIndex = newIndex; })
+            );
+        } else if(block.type === 'dual' && block.images) {
+            block.images.forEach(function(img, iIdx) {
+                if(img) {
+                    promises.push(
+                        downloadAndSliceImage(img, '듀얼_' + (idx + 1) + '_' + (iIdx + 1), slicedFolder, sliceIndex)
+                            .then(function(newIndex) { sliceIndex = newIndex; })
+                    );
+                }
+            });
+        } else if(block.type === 'product' && block.products) {
+            block.products.forEach(function(p, pIdx) {
+                if(p.image) {
+                    promises.push(
+                        downloadAndSliceImage(p.image, '상품_' + (idx + 1) + '_' + (pIdx + 1), slicedFolder, sliceIndex)
+                            .then(function(newIndex) { sliceIndex = newIndex; })
+                    );
+                }
+            });
+        } else if(block.type === 'lookbook' && block.items) {
+            block.items.forEach(function(item, iIdx) {
+                if(item.image) {
+                    promises.push(
+                        downloadAndSliceImage(item.image, '룩북_' + (idx + 1) + '_' + (iIdx + 1), slicedFolder, sliceIndex)
+                            .then(function(newIndex) { sliceIndex = newIndex; })
+                    );
+                }
+                if(item.products) {
+                    item.products.forEach(function(p, pIdx) {
+                        if(p.image) {
+                            promises.push(
+                                downloadAndSliceImage(p.image, '룩북_' + (idx + 1) + '_' + (iIdx + 1) + '_상품_' + (pIdx + 1), slicedFolder, sliceIndex)
+                                    .then(function(newIndex) { sliceIndex = newIndex; })
+                            );
+                        }
+                    });
+                }
+            });
+        }
+    });
+    
+    // 4. 프로젝트 JSON 파일
+    var projectData = {
+        heroData: heroData,
+        benefits: benefits,
+        blocks: blocks,
+        exportDate: new Date().toISOString()
+    };
+    zip.file('project.json', JSON.stringify(projectData, null, 2));
+    
+    // 모든 이미지 다운로드 완료 후 ZIP 생성
+    Promise.all(promises).then(function() {
+        return zip.generateAsync({type: 'blob'});
+    }).then(function(content) {
+        var url = URL.createObjectURL(content);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'style24_export_' + Date.now() + '.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        alert('이미지 추출 완료!\n\n슬라이스된 이미지는 images/sliced 폴더에 저장되었습니다.');
+    }).catch(function(err) {
+        alert('이미지 추출 중 오류 발생: ' + err.message);
+    });
+}
+
+// 이미지 다운로드 및 슬라이스 함수 (500KB 이하)
+function downloadAndSliceImage(url, name, folder, startIndex) {
+    return new Promise(function(resolve, reject) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        
+        img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            
+            // 원본 이미지 크기
+            var originalWidth = img.width;
+            var originalHeight = img.height;
+            
+            // 세로로 슬라이스할 높이 (약 1000px씩)
+            var sliceHeight = 1000;
+            var totalSlices = Math.ceil(originalHeight / sliceHeight);
+            var slicePromises = [];
+            
+            for(var i = 0; i < totalSlices; i++) {
+                (function(sliceNum) {
+                    var yStart = sliceNum * sliceHeight;
+                    var currentHeight = Math.min(sliceHeight, originalHeight - yStart);
+                    
+                    canvas.width = originalWidth;
+                    canvas.height = currentHeight;
+                    
+                    // 이미지의 일부분을 canvas에 그리기
+                    ctx.drawImage(img, 0, yStart, originalWidth, currentHeight, 0, 0, originalWidth, currentHeight);
+                    
+                    // 품질을 조정하여 500KB 이하로 만들기
+                    var quality = 0.9;
+                    var slicePromise = new Promise(function(resolveSlice) {
+                        function tryCompress() {
+                            canvas.toBlob(function(blob) {
+                                if(blob.size <= 500 * 1024 || quality <= 0.1) {
+                                    // 500KB 이하 또는 최소 품질에 도달
+                                    var fileName = name + '_slice_' + String(startIndex + sliceNum).padStart(3, '0') + '.jpg';
+                                    folder.file(fileName, blob);
+                                    resolveSlice();
+                                } else {
+                                    // 품질 낮추고 재시도
+                                    quality -= 0.1;
+                                    tryCompress();
+                                }
+                            }, 'image/jpeg', quality);
+                        }
+                        tryCompress();
+                    });
+                    
+                    slicePromises.push(slicePromise);
+                })(i);
+            }
+            
+            Promise.all(slicePromises).then(function() {
+                resolve(startIndex + totalSlices);
+            });
+        };
+        
+        img.onerror = function() {
+            console.error('이미지 로드 실패:', url);
+            resolve(startIndex); // 에러 시에도 계속 진행
+        };
+        
+        img.src = url;
+    });
 }
 
 </script>
