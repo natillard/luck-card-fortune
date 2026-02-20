@@ -117,18 +117,18 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 
 /* BENEFIT */
 .benefit-section{padding:0 0 40px;background:#fff}
-.benefit-header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:1000px;margin-left:auto;margin-right:auto}
-.benefit-title{font-size:35px; font-weight:700;letter-spacing:2px;color:#1a1a1a;margin-bottom:8px}
-.benefit-date{font-size:14px;color:#666}
+.benefit-header{text-align:center;margin-bottom:0px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:1000px;margin-left:auto;margin-right:auto}
+.benefit-title{font-size:48px; font-weight:700;letter-spacing:2px;color:#1a1a1a;}
+.benefit-date{font-size:16px;color:#666}
 .benefit-wrapper{max-width:1000px;margin:0 auto}
 .benefit-item{padding:40px 0;border-bottom:1px solid #e5e5e5;position:relative}
 .benefit-item:last-child{border-bottom:none}
 .benefit-item-inner{position:relative}
 .benefit-number-col{position:absolute;top:0;left:0;width:100px;text-align:left}
-.benefit-number{font-size:12px;font-weight:600;color:#999;letter-spacing:1px}
+.benefit-number{font-size:12px;font-weight:600;color:#666;letter-spacing:1px}
 .benefit-content-col{width:100%; min-width: 0; position: relative; text-align: center;}
-.benefit-main-title{font-size:30px; font-weight:700;color:#1a1a1a;margin-bottom:8px}
-.benefit-sub-text{font-size:15px;color:#666;line-height:1.7;white-space:pre-line;margin-bottom:16px}
+.benefit-main-title{font-size:40px; font-weight:700;color:#1a1a1a;margin-bottom:8px}
+.benefit-sub-text{font-size:24px;color:#1a1a1a;line-height:1.4;white-space:pre-line;margin-bottom:16px}
 .benefit-link-btn{display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;color:#fff;padding:16px 24px;font-size:14px;font-weight:500;cursor:pointer;border:none;width:100%;max-width:400px;margin:0 auto}
 .benefit-link-btn span:last-child{font-size:18px}
 
@@ -153,18 +153,18 @@ body.preview-mode .content-block.is-hidden { display: none !important; }
 .gift-dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; cursor: pointer; border: none; padding: 0; }
 .gift-dot.active { background: #222; width: 24px; border-radius: 4px; }
 
-.benefit-gift-notes{font-size:12px;color:#999;line-height:1.8}
+.benefit-gift-notes{font-size:16px;color:#999;line-height:1.8}
 .benefit-gift-notes p{margin-bottom:4px}
 
 
 
 
 /* 쿠폰 카드 */
-.benefit-coupon-card{display:inline-flex;background:#1a1a1a; overflow:hidden;margin-top:16px; border-radius: 2px;}
-.coupon-left{padding:20px 28px; display:flex;align-items:center;justify-content:center;border-right:1px dashed #444}
-.coupon-percent{font-size:36px; font-weight:700;color:#fff}
-.coupon-right{padding:16px 24px; display:flex;flex-direction:column;justify-content:center}
-.coupon-name{font-size:13px; font-weight:600;color:#fff;margin-bottom:4px}
+.benefit-coupon-card{display:flex;background:#1a1a1a; overflow:hidden; width: 100%; max-width:760px; height: 120px; align-items: center; border-radius: 2px;margin:16px auto 0;}
+.coupon-left{width: 220px; height: 100%; display:flex;align-items:center;justify-content:center;border-right:1px dashed #444}
+.coupon-percent{font-size: 50px; font-weight:700;color:#fff}
+.coupon-right{height: 100%; display:flex;flex-direction:column;justify-content:center; padding: 0 28px; align-items: flex-start;text-align: left; }
+.coupon-name{font-size:20px; font-weight:600;color:#fff;margin-bottom:4px}
 .coupon-period{font-size:11px; color:#888}
 
 /* 공통 추가 패널 스타일 */
@@ -480,12 +480,12 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 }
 .preview-container.mobile-view .hero-slide.full-mode .hero-main-image-frame{width:1080px !important; height:1668px !important; aspect-ratio:1080/1668}
 .preview-container.mobile-view .hero-text-wrapper{
-    width:100%; padding:0 48px 64px 48px; bottom:100px
+    width:100%; padding:0 48px 0px 48px; bottom:100px
 }
 .preview-container.mobile-view .hero-top-label{display:none}
 .preview-container.mobile-view .hero-logo{font-size:40px; letter-spacing:0; font-weight:700}
-.preview-container.mobile-view .hero-main-text{font-size:96px; line-height:1.1; letter-spacing:-2px; font-weight:700}
-.preview-container.mobile-view .hero-sub-text{font-size:36px; line-height:1.4; font-weight:400}
+.preview-container.mobile-view .hero-main-text{font-size:105px; line-height:1.1; letter-spacing:-2px; font-weight:700}
+.preview-container.mobile-view .hero-sub-text{font-size:42px; line-height:1.4; font-weight:400}
 .preview-container.mobile-view .hero-indicators{bottom:40px; gap:8px}
 .preview-container.mobile-view .hero-indicator{width:8px; height:8px}
 .preview-container.mobile-view .hero-indicator.active{width:28px; border-radius:4px}
@@ -499,17 +499,17 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .preview-container.mobile-view .benefit-section{padding:80px 0 80px}
 .preview-container.mobile-view .benefit-header{
     padding:0 48px; 
-    margin-bottom:60px;
+    margin-bottom:0px;
     padding-bottom:28px;
     text-align:center
 }
-.preview-container.mobile-view .benefit-title{font-size:80px; letter-spacing:3px; margin-bottom:16px; font-weight:700}
+.preview-container.mobile-view .benefit-title{font-size:60px; margin-bottom:0px; font-weight:700}
 .preview-container.mobile-view .benefit-date{font-size:32px; font-weight:600}
 .preview-container.mobile-view .benefit-wrapper{padding:0 48px; max-width:1000px; margin:0 auto}
 .preview-container.mobile-view .benefit-item{padding:50px 0}
 .preview-container.mobile-view .benefit-item-inner{flex-direction:column; gap:20px; text-align:center}
 .preview-container.mobile-view .benefit-number-col{position:relative; width:100%; text-align:center}
-.preview-container.mobile-view .benefit-number{font-size:28px; letter-spacing:2px; font-weight:600}
+.preview-container.mobile-view .benefit-number{font-size:24px; letter-spacing:2px; font-weight:600; margin-bottom: 20px;}
 .preview-container.mobile-view .benefit-main-title{font-size:60px; text-align:center; font-weight:700; line-height:1.3}
 .preview-container.mobile-view .benefit-sub-text{font-size:38px; text-align:center; line-height:1.4; font-weight:600}
 .preview-container.mobile-view .benefit-link-btn{margin:0 auto; font-size:18px; padding:18px 28px}
@@ -535,11 +535,11 @@ input:checked + .toggle-slider:before { transform: translateX(20px); }
 .preview-container.mobile-view .benefit-gift-indicators{display:none}
 .preview-container.mobile-view .gift-dot{width:10px; height:10px}
 .preview-container.mobile-view .gift-dot.active{width:30px}
-.preview-container.mobile-view .benefit-gift-notes{font-size:28px; line-height:1.9; text-align:center; margin-top:18px; font-weight:400}
+.preview-container.mobile-view .benefit-gift-notes{font-size:28px; line-height:1.5; text-align:center; margin-top:18px; font-weight:400}
 
 
 /* 4️⃣ 쿠폰 영역 */
-.preview-container.mobile-view .benefit-coupon-card{margin:60px auto 0; display:flex; width:100%; max-width:100%; border-radius:0}
+.preview-container.mobile-view .benefit-coupon-card{margin:60px auto 0; display:flex; width:100%; max-width:100%; border-radius:0;  height: 200px;}
 .preview-container.mobile-view .coupon-left{padding:24px 32px}
 .preview-container.mobile-view .coupon-percent{font-size:72px; font-weight:700}
 .preview-container.mobile-view .coupon-right{padding:20px 28px; text-align:left}
@@ -731,7 +731,7 @@ display: block !important; /* margin: auto가 작동하도록 설정 */
 
 
 /* 📐 모바일 간격 조정 */
-.preview-container.mobile-view .content-block{margin-bottom:80px !important}
+.preview-container.mobile-view .content-block{margin-bottom:20px !important}
 .preview-container.mobile-view #blocksContainer .content-block{margin-bottom:80px}
 .preview-container.mobile-view .content-block:last-child{margin-bottom:0 !important}
 
@@ -782,7 +782,7 @@ display: block !important; /* margin: auto가 작동하도록 설정 */
 </div>
 <div class="hero-indicators" id="heroIndicators"></div>
 <div class="overlay-controls">
-<button class="overlay-ctrl-btn" onclick="openEditModal(-1,'hero')">🖼️ 배너</button>
+<button class="overlay-ctrl-btn" onclick="openHeroBannerEdit()">🖼️ 배너</button>
 <button class="overlay-ctrl-btn" onclick="openEditModal(-1,'hero-text')">✏️ 텍스트</button>
 </div>
 </div>
@@ -1583,15 +1583,15 @@ list+='<div class="item-edit-row"><img class="item-edit-img" src="'+s.image+'"><
 h='<div class="item-edit-list">'+list+'</div><button class="item-add-btn" onclick="addHeroSlideUI()">+ 이미지 추가</button>';
 btn.innerHTML='<button class="edit-modal-btn primary" onclick="closeEditModal()">닫기</button>';
 }else if(type==='hero-slide'){
-var slide=heroData.slides[index]; t.textContent='슬라이드 '+(index+1);
-h='<div class="mode-tabs"><button class="mode-tab '+(slide.mode==='blur'?'active':'')+'" onclick="setSlideMode(\'blur\')"><div class="mode-tab-label">BLUR</div><div class="mode-tab-desc">세로 이미지</div></button><button class="mode-tab '+(slide.mode==='full'?'active':'')+'" onclick="setSlideMode(\'full\')"><div class="mode-tab-label">FULL</div><div class="mode-tab-desc">가로 이미지</div></button></div>';
-h+='<div class="image-edit-section"><p class="image-edit-label">이미지 조정</p>';
+var slide=heroData.slides[index]; t.textContent='배너 편집';
+/* BLUR 모드만 지원 - FULL 탭 제거 */
+h='<div class="image-edit-section"><p class="image-edit-label">이미지 조정</p>';
 h+='<div class="image-edit-row"><label>확대</label><input type="range" id="editZoom" min="100" max="200" value="'+(slide.zoom||100)+'" oninput="updateLivePreview()"><span class="value-display" id="zoomValue">'+(slide.zoom||100)+'%</span><button class="slider-reset-btn" onclick="resetSlider(\'editZoom\',100)">↺</button></div>';
 h+='<div class="image-edit-row"><label>좌우</label><input type="range" id="editPosX" min="0" max="100" value="'+(slide.posX||50)+'" oninput="updateLivePreview()"><span class="value-display" id="posXValue">'+(slide.posX||50)+'%</span><button class="slider-reset-btn" onclick="resetSlider(\'editPosX\',50)">↺</button></div>';
 h+='<div class="image-edit-row"><label>상하</label><input type="range" id="editPosY" min="0" max="100" value="'+(slide.posY||50)+'" oninput="updateLivePreview()"><span class="value-display" id="posYValue">'+(slide.posY||50)+'%</span><button class="slider-reset-btn" onclick="resetSlider(\'editPosY\',50)">↺</button></div></div>';
 h+='<div class="edit-modal-field"><label class="edit-modal-label">이미지 교체</label><div class="upload-btn-wrapper"><button class="upload-btn">📷 이미지 선택</button><input type="file" accept="image/*" onchange="updateSlideImage(this)"></div></div>';
-h+='<div class="live-preview-container"><p class="live-preview-label">미리보기</p><div class="live-preview-box '+(slide.mode==='full'?'full-mode':'')+'" id="livePreviewBox"><div class="live-preview-blur" id="livePreviewBlur" style="background-image:url(\''+slide.image+'\')"></div><div class="live-preview-img-frame"><img class="live-preview-img" id="livePreviewImg" src="'+slide.image+'"></div></div>';
-btn.innerHTML='<button style="flex:1" class="edit-modal-btn secondary" onclick="openEditModal(-1,\'hero\')">← 목록</button><button style="flex:1" class="edit-modal-btn primary" onclick="saveHeroSlide()">저장</button>';
+h+='<div class="live-preview-container"><p class="live-preview-label">미리보기</p><div class="live-preview-box" id="livePreviewBox"><div class="live-preview-blur" id="livePreviewBlur" style="background-image:url(\''+slide.image+'\')"></div><div class="live-preview-img-frame"><img class="live-preview-img" id="livePreviewImg" src="'+slide.image+'"></div></div>';
+btn.innerHTML='<button style="flex:1" class="edit-modal-btn secondary" onclick="closeEditModal()">닫기</button><button style="flex:1" class="edit-modal-btn primary" onclick="saveHeroSlide()">저장</button>';
 }else if(type==='basic'){
 var b=blocks[index]; t.textContent='기본형 편집';
 h='<div class="mode-tabs"><button class="mode-tab '+(b.mode==='blur'?'active':'')+'" onclick="setBasicMode('+index+',\'blur\')"><div class="mode-tab-label">BLUR</div><div class="mode-tab-desc">세로 이미지</div></button><button class="mode-tab '+(b.mode==='full'?'active':'')+'" onclick="setBasicMode('+index+',\'full\')"><div class="mode-tab-label">FULL</div><div class="mode-tab-desc">가로 이미지</div></button></div>';
@@ -2077,7 +2077,15 @@ function updateLivePreview(){
 function saveHeroSlide(){
     var s=heroData.slides[currentEditBlock];
     s.zoom=parseInt(document.getElementById('editZoom').value); s.posX=parseInt(document.getElementById('editPosX').value); s.posY=parseInt(document.getElementById('editPosY').value);
-    renderHeroSlides(); openEditModal(-1,'hero');
+    renderHeroSlides(); closeEditModal();
+}
+
+/* 배너 버튼 클릭 시 슬라이드 목록 없이 즉시 슬라이드0 편집화면 */
+function openHeroBannerEdit(){
+    currentEditBlock = 0;
+    if(!heroData.slides[0]) heroData.slides[0] = {image:'', mode:'blur', zoom:100, posX:50, posY:50};
+    heroData.slides[0].mode = 'blur'; /* 항상 blur 모드 */
+    openEditModal(0, 'hero-slide');
 }
 
 function updateBlockImage(input,type){if(input.files&&input.files[0]){if(!validateImageSize(input.files[0])) return; var r=new FileReader();r.onload=function(e){
@@ -2191,7 +2199,7 @@ function generateExportHTML(viewMode) {
     html += '.preview-inner{max-width:'+innerWidth+';margin:0 auto}\n';
     
     /* 콘텐츠 블록 간격 */
-    html += '.content-block{margin-bottom:100px}\n';
+    html += '.content-block{margin-bottom:60px}\n';
     html += '.content-block:last-child{margin-bottom:0}\n';
     
     /* 히어로 스타일 */
@@ -2220,7 +2228,7 @@ function generateExportHTML(viewMode) {
     
     /* 베네핏 스타일 */
     html += '.benefit-section{padding:0 0 40px;background:#fff}\n';
-    html += '.benefit-header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:800px;margin-left:auto;margin-right:auto}\n';
+    html += '.benefit-header{text-align:center;margin-bottom:0px;padding-bottom:20px;border-bottom:2px solid #1a1a1a;max-width:800px;margin-left:auto;margin-right:auto}\n';
     html += '.benefit-title{font-size:35px;font-weight:700;letter-spacing:2px;color:#1a1a1a;margin-bottom:8px}\n';
     html += '.benefit-date{font-size:14px;color:#666}\n';
     html += '.benefit-wrapper{max-width:800px;margin:0 auto}\n';
@@ -2842,107 +2850,7 @@ function validateImageSize(file) {
     return true;
 }
 
-// ========== Export/Import 파이프라인 ==========
-function exportImagesAndProject() {
-    if(typeof JSZip === 'undefined') { alert('잠시 후 다시 시도하세요.'); return; }
-    var zip = new JSZip();
-    var slicesFolder = zip.folder('slices');
-    var bannersFolder = zip.folder('banners');
-    
-    // 프로젝트 상태 저장
-    var state = {
-        version: '5.0',
-        timestamp: new Date().toISOString(),
-        heroData: heroData,
-        benefitSectionData: benefitSectionData,
-        benefits: benefits,
-        blocks: blocks,
-        notices: notices
-    };
-    zip.file('project.json', JSON.stringify(state, null, 2));
-    
-    // 슬라이스 및 배너 생성
-    var promises = [];
-    
-    // 히어로 슬라이스
-    heroData.slides.forEach(function(slide, i) {
-        if(slide.image && slide.image.startsWith('data:')) {
-            var data = compressImage(slide.image, 500);
-            slicesFolder.file('hero_slide_' + i + '.jpg', data.split(',')[1], {base64: true});
-        }
-    });
-    
-    // 블록별 슬라이스
-    blocks.forEach(function(block, i) {
-        if(block.image && block.image.startsWith('data:')) {
-            var data = compressImage(block.image, 500);
-            slicesFolder.file('block_' + i + '_main.jpg', data.split(',')[1], {base64: true});
-        }
-        if(block.images) {
-            block.images.forEach(function(img, j) {
-                if(img && img.startsWith('data:')) {
-                    var data = compressImage(img, 500);
-                    slicesFolder.file('block_' + i + '_img_' + j + '.jpg', data.split(',')[1], {base64: true});
-                }
-            });
-        }
-    });
-    
-    // 배너 생성
-    if(heroData.slides && heroData.slides[0] && heroData.slides[0].image) {
-        var img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = function() {
-            var configs = [
-                {n: 'PC_메인배너', w: 1120, h: 700},
-                {n: 'MO_메인배너', w: 960, h: 1024},
-                {n: '기획전목록배너', w: 1080, h: 1248},
-                {n: '카카오배너', w: 800, h: 1100}
-            ];
-            configs.forEach(function(cfg) {
-                var data = createBannerImage(img, cfg.w, cfg.h, cfg.n === '카카오배너');
-                bannersFolder.file(cfg.n + '.jpg', data.split(',')[1], {base64: true});
-            });
-            
-            zip.generateAsync({type: 'blob'}).then(function(content) {
-                var url = URL.createObjectURL(content);
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = 'style24_export_' + Date.now() + '.zip';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                alert('이미지 추출 완료!');
-            });
-        };
-        img.onerror = function() {
-            zip.generateAsync({type: 'blob'}).then(function(content) {
-                var url = URL.createObjectURL(content);
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = 'style24_export_' + Date.now() + '.zip';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                alert('프로젝트 JSON 저장 완료! (이미지는 외부 URL이라 추출되지 않음)');
-            });
-        };
-        img.src = heroData.slides[0].image;
-    } else {
-        zip.generateAsync({type: 'blob'}).then(function(content) {
-            var url = URL.createObjectURL(content);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'style24_export_' + Date.now() + '.zip';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
-    }
-}
+// ========== Export/Import 파이프라인 (아래 함수로 대체됨) ==========
 
 function compressImage(dataUrl, maxKB) {
     var canvas = document.createElement('canvas');
@@ -3085,12 +2993,44 @@ function generateBannerPreviews() {
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, cfg.w, cfg.h);
                 
-                ctx.fillStyle = '#fff';
+                /* 카카오 배너 텍스트: 모바일 배너 비율 기준
+                   MO 히어로: 1080×1668px, bottom:100px, 텍스트영역 padding:48px
+                   카카오: 800×1100px → 비율 1100/1668 = 0.66
+                   - 로고: bottom ~320px (1668기준 logo y = 1668-480 → 카카오: 1100*((1668-480)/1668))
+                   - 메인: 105px font → 800캔버스 = 800/1080*105 ≈ 78px
+                   - 서브: 42px font → 800캔버스 = 800/1080*42 ≈ 31px
+                */
+                var moRatio = cfg.w / 1080; /* 800/1080 */
+                var hRatio = cfg.h / 1668;  /* 1100/1668 */
                 ctx.textAlign = 'center';
-                ctx.font = '600 40px Pretendard, sans-serif';
-                ctx.fillText(heroData.mainText.replace(/\n/g, ' '), cfg.w / 2, cfg.h - 80);
-                ctx.font = '300 18px Pretendard, sans-serif';
-                ctx.fillText(heroData.subText.split('\n')[0] || '', cfg.w / 2, cfg.h - 40);
+                
+                /* 로고 */
+                if(heroData.logo) {
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold ' + Math.round(40 * moRatio) + 'px Pretendard, sans-serif';
+                    var logoY = cfg.h - Math.round(400 * hRatio);
+                    ctx.fillText(heroData.logo, cfg.w / 2, logoY);
+                }
+                
+                /* 메인 텍스트 (줄바꿈 처리) */
+                var mainFontSize = Math.round(105 * moRatio);
+                ctx.font = 'bold ' + mainFontSize + 'px Pretendard, sans-serif';
+                ctx.fillStyle = '#fff';
+                var mainLines = heroData.mainText ? heroData.mainText.split('\n') : [];
+                var mainStartY = cfg.h - Math.round(280 * hRatio);
+                mainLines.forEach(function(line, li) {
+                    ctx.fillText(line, cfg.w / 2, mainStartY + li * (mainFontSize * 1.2));
+                });
+                
+                /* 서브 텍스트 */
+                var subFontSize = Math.round(42 * moRatio);
+                ctx.font = '400 ' + subFontSize + 'px Pretendard, sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.85)';
+                var subLines = heroData.subText ? heroData.subText.split('\n') : [];
+                var subStartY = cfg.h - Math.round(130 * hRatio);
+                subLines.slice(0,2).forEach(function(line, li) {
+                    ctx.fillText(line, cfg.w / 2, subStartY + li * (subFontSize * 1.4));
+                });
             }
         });
     };
@@ -3209,29 +3149,37 @@ function renderProductBlock(block, index) {
 
 // ========== 초기화 기능 ==========
 function resetAll() {
-    if(!confirm('모든 내용을 초기화하시겠습니까?\n(임시저장된 데이터는 유지됩니다)')) return;
+    if(!confirm('모든 내용을 초기화하시겠습니까?')) return;
     
     // 모든 데이터 초기화
     heroData = {
-        slides: [{
-            image: '',
-            topLabel: '',
-            logo: '',
-            mainText: '',
-            subText: '',
-            textAlign: 'left',
-            overlayMode: 'blur'
-        }],
-        activeSlide: 0
+        topLabel: '',
+        logo: '',
+        mainText: '',
+        subText: '',
+        textAlign: 'center',
+        slides: [{image:'', mode:'blur', zoom:100, posX:50, posY:50}]
     };
+    benefitSectionData = { title: 'BENEFIT', date: '2025. 6. 9 - 6. 23', visible: true };
     benefits = [];
     blocks = [];
+    notices = [];
     bannerImages = {};
+    currentHeroSlide = 0;
     
     // 렌더링
-    renderHero();
+    renderHeroSlides();
+    renderHeroContent();
     renderBenefits();
     renderBlocks();
+    renderNotices();
+    
+    // 혜택영역 표시 복구
+    var benefitSection = document.getElementById('benefitSection');
+    if(benefitSection) { benefitSection.style.display = 'block'; benefitSection.classList.remove('is-hidden'); }
+    document.getElementById('benefitSectionTitle').textContent = 'BENEFIT';
+    document.getElementById('benefitSectionDate').textContent = '2025. 6. 9 - 6. 23';
+    document.getElementById('noticeSection').style.display = 'none';
     
     alert('초기화 완료!');
 }
@@ -3302,7 +3250,8 @@ function loadFromTemp() {
         benefits = data.benefits || [];
         blocks = data.blocks || [];
         
-        renderHero();
+        renderHeroSlides();
+        renderHeroContent();
         renderBenefits();
         renderBlocks();
         
@@ -3313,9 +3262,9 @@ function loadFromTemp() {
 }
 
 // 기존 render 함수들에 자동저장 추가
-var originalRenderHero = renderHero;
-renderHero = function() {
-    originalRenderHero.apply(this, arguments);
+var originalRenderHeroSlides = renderHeroSlides;
+renderHeroSlides = function() {
+    originalRenderHeroSlides.apply(this, arguments);
     autoSaveData();
 };
 
@@ -3331,7 +3280,7 @@ renderBlocks = function() {
     autoSaveData();
 };
 
-// ========== 이미지 영역별 슬라이스 추출 (500KB 이하) ==========
+// ========== 이미지 영역별 슬라이스 추출 (500KB 이하) PC+MO ==========
 function exportImagesAndProject() {
     if(typeof JSZip === 'undefined') {
         alert('JSZip 라이브러리를 로딩 중입니다. 잠시 후 다시 시도하세요.');
@@ -3339,106 +3288,109 @@ function exportImagesAndProject() {
     }
     
     var zip = new JSZip();
-    var imgFolder = zip.folder('images');
-    var slicedFolder = imgFolder.folder('sliced');
+    var pcFolder = zip.folder('PC');
+    var moFolder = zip.folder('MO');
     var promises = [];
     var sliceIndex = 1;
     
-    // 1. 히어로 이미지들
+    /* ---- 영역명 매핑 ---- */
+    function getBlockName(block, idx) {
+        var map = {basic:'기본형', swipe:'자동스와이프', split:'2분할', zigzag:'지그재그', collage:'콜라주', product:'상품단'};
+        return (map[block.type] || block.type) + '_' + (idx + 1);
+    }
+    
+    /* ---- 이미지 수집: 히어로 ---- */
     heroData.slides.forEach(function(slide, idx) {
         if(slide.image) {
-            promises.push(
-                downloadAndSliceImage(slide.image, '히어로_' + (idx + 1), slicedFolder, sliceIndex)
-                    .then(function(newIndex) { sliceIndex = newIndex; })
-            );
+            promises.push(downloadAndSliceImage(slide.image, '배너영역_' + (idx + 1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+            promises.push(downloadAndSliceImage(slide.image, '배너영역_' + (idx + 1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
         }
     });
     
-    // 2. 베네핏 쿠폰/사은품 이미지
-    benefits.forEach(function(b, idx) {
-        if(b.gifts && b.gifts.length > 0) {
-            b.gifts.forEach(function(gift, gIdx) {
-                if(gift.image) {
-                    promises.push(
-                        downloadAndSliceImage(gift.image, '베네핏' + (idx + 1) + '_사은품_' + (gIdx + 1), slicedFolder, sliceIndex)
-                            .then(function(newIndex) { sliceIndex = newIndex; })
-                    );
-                }
-            });
-        }
-    });
+    /* ---- 이미지 수집: 혜택영역 ---- */
+    if(benefitSectionData.visible) {
+        benefits.forEach(function(b, idx) {
+            if(b.gifts) {
+                b.gifts.forEach(function(gift, gIdx) {
+                    if(gift.image) {
+                        promises.push(downloadAndSliceImage(gift.image, '혜택영역_' + (idx+1) + '_사은품_' + (gIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                        promises.push(downloadAndSliceImage(gift.image, '혜택영역_' + (idx+1) + '_사은품_' + (gIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                    }
+                });
+            }
+        });
+    }
     
-    // 3. 블록 이미지들
+    /* ---- 이미지 수집: 콘텐츠 블록 ---- */
     blocks.forEach(function(block, idx) {
-        if(block.type === 'video' && block.thumbnail) {
-            promises.push(
-                downloadAndSliceImage(block.thumbnail, '영상_썸네일_' + (idx + 1), slicedFolder, sliceIndex)
-                    .then(function(newIndex) { sliceIndex = newIndex; })
-            );
-        } else if(block.type === 'swipe' && block.items) {
-            block.items.forEach(function(item, iIdx) {
-                if(item.image) {
-                    promises.push(
-                        downloadAndSliceImage(item.image, '스와이프_' + (idx + 1) + '_' + (iIdx + 1), slicedFolder, sliceIndex)
-                            .then(function(newIndex) { sliceIndex = newIndex; })
-                    );
-                }
-            });
-        } else if(block.type === 'image' && block.image) {
-            promises.push(
-                downloadAndSliceImage(block.image, '이미지_' + (idx + 1), slicedFolder, sliceIndex)
-                    .then(function(newIndex) { sliceIndex = newIndex; })
-            );
-        } else if(block.type === 'dual' && block.images) {
+        var name = getBlockName(block, idx);
+        /* 기본형 */
+        if(block.type === 'basic' && block.image) {
+            promises.push(downloadAndSliceImage(block.image, name, pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+            promises.push(downloadAndSliceImage(block.image, name, moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+        }
+        /* 자동스와이프 */
+        if(block.type === 'swipe' && block.images) {
             block.images.forEach(function(img, iIdx) {
                 if(img) {
-                    promises.push(
-                        downloadAndSliceImage(img, '듀얼_' + (idx + 1) + '_' + (iIdx + 1), slicedFolder, sliceIndex)
-                            .then(function(newIndex) { sliceIndex = newIndex; })
-                    );
+                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
                 }
             });
-        } else if(block.type === 'product' && block.products) {
+        }
+        /* 2분할 */
+        if(block.type === 'split') {
+            if(block.leftImage) {
+                promises.push(downloadAndSliceImage(block.leftImage, name + '_좌', pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                promises.push(downloadAndSliceImage(block.leftImage, name + '_좌', moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+            }
+            if(block.rightImage) {
+                promises.push(downloadAndSliceImage(block.rightImage, name + '_우', pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                promises.push(downloadAndSliceImage(block.rightImage, name + '_우', moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+            }
+        }
+        /* 지그재그 */
+        if(block.type === 'zigzag' && block.images) {
+            block.images.forEach(function(img, iIdx) {
+                if(img) {
+                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                }
+            });
+        }
+        /* 콜라주 */
+        if(block.type === 'collage' && block.images) {
+            block.images.forEach(function(img, iIdx) {
+                if(img) {
+                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                }
+            });
+        }
+        /* 상품단 */
+        if(block.type === 'product' && block.products) {
             block.products.forEach(function(p, pIdx) {
                 if(p.image) {
-                    promises.push(
-                        downloadAndSliceImage(p.image, '상품_' + (idx + 1) + '_' + (pIdx + 1), slicedFolder, sliceIndex)
-                            .then(function(newIndex) { sliceIndex = newIndex; })
-                    );
-                }
-            });
-        } else if(block.type === 'lookbook' && block.items) {
-            block.items.forEach(function(item, iIdx) {
-                if(item.image) {
-                    promises.push(
-                        downloadAndSliceImage(item.image, '룩북_' + (idx + 1) + '_' + (iIdx + 1), slicedFolder, sliceIndex)
-                            .then(function(newIndex) { sliceIndex = newIndex; })
-                    );
-                }
-                if(item.products) {
-                    item.products.forEach(function(p, pIdx) {
-                        if(p.image) {
-                            promises.push(
-                                downloadAndSliceImage(p.image, '룩북_' + (idx + 1) + '_' + (iIdx + 1) + '_상품_' + (pIdx + 1), slicedFolder, sliceIndex)
-                                    .then(function(newIndex) { sliceIndex = newIndex; })
-                            );
-                        }
-                    });
+                    promises.push(downloadAndSliceImage(p.image, name + '_상품' + (pIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+                    promises.push(downloadAndSliceImage(p.image, name + '_상품' + (pIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
                 }
             });
         }
     });
     
-    // 4. 프로젝트 JSON 파일
+    /* ---- 프로젝트 JSON ---- */
     var projectData = {
+        version: '5.0',
         heroData: heroData,
+        benefitSectionData: benefitSectionData,
         benefits: benefits,
         blocks: blocks,
+        notices: notices,
         exportDate: new Date().toISOString()
     };
     zip.file('project.json', JSON.stringify(projectData, null, 2));
     
-    // 모든 이미지 다운로드 완료 후 ZIP 생성
+    /* ---- ZIP 생성 ---- */
     Promise.all(promises).then(function() {
         return zip.generateAsync({type: 'blob'});
     }).then(function(content) {
@@ -3450,7 +3402,7 @@ function exportImagesAndProject() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        alert('이미지 추출 완료!\n\n슬라이스된 이미지는 images/sliced 폴더에 저장되었습니다.');
+        alert('이미지 추출 완료!\nPC / MO 폴더에 영역별 PNG가 저장되었습니다.');
     }).catch(function(err) {
         alert('이미지 추출 중 오류 발생: ' + err.message);
     });
