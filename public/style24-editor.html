@@ -748,6 +748,7 @@ display: block !important; /* margin: auto가 작동하도록 설정 */
 </style>
 <!-- FIXED: JSZip CDN 추가 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div class="editor-panel">
@@ -3280,120 +3281,139 @@ renderBlocks = function() {
     autoSaveData();
 };
 
-// ========== 이미지 영역별 슬라이스 추출 (500KB 이하) PC+MO ==========
-function exportImagesAndProject() {
-    if(typeof JSZip === 'undefined') {
+// ========== 이미지 영역별 슬라이스 추출 (DOM 캡처 방식) PC+MO ==========
+async function exportImagesAndProject() {
+    if (typeof JSZip === 'undefined') {
         alert('JSZip 라이브러리를 로딩 중입니다. 잠시 후 다시 시도하세요.');
         return;
     }
-    
-    var zip = new JSZip();
-    var pcFolder = zip.folder('PC');
-    var moFolder = zip.folder('MO');
-    var promises = [];
-    var sliceIndex = 1;
-    
-    /* ---- 영역명 매핑 ---- */
-    function getBlockName(block, idx) {
-        var map = {basic:'기본형', swipe:'자동스와이프', split:'2분할', zigzag:'지그재그', collage:'콜라주', product:'상품단'};
-        return (map[block.type] || block.type) + '_' + (idx + 1);
+    if (typeof html2canvas === 'undefined') {
+        alert('html2canvas 라이브러리를 로딩 중입니다. 잠시 후 다시 시도하세요.');
+        return;
     }
-    
-    /* ---- 이미지 수집: 히어로 ---- */
-    heroData.slides.forEach(function(slide, idx) {
-        if(slide.image) {
-            promises.push(downloadAndSliceImage(slide.image, '배너영역_' + (idx + 1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-            promises.push(downloadAndSliceImage(slide.image, '배너영역_' + (idx + 1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+
+    var btn = document.querySelector('[onclick="exportImagesAndProject()"]');
+    if (btn) { btn.textContent = '⏳ 추출 중...'; btn.disabled = true; }
+
+    try {
+        var zip = new JSZip();
+        var pcFolder = zip.folder('PC');
+        var moFolder = zip.folder('MO');
+
+        // 현재 뷰 모드 저장
+        var container = document.getElementById('previewContainer');
+        var wasMobile = container.classList.contains('mobile-view');
+        var wasPreview = document.body.classList.contains('preview-mode');
+
+        // 미리보기 모드 강제 활성화 (편집 UI 숨김)
+        document.body.classList.add('preview-mode');
+
+        // ---- 영역 ID 목록 수집 함수 ----
+        function getSectionElements() {
+            var sections = [];
+            // 히어로
+            var hero = document.querySelector('.hero-section');
+            if (hero) sections.push({ el: hero, name: '01_배너영역' });
+            // 혜택
+            var benefit = document.getElementById('benefitSection');
+            if (benefit && !benefit.classList.contains('is-hidden')) sections.push({ el: benefit, name: '02_혜택영역' });
+            // 콘텐츠 블록들
+            var blockEls = document.querySelectorAll('#blocksContainer .content-block');
+            var blockTypeCount = {};
+            blockEls.forEach(function(el, idx) {
+                if (el.classList.contains('is-hidden')) return;
+                var block = blocks[idx];
+                if (!block) return;
+                var typeMap = { basic:'기본형', swipe:'자동스와이프', split:'2분할', zigzag:'지그재그', collage:'콜라주', product:'상품단' };
+                var typeName = typeMap[block.type] || block.type;
+                blockTypeCount[typeName] = (blockTypeCount[typeName] || 0) + 1;
+                var num = String(sections.length + 1).padStart(2, '0');
+                sections.push({ el: el, name: num + '_' + typeName + '_' + blockTypeCount[typeName] });
+            });
+            // 유의사항
+            var notice = document.getElementById('noticeSection');
+            if (notice && !notice.classList.contains('is-hidden')) {
+                var num = String(sections.length + 1).padStart(2, '0');
+                sections.push({ el: notice, name: num + '_유의사항' });
+            }
+            return sections;
         }
-    });
-    
-    /* ---- 이미지 수집: 혜택영역 ---- */
-    if(benefitSectionData.visible) {
-        benefits.forEach(function(b, idx) {
-            if(b.gifts) {
-                b.gifts.forEach(function(gift, gIdx) {
-                    if(gift.image) {
-                        promises.push(downloadAndSliceImage(gift.image, '혜택영역_' + (idx+1) + '_사은품_' + (gIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                        promises.push(downloadAndSliceImage(gift.image, '혜택영역_' + (idx+1) + '_사은품_' + (gIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                    }
+
+        // ---- 요소를 캡처해서 폴더에 저장 (500KB 이하) ----
+        async function captureAndSave(el, name, folder) {
+            // 요소가 화면에 보이도록 잠깐 스크롤
+            el.scrollIntoView({ block: 'center' });
+            await new Promise(r => setTimeout(r, 80));
+
+            var canvas = await html2canvas(el, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 1,
+                backgroundColor: '#ffffff',
+                logging: false,
+                width: el.scrollWidth,
+                height: el.scrollHeight
+            });
+
+            // 500KB 이하로 품질 조정 후 저장
+            var quality = 0.92;
+            var blob = null;
+            for (var attempt = 0; attempt < 9; attempt++) {
+                blob = await new Promise(function(res) {
+                    canvas.toBlob(res, 'image/jpeg', quality);
                 });
+                if (blob.size <= 500 * 1024) break;
+                quality = Math.max(0.1, quality - 0.1);
             }
-        });
-    }
-    
-    /* ---- 이미지 수집: 콘텐츠 블록 ---- */
-    blocks.forEach(function(block, idx) {
-        var name = getBlockName(block, idx);
-        /* 기본형 */
-        if(block.type === 'basic' && block.image) {
-            promises.push(downloadAndSliceImage(block.image, name, pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-            promises.push(downloadAndSliceImage(block.image, name, moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
+            folder.file(name + '.jpg', blob);
         }
-        /* 자동스와이프 */
-        if(block.type === 'swipe' && block.images) {
-            block.images.forEach(function(img, iIdx) {
-                if(img) {
-                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                }
-            });
+
+        // ---- PC 캡처 ----
+        container.classList.remove('mobile-view');
+        document.getElementById('viewPcBtn').classList.add('active');
+        document.getElementById('viewMoBtn').classList.remove('active');
+        await new Promise(r => setTimeout(r, 400));
+
+        var pcSections = getSectionElements();
+        for (var i = 0; i < pcSections.length; i++) {
+            await captureAndSave(pcSections[i].el, pcSections[i].name, pcFolder);
         }
-        /* 2분할 */
-        if(block.type === 'split') {
-            if(block.leftImage) {
-                promises.push(downloadAndSliceImage(block.leftImage, name + '_좌', pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                promises.push(downloadAndSliceImage(block.leftImage, name + '_좌', moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-            }
-            if(block.rightImage) {
-                promises.push(downloadAndSliceImage(block.rightImage, name + '_우', pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                promises.push(downloadAndSliceImage(block.rightImage, name + '_우', moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-            }
+
+        // ---- MO 캡처 ----
+        container.classList.add('mobile-view');
+        document.getElementById('viewPcBtn').classList.remove('active');
+        document.getElementById('viewMoBtn').classList.add('active');
+        await new Promise(r => setTimeout(r, 400));
+
+        var moSections = getSectionElements();
+        for (var j = 0; j < moSections.length; j++) {
+            await captureAndSave(moSections[j].el, moSections[j].name, moFolder);
         }
-        /* 지그재그 */
-        if(block.type === 'zigzag' && block.images) {
-            block.images.forEach(function(img, iIdx) {
-                if(img) {
-                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                }
-            });
+
+        // ---- 원래 뷰 복원 ----
+        if (!wasMobile) {
+            container.classList.remove('mobile-view');
+            document.getElementById('viewPcBtn').classList.add('active');
+            document.getElementById('viewMoBtn').classList.remove('active');
         }
-        /* 콜라주 */
-        if(block.type === 'collage' && block.images) {
-            block.images.forEach(function(img, iIdx) {
-                if(img) {
-                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                    promises.push(downloadAndSliceImage(img, name + '_이미지' + (iIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                }
-            });
+        if (!wasPreview) {
+            document.body.classList.remove('preview-mode');
         }
-        /* 상품단 */
-        if(block.type === 'product' && block.products) {
-            block.products.forEach(function(p, pIdx) {
-                if(p.image) {
-                    promises.push(downloadAndSliceImage(p.image, name + '_상품' + (pIdx+1), pcFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                    promises.push(downloadAndSliceImage(p.image, name + '_상품' + (pIdx+1), moFolder, sliceIndex).then(function(n){ sliceIndex = n; }));
-                }
-            });
-        }
-    });
-    
-    /* ---- 프로젝트 JSON ---- */
-    var projectData = {
-        version: '5.0',
-        heroData: heroData,
-        benefitSectionData: benefitSectionData,
-        benefits: benefits,
-        blocks: blocks,
-        notices: notices,
-        exportDate: new Date().toISOString()
-    };
-    zip.file('project.json', JSON.stringify(projectData, null, 2));
-    
-    /* ---- ZIP 생성 ---- */
-    Promise.all(promises).then(function() {
-        return zip.generateAsync({type: 'blob'});
-    }).then(function(content) {
+
+        // ---- project.json ----
+        var projectData = {
+            version: '5.0',
+            heroData: heroData,
+            benefitSectionData: benefitSectionData,
+            benefits: benefits,
+            blocks: blocks,
+            notices: notices,
+            exportDate: new Date().toISOString()
+        };
+        zip.file('project.json', JSON.stringify(projectData, null, 2));
+
+        // ---- ZIP 다운로드 ----
+        var content = await zip.generateAsync({ type: 'blob' });
         var url = URL.createObjectURL(content);
         var a = document.createElement('a');
         a.href = url;
@@ -3403,77 +3423,13 @@ function exportImagesAndProject() {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         alert('이미지 추출 완료!\nPC / MO 폴더에 영역별 PNG가 저장되었습니다.');
-    }).catch(function(err) {
-        alert('이미지 추출 중 오류 발생: ' + err.message);
-    });
-}
 
-// 이미지 다운로드 및 슬라이스 함수 (500KB 이하)
-function downloadAndSliceImage(url, name, folder, startIndex) {
-    return new Promise(function(resolve, reject) {
-        var img = new Image();
-        img.crossOrigin = 'anonymous';
-        
-        img.onload = function() {
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-            
-            // 원본 이미지 크기
-            var originalWidth = img.width;
-            var originalHeight = img.height;
-            
-            // 세로로 슬라이스할 높이 (약 1000px씩)
-            var sliceHeight = 1000;
-            var totalSlices = Math.ceil(originalHeight / sliceHeight);
-            var slicePromises = [];
-            
-            for(var i = 0; i < totalSlices; i++) {
-                (function(sliceNum) {
-                    var yStart = sliceNum * sliceHeight;
-                    var currentHeight = Math.min(sliceHeight, originalHeight - yStart);
-                    
-                    canvas.width = originalWidth;
-                    canvas.height = currentHeight;
-                    
-                    // 이미지의 일부분을 canvas에 그리기
-                    ctx.drawImage(img, 0, yStart, originalWidth, currentHeight, 0, 0, originalWidth, currentHeight);
-                    
-                    // 품질을 조정하여 500KB 이하로 만들기
-                    var quality = 0.9;
-                    var slicePromise = new Promise(function(resolveSlice) {
-                        function tryCompress() {
-                            canvas.toBlob(function(blob) {
-                                if(blob.size <= 500 * 1024 || quality <= 0.1) {
-                                    // 500KB 이하 또는 최소 품질에 도달
-                                    var fileName = name + '_slice_' + String(startIndex + sliceNum).padStart(3, '0') + '.jpg';
-                                    folder.file(fileName, blob);
-                                    resolveSlice();
-                                } else {
-                                    // 품질 낮추고 재시도
-                                    quality -= 0.1;
-                                    tryCompress();
-                                }
-                            }, 'image/jpeg', quality);
-                        }
-                        tryCompress();
-                    });
-                    
-                    slicePromises.push(slicePromise);
-                })(i);
-            }
-            
-            Promise.all(slicePromises).then(function() {
-                resolve(startIndex + totalSlices);
-            });
-        };
-        
-        img.onerror = function() {
-            console.error('이미지 로드 실패:', url);
-            resolve(startIndex); // 에러 시에도 계속 진행
-        };
-        
-        img.src = url;
-    });
+    } catch (err) {
+        alert('이미지 추출 중 오류 발생: ' + err.message);
+        console.error(err);
+    } finally {
+        if (btn) { btn.textContent = '🖼️ 이미지추출'; btn.disabled = false; }
+    }
 }
 
 </script>
